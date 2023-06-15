@@ -4,15 +4,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import conexao.conexao_bancodedados;
 import aplicacao.Cliente;
 
-@WebServlet(name = "ClienteDAO", urlPatterns = {"/ClienteDAO"})
-public class ClienteDAO extends HttpServlet {
+public class ClienteDAO {
     
     private Connection conn;
+
+    public ClienteDAO(Connection conn){
+        this.conn = conn;
+    }
 
     public ClienteDAO() {
         try {

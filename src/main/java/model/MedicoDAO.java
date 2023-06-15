@@ -4,14 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import conexao.conexao_bancodedados;
 import aplicacao.Medico;
 import aplicacao.Consulta;
 
-@WebServlet(name = "MedicoDAO", urlPatterns = {"/MedicoDAO"})
-public class MedicoDAO extends HttpServlet {
+public class MedicoDAO {
     
     private Connection conn;
 
