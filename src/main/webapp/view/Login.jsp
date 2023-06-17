@@ -22,7 +22,7 @@
                 
                 <br>
                 
-                <label for="papel"><b>Selecione o tipo de acesso:</b></label>
+                <label for="papel"><strong>Selecione o tipo de acesso:</strong></label>
                 
                 <select id="papel" name="papel">
                     <option value="Cliente">Cliente</option>
@@ -30,16 +30,16 @@
                     <option value="Medico">Médico</option>
                 </select>
                 <br><br>
-                <label for="CPF"><b>CPF:</b></label>
+                <label for="CPF"><strong>CPF:</strong></label>
                 <input type="text" placeholder="Digite seu CPF" name="CPF" required>
                 <br><br>
-                <label for="senha"><b>Senha:</b></label>
+                <label for="senha"><strong>Senha:</strong></label>
                 <input type="password" placeholder="Digite sua senha" name="senha" required> 
                 <br><br>
                 <input type="submit" value="Enviar">
             </form>    
             <br>
-            <a href="../index.jsp"><button type="button"><b>Voltar</b></button></a>
+            <a href="../index.jsp"><button type="button"><strong>Voltar</strong></button></a>
         </div>
     </body>
 </html>

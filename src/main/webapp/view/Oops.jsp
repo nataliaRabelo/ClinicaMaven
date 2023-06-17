@@ -3,7 +3,7 @@
     String nome = request.getParameter("type");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Oooooops!</title>
@@ -23,7 +23,7 @@
                     out.println("<h3>Você não está autorizado a acessar a Clínica WeB no momento!</h3>");
                 }
             %>
-            <a href="./view/Login.jsp"><button type="button"><b>Voltar</b></button></a>
+            <a href="./view/Login.jsp"><button type="button"><strong>Voltar</strong></button></a>
         </div>
     </body>
 </html>

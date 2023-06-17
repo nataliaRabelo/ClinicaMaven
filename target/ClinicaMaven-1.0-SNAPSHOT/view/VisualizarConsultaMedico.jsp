@@ -9,7 +9,7 @@
     ArrayList<String> lista_nomes = (ArrayList<String>)session.getAttribute("lista_nomes");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Suas Consultas</title>
@@ -25,6 +25,7 @@
         <h2 style="text-align:center">Veja aqui as suas Consultas em que você está agendado.</h2>        
         <div class="div">
             <table>
+                <caption> Tabela de Consultas - Médico </caption>
                 <tr>
                     <th>Consulta</th>
                     <th>Paciente</th>
@@ -107,7 +108,7 @@
             </table>
             <br><br>    
             <div style="text-align:center">
-            <a href="./ControladorMedico?arg=Dashboard"><button type="button"><b>Voltar</b></button></a>
+            <a href="./ControladorMedico?arg=Dashboard"><button type="button"><strong>Voltar</strong></button></a>
             </div>
         </div>
     </body>

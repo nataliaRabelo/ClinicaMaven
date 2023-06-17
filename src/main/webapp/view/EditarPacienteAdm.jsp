@@ -74,7 +74,7 @@
                 <input type="hidden" name="type" value="Paciente">
             </form>
             <br>
-            <a href="./ControladorAdministrador?arg=Visualizar&type=Paciente"><button type="button"><b>Voltar</b></button></a>
+            <a href="./ControladorAdministrador?arg=Visualizar&type=Paciente"><button type="button"><strong>Voltar</strong></button></a>
         </div>
     </body>
 </html>

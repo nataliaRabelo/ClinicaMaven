@@ -4,7 +4,7 @@
     Administrador adm = (Administrador)session.getAttribute("adm");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Área do Administrador</title>
@@ -50,8 +50,7 @@
         
         <div style="text-align: center;">
             <div>
-            <!--<div class="intern" style="border: 15px solid red; display: inline-block;">-->
-                <!--<div class="intern" style="border: 15px solid green; width: 30%;">-->
+
                     <form action="./ControladorAdministrador" method="GET">
                         <button class="button button2" type="submit">Ver Pacientes</button>
                         <input type="hidden" name="arg" value="Visualizar">

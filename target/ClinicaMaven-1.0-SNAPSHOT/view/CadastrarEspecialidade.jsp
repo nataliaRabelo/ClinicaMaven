@@ -13,6 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
         <%
         if(especialidade != null){
             out.println("<title>Editar Especialidade</title>");
@@ -21,6 +22,7 @@
         }
         
         %>
+    </title>
         <link href="./bootstrap/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./styles/Formulario.css"/>
     </head>
@@ -53,7 +55,7 @@
                 <input type="submit" name="action" value="<%=retorno%>">
                 <input type="hidden" name="type" value="Especialidade">
             </form> 
-            <a href="./ControladorAdministrador?arg=Visualizar&type=Especialidade"><button type="button"><b>Voltar</b></button></a>    
+            <a href="./ControladorAdministrador?arg=Visualizar&type=Especialidade"><button type="button"><strong>Voltar</strong></button></a>    
         </div>
     </body>
 </html>

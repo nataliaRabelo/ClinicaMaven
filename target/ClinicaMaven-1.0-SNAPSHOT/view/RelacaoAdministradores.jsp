@@ -6,7 +6,7 @@
     Administrador administrador_sessao = (Administrador)session.getAttribute("administrador_sessao");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Administradores da Clínica</title>
@@ -29,6 +29,7 @@
         </form>
         <div class="div">
             <table>
+                <caption> Tabela de Administradores </caption>
                 <tr>
                     <th>Administrador</th>
                     <th>Nome</th>
@@ -65,7 +66,7 @@
             </table>
             <br><br>    
             <div style="text-align:center">
-            <a href="./ControladorAdministrador?type=Dashboard"><button type="button"><b>Voltar</b></button></a>
+            <a href="./ControladorAdministrador?type=Dashboard"><button type="button"><strong>Voltar</strong></button></a>
             </div>
         </div>
     </body>

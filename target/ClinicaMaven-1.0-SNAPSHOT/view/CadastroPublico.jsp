@@ -54,7 +54,7 @@
                 <input type="submit" value="Enviar">
             </form>
             <br>
-            <a href="./index.jsp"><button type="button"><b>Voltar</b></button></a>    
+            <a href="./index.jsp"><button type="button"><strong>Voltar</strong></button></a>    
         </div>
     </body>
 </html>
