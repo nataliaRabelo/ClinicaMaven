@@ -1,0 +1,85 @@
+package DAOTests;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import model.EspecialidadeDAO;
+import aplicacao.Especialidade;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+
+public class EspecialidadeDAOTest {
+    EspecialidadeDAO especialidadeDAO;
+
+    @Before
+    public void setUp() {
+        especialidadeDAO = new EspecialidadeDAO();
+    }
+
+    @Test
+    public void testCreateEspecialidade() {
+        Especialidade novaEspecialidade = new Especialidade();
+        novaEspecialidade.setDescricao("Cardiologia");
+
+        especialidadeDAO.create_especialidade(novaEspecialidade);
+
+        // Aqui você precisa de alguma maneira de validar que a especialidade foi criada corretamente
+        // Como no seu código original não existe maneira de verificar isso diretamente,
+        // a sugestão é verificar no banco de dados se a inserção ocorreu corretamente.
+    }
+
+    @Test
+    public void testGetEspecialidades() {
+        ArrayList<Especialidade> especialidades = especialidadeDAO.get_especialidades();
+
+        assertNotNull("A lista de especialidades não deve ser nula", especialidades);
+        assertTrue("A lista de especialidades deve ter pelo menos uma especialidade", especialidades.size() > 0);
+    }
+
+    @Test
+    public void testGetEspecialidade() {
+        int idEspecialidade = 1; // ID válido
+
+        Especialidade especialidade = especialidadeDAO.get_especialidade(idEspecialidade);
+
+        assertNotNull("A especialidade não deve ser nula", especialidade);
+        assertEquals("O ID da especialidade deve ser o mesmo do ID de entrada", idEspecialidade, especialidade.getId());
+    }
+
+    @Test
+    public void testUpdateEspecialidade() {
+        int idEspecialidade = 1; // ID válido
+        Especialidade novaEspecialidade = new Especialidade();
+        novaEspecialidade.setDescricao("Pediatria");
+
+        especialidadeDAO.update_especialidade(idEspecialidade, novaEspecialidade);
+
+        // Aqui é necessário alguma forma de validar que a especialidade foi atualizada corretamente.
+        // Por exemplo, você poderia ter um método 'getEspecialidade' que retorna a especialidade com base no ID.
+        // Em um caso real, isso seria mais complexo e envolveria, por exemplo, verificar os novos dados da especialidade.
+    }
+
+    @Test
+    public void testDeleteEspecialidade() {
+        int idEspecialidade = 1; // ID válido
+
+        especialidadeDAO.delete_especialidade(idEspecialidade);
+
+        // Aqui é necessário alguma forma de validar que a especialidade foi excluída corretamente.
+        // Por exemplo, você poderia ter um método 'getEspecialidade' que retorna a especialidade com base no ID.
+        // Em um caso real, isso seria mais complexo e envolveria, por exemplo, verificar que a especialidade não existe mais.
+    }
+
+    @Test
+    public void testGetIdDeleteEspecialidade() {
+        int idEspecialidade = 1; // ID válido
+
+        ArrayList<ArrayList<Integer>> idCompilado = especialidadeDAO.get_idDeleteEspecialidade(idEspecialidade);
+
+        assertNotNull("A lista de IDs compilados não deve ser nula", idCompilado);
+        assertTrue("A lista de IDs compilados deve ter pelo menos um ID", idCompilado.size() > 0);
+    }
+}
+

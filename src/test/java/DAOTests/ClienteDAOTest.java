@@ -5,6 +5,8 @@ import model.ClienteDAO;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,9 +17,178 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import conexao.conexao_bancodedados;
+
+import org.junit.jupiter.api.BeforeAll;
+
+/**
+* @author Natália
+*/
 public class ClienteDAOTest {
+    
+    private static Connection conn;
+
+    @BeforeAll
+    public static void setUp() {
+        try {
+            conn = conexao_bancodedados.newConnection();
+        } catch(SQLException e) {
+            System.out.println("Nao foi possivel conectar");
+        }
+    }
+
     @Test
-    public void testLogin() throws Exception {
+    public void testCreatePaciente() {
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+        Cliente novoPaciente = new Cliente();
+        novoPaciente.setNome("João Teste");
+        novoPaciente.setCpf("12345678901");
+        novoPaciente.setSenha("111");
+        novoPaciente.setAutorizado('S');
+        novoPaciente.setIdtipoplano(1);
+
+        // Act
+        dao.create_paciente(novoPaciente);
+
+        // Assert
+        boolean isCadastrado = dao.jaCadastrado("12345678901");
+        assertTrue(isCadastrado, "O paciente deveria estar cadastrado após a chamada a create_paciente");
+    }
+    
+    @Test
+    public void testLogin() {
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+
+        // Act
+        Cliente paciente = dao.login("937.397.160-37", "111");
+
+        // Assert
+        assertNotNull(paciente);
+        assertEquals("Maria", paciente.getNome());
+    }
+    
+    @Test
+    public void testGetPaciente() {
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+
+        // Act
+        Cliente paciente = dao.get_paciente(1); // Necessário que exista um paciente com ID 1 no banco de dados de teste
+
+        // Assert
+        assertNotNull(paciente);
+        assertEquals("Maria", paciente.getNome());
+    }
+    
+    @Test
+    public void testUpdatePaciente() {
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+        Cliente paciente = dao.get_paciente(1); // Certifique-se de que existe um paciente com ID 1
+        paciente.setNome("Maria2");
+
+        // Act
+        dao.update_paciente(1, paciente);
+
+        // Assert
+        Cliente pacienteAtualizado = dao.get_paciente(1);
+        assertEquals("Maria2", pacienteAtualizado.getNome());
+        
+        //Retornando o nome como estava antes para não causar inconsistências no banco
+        paciente.setNome("Maria");
+        dao.update_paciente(1, paciente);
+    }
+    
+    @Test
+    public void testGetNomePaciente() {
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+
+        // Act
+        String nome = dao.get_nomePaciente(1); // Certifique-se de que existe um paciente com ID 1
+
+        // Assert
+        assertEquals("Maria", nome);
+    }
+
+    @Test
+    public void testGetPacientes() {
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+
+        // Act
+        ArrayList<Cliente> pacientes = dao.get_pacientes();
+
+        // Assert
+        assertFalse(pacientes.isEmpty(), "A lista de pacientes não deve estar vazia");
+    }
+
+    @Test
+    public void testDeletePaciente() {
+        try {
+            // Arrange
+            ClienteDAO dao = new ClienteDAO(conn);  
+            Cliente cliente = new Cliente(); // Criando um paciente para testar a deleção
+            cliente.setNome("natalia");
+            cliente.setCpf("123");
+            dao.create_paciente(cliente);
+
+            // Criando o Statement para executar a query
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente WHERE paciente.cpf = '" + cliente.getCpf() + "'");
+            int idResultSet = 0; 
+            // Verificando se a consulta retornou algum resultado
+            if(resultSet.next()) {
+                // Act
+                int id = resultSet.getInt("id"); // Supondo que a coluna do id na tabela seja 'id'
+                idResultSet = id;
+                dao.delete_paciente(id); // deletando o usuário que acabei de criar, onde o id é inserido no banco
+            }
+
+            // Assert
+            Cliente paciente = dao.get_paciente(idResultSet);
+            assertNull(paciente.getNome(), "O paciente deveria ser null após ser deletado");
+        } catch (SQLException e) {
+            System.out.println("Erro SQL: " + e.getMessage());
+        }
+    }
+
+@Test
+public void testGetIdDeletePaciente() {
+    try {
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+        
+        Cliente cliente = new Cliente(); // Criando um paciente para testar a deleção
+        cliente.setNome("natalia");
+        cliente.setCpf("123");
+        dao.create_paciente(cliente);
+
+        // Criando o Statement para executar a query
+        Statement statement = conn.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente WHERE paciente.cpf = '" + cliente.getCpf() + "'");
+
+        // Verificando se a consulta retornou algum resultado
+        if(resultSet.next()) {
+            // Act
+            int id = resultSet.getInt("id"); // Supondo que a coluna do id na tabela seja 'id'
+            ArrayList<ArrayList<Integer>> id_compilado = dao.get_idDeletePaciente(id);
+
+            // Assert
+            assertFalse(id_compilado.get(0).isEmpty(), "A lista de ids de exames não deve estar vazia");
+            assertFalse(id_compilado.get(1).isEmpty(), "A lista de ids de consultas não deve estar vazia");
+        }
+    } catch (SQLException e) {
+        System.out.println("Erro SQL: " + e.getMessage());
+    }
+}
+
+    // ------------------------ TESTES COM MOCK --------------------------
+
+    @Test
+    public void testLoginMock() throws Exception {
         // Arrange
         Connection conn = mock(Connection.class);
         Statement statement = mock(Statement.class);
@@ -50,7 +221,7 @@ public class ClienteDAOTest {
     }
 
     @Test
-    public void testJaCadastrado() throws Exception {
+    public void testJaCadastradoMock() throws Exception {
         // Arrange
         Connection conn = mock(Connection.class);
         Statement statement = mock(Statement.class);
@@ -70,7 +241,7 @@ public class ClienteDAOTest {
     }
 
     @Test
-    public void testGetNomePaciente() throws Exception {
+    public void testGetNomePacienteMock() throws Exception {
         // Arrange
         Connection conn = mock(Connection.class);
         Statement statement = mock(Statement.class);
@@ -90,8 +261,8 @@ public class ClienteDAOTest {
         verify(statement, times(1)).executeQuery(anyString());
     }
 
-        @Test
-    public void testGetPacientes() throws Exception {
+    @Test
+    public void testGetPacientesMock() throws Exception {
         // Arrange
         Connection conn = mock(Connection.class);
         Statement statement = mock(Statement.class);
@@ -119,7 +290,7 @@ public class ClienteDAOTest {
     }
 
     @Test
-    public void testGetPaciente() throws Exception {
+    public void testGetPacienteMock() throws Exception {
         // Arrange
         Connection conn = mock(Connection.class);
         Statement statement = mock(Statement.class);
@@ -146,7 +317,7 @@ public class ClienteDAOTest {
     }
 
     @Test
-    public void testUpdatePaciente() throws Exception {
+    public void testUpdatePacienteMock() throws Exception {
         // Arrange
         Connection conn = mock(Connection.class);
         Statement statement = mock(Statement.class);
@@ -169,7 +340,7 @@ public class ClienteDAOTest {
     }
     
     @Test
-    public void testGetIdDeletePaciente() throws Exception {
+    public void testGetIdDeletePacienteMock() throws Exception {
         // Arrange
         Connection conn = mock(Connection.class);
         Statement statement = mock(Statement.class);
@@ -198,7 +369,7 @@ public class ClienteDAOTest {
     }
 
     @Test
-    public void testDeletePaciente() throws Exception {
+    public void testDeletePacienteMock() throws Exception {
         // Arrange
         Connection conn = mock(Connection.class);
         Statement statement = mock(Statement.class);
