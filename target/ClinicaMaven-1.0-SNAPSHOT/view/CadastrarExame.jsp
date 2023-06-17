@@ -13,14 +13,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <%
+    <title> <%
         if(exame != null){
             out.println("<title>Editar Exame</title>");
         }else{
             out.println("<title>Cadastrar Exame</title>");
         }
         
-        %>
+        %></title>
         <link href="./bootstrap/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./styles/Formulario.css"/>
     </head>
@@ -53,7 +53,7 @@
                 <input type="submit" name="action" value="<%=retorno%>">
                 <input type="hidden" name="type" value="Exame">
             </form>
-            <a href="./ControladorAdministrador?arg=Visualizar&type=Exame"><button type="button"><b>Voltar</b></button></a>    
+            <a href="./ControladorAdministrador?arg=Visualizar&type=Exame"><button type="button"><strong>Voltar</strong></button></a>    
         </div>
     </body>
 </html>

@@ -10,7 +10,7 @@
 
 %>
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Suas Consultas</title>
@@ -26,6 +26,7 @@
         <h2 style="text-align:center">Veja aqui as suas Consultas!</h2>
         <div class="div">
             <table>
+                <caption> Tabela de Consultas </caption>
                 <tr>
                     <th>Consulta</th>
                     <th>Data</th>
@@ -99,7 +100,7 @@
             </table>
             <br><br>    
             <div style="text-align:center">
-            <a href="./ControladorCliente?arg=Dashboard"><button type="button"><b>Voltar</b></button></a>
+            <a href="./ControladorCliente?arg=Dashboard"><button type="button"><strong>Voltar</strong></button></a>
             </div>
         </div>
     </body>

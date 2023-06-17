@@ -7,7 +7,7 @@
     ArrayList<Plano> lista_planos = (ArrayList<Plano>)session.getAttribute("planos_pacientes");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Pacientes da Clínica</title>
@@ -30,6 +30,7 @@
         </form>
         <div class="div">
             <table>
+                <caption> Tabela de Pacientes </caption>
                 <tr>
                     <th>Paciente</th>
                     <th>Nome</th>
@@ -71,7 +72,7 @@
             <br><br>    
             <div style="text-align:center">
                 
-            <a href="./ControladorAdministrador?type=Dashboard"><button type="button"><b>Voltar</b></button></a>
+            <a href="./ControladorAdministrador?type=Dashboard"><button type="button"><strong>Voltar</strong></button></a>
             </div>
         </div>
     </body>

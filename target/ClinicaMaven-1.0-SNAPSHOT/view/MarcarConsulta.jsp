@@ -49,7 +49,7 @@
                 <input type="hidden" name="id_cliente" value="<%= cliente.getId() %>">
             </form> 
             <br>
-            <a href="./ControladorCliente?arg=Dashboard"><button type="button"><b>Voltar</b></button></a>
+            <a href="./ControladorCliente?arg=Dashboard"><button type="button"><strong>Voltar</strong></button></a>
         </div>       
     </body>
 </html>

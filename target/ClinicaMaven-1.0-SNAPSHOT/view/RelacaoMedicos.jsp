@@ -7,7 +7,7 @@
     ArrayList<Especialidade> lista_especialidades = (ArrayList<Especialidade>)session.getAttribute("especialidades_medicos");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Médicos da Clínica</title>
@@ -30,6 +30,7 @@
         </form>
         <div class="div">
             <table>
+                <caption> Tabela de Médicos </caption>
                 <tr>
                     <th>Médico</th>
                     <th>Nome</th>
@@ -80,7 +81,7 @@
             </table>
             <br><br>    
             <div style="text-align:center">
-            <a href="./ControladorAdministrador?type=Dashboard"><button type="button"><b>Voltar</b></button></a>
+            <a href="./ControladorAdministrador?type=Dashboard"><button type="button"><strong>Voltar</strong></button></a>
             </div>
         </div>
     </body>

@@ -14,7 +14,7 @@ public class conexao_bancodedados extends HttpServlet {
         if (conexao == null) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                conexao = DriverManager.getConnection("jdbc:mysql://localhost:3307/clinica", "root", "");
+                conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinica", "root", "");
             } catch(ClassNotFoundException e) {
                 System.out.println("Nao encontrado");
             }

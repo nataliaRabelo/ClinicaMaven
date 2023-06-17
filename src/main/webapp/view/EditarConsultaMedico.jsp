@@ -31,7 +31,7 @@
                 <input type="submit" name="acao" value="Enviar">
             </form> 
             <div>
-            <a href="./ControladorMedico?arg=Visualizar"><button type="button"><b>Voltar</b></button></a>
+            <a href="./ControladorMedico?arg=Visualizar"><button type="button"><strong>Voltar</strong></button></a>
             </div>
         </div>       
     </body>

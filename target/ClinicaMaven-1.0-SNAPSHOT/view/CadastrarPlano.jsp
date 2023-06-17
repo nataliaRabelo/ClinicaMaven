@@ -13,14 +13,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <%
+    <title> <%
         if(plano != null){
             out.println("<title>Editar Plano</title>");
         }else{
             out.println("<title>Cadastrar Plano</title>");
         }
         
-        %>
+        %></title>
         <link href="./bootstrap/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./styles/Formulario.css"/>
     </head>
@@ -53,7 +53,7 @@
                 <input type="submit" name="action" value="<%=retorno%>">
                 <input type="hidden" name="type" value="Plano">
             </form>
-            <a href="./ControladorAdministrador?arg=Visualizar&type=Plano"><button type="button"><b>Voltar</b></button></a>    
+            <a href="./ControladorAdministrador?arg=Visualizar&type=Plano"><button type="button"><strong>Voltar</strong></button></a>    
         </div>
     </body>
 </html>

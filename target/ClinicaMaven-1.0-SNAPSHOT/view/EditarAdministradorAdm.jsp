@@ -44,7 +44,7 @@
                 <input type="submit" name="action" value="Editar">
                 <input type="hidden" name="type" value="Administrador">   
             </form> 
-            <a href="./ControladorAdministrador?arg=Visualizar&type=Administrador"><button type="button"><b>Voltar</b></button></a>    
+            <a href="./ControladorAdministrador?arg=Visualizar&type=Administrador"><button type="button"><strong>Voltar</strong></button></a>    
         </div>
     </body>
 </html>

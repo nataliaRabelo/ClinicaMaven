@@ -68,7 +68,7 @@
             </form> 
             <br>
             <div>
-                <a href="./ControladorCliente?arg=Visualizar"><button type="button"><b>Voltar</b></button></a>
+                <a href="./ControladorCliente?arg=Visualizar"><button type="button"><strong>Voltar</strong></button></a>
             </div>
         </div>       
     </body>

@@ -84,7 +84,7 @@
                 <input type="submit" name="action" value="Cadastrar">
                 <input type="hidden" name="type" value="Medico">
             </form>
-            <a href="./ControladorAdministrador?arg=Visualizar&type=Medico"><button type="button"><b>Voltar</b></button></a>    
+            <a href="./ControladorAdministrador?arg=Visualizar&type=Medico"><button type="button"><strong>Voltar</strong></button></a>    
         </div>
     </body>
 </html>

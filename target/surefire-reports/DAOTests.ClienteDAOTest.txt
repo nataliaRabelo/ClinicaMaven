@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: DAOTests.ClienteDAOTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.414 sec
+=======
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.583 sec
+>>>>>>> f22ebbf82834f089f57c3dd74fdefe1ec20f1794
