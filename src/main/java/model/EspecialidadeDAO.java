@@ -29,10 +29,10 @@ public class EspecialidadeDAO {
         }
     }
     
-    public void createEspecialidade(Especialidade nova_especialidade){
+    public void createEspecialidade(Especialidade novaEspecialidade){
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO especialidade "
-                    + "(descricao) VALUES ( '" + nova_especialidade.getDescricao() + "')");
+                    + "(descricao) VALUES ( '" + novaEspecialidade.getDescricao() + "')");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
@@ -59,13 +59,13 @@ public class EspecialidadeDAO {
         return especialidades;
     }
     
-    public Especialidade getEspecialidade(int id_especialidade){
+    public Especialidade getEspecialidade(int idEspecialidade){
         
         Especialidade espec = new Especialidade();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM especialidade "
-                    + "WHERE especialidade.id = '" + id_especialidade + "'");
+                    + "WHERE especialidade.id = '" + idEspecialidade + "'");
             
             if (resultSet.next()) {
                 espec.setId(resultSet.getInt("id"));
@@ -78,71 +78,71 @@ public class EspecialidadeDAO {
         return espec;
     }
     
-    public void updateEspecialidade(int id_especialidade, Especialidade nova_especialidade){
+    public void updateEspecialidade(int idEspecialidade, Especialidade novaEspecialidade){
     
        try (Statement statement = conn.createStatement()){
-            statement.execute("UPDATE especialidade SET descricao='" + nova_especialidade.getDescricao() + "' "
-                    + "WHERE especialidade.id=" + id_especialidade + "");
+            statement.execute("UPDATE especialidade SET descricao='" + novaEspecialidade.getDescricao() + "' "
+                    + "WHERE especialidade.id=" + idEspecialidade + "");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public void deleteEspecialidade(int id_especialidade){
+    public void deleteEspecialidade(int idEspecialidade){
     
         try (Statement statement = conn.createStatement()){
-            statement.execute("DELETE FROM especialidade WHERE especialidade.id=" + id_especialidade + "");
+            statement.execute("DELETE FROM especialidade WHERE especialidade.id=" + idEspecialidade + "");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public ArrayList<ArrayList<Integer>> getIdDeleteEspecialidade(int id_especialidade){
+    public ArrayList<ArrayList<Integer>> getIdDeleteEspecialidade(int idEspecialidade){
         
-        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> idCompilado = new ArrayList<>();
         
-        ArrayList<Integer> id_medicos = new ArrayList<>();
-        ArrayList<Integer> id_consultas = new ArrayList<>();
-        ArrayList<Integer> id_exames = new ArrayList<>();
+        ArrayList<Integer> idMedicos = new ArrayList<>();
+        ArrayList<Integer> idConsultas = new ArrayList<>();
+        ArrayList<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
             "FROM especialidade INNER JOIN medico ON especialidade.id=medico.idespecialidade " +
             "INNER JOIN consulta ON consulta.idmedico=medico.id " +
             "INNER JOIN exames ON exames.idconsulta=consulta.id " +
-            "WHERE especialidade.id=" + id_especialidade + "");
+            "WHERE especialidade.id=" + idEspecialidade + "");
             
             while(resultSet.next()) {
-                id_exames.add(resultSet.getInt("id"));
+                idExames.add(resultSet.getInt("id"));
             }
             
             resultSet = statement.executeQuery("SELECT consulta.id " +
             "FROM especialidade INNER JOIN medico ON especialidade.id=medico.idespecialidade " +
             "INNER JOIN consulta ON consulta.idmedico=medico.id " +
-            "WHERE especialidade.id=" + id_especialidade + "");
+            "WHERE especialidade.id=" + idEspecialidade + "");
             
             while(resultSet.next()) {
-                id_consultas.add(resultSet.getInt("id"));
+                idConsultas.add(resultSet.getInt("id"));
             }
             
             resultSet = statement.executeQuery("SELECT medico.id " +
             "FROM especialidade INNER JOIN medico ON especialidade.id=medico.idespecialidade " +
-            "WHERE especialidade.id=" + id_especialidade + "");
+            "WHERE especialidade.id=" + idEspecialidade + "");
             
             while(resultSet.next()) {
-                id_medicos.add(resultSet.getInt("id"));
+                idMedicos.add(resultSet.getInt("id"));
             }
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
         
-        id_compilado.add(id_exames);
-        id_compilado.add(id_consultas);
-        id_compilado.add(id_medicos);
+        idCompilado.add(idExames);
+        idCompilado.add(idConsultas);
+        idCompilado.add(idMedicos);
         
-        return id_compilado;
+        return idCompilado;
     }
 }

@@ -29,11 +29,11 @@ public class PlanoDAO {
         }
     }
     
-    public void createPlano(Plano novo_plano){
+    public void createPlano(Plano novoPlano){
         
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO tipoplano "
-                    + "(descricao) VALUES ( '" + novo_plano.getDescricao() + "')");
+                    + "(descricao) VALUES ( '" + novoPlano.getDescricao() + "')");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
@@ -60,13 +60,13 @@ public class PlanoDAO {
         return planos;
     }
     
-    public Plano getPlano(int id_plano){
+    public Plano getPlano(int idPlano){
     
         Plano plano = new Plano();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoplano "
-                    + "WHERE tipoplano.id=" + id_plano + "");
+                    + "WHERE tipoplano.id=" + idPlano + "");
             
             if (resultSet.next()) {
                 plano.setId(resultSet.getInt("id"));
@@ -79,70 +79,70 @@ public class PlanoDAO {
         return plano;
     }
      
-    public void updatePlano(int id_plano, Plano novo_plano){
+    public void updatePlano(int idPlano, Plano novoPlano){
     
         try (Statement statement = conn.createStatement()){
-            statement.execute("UPDATE tipoplano SET descricao='" + novo_plano.getDescricao() + "' WHERE tipoplano.id=" + id_plano + "");
+            statement.execute("UPDATE tipoplano SET descricao='" + novoPlano.getDescricao() + "' WHERE tipoplano.id=" + idPlano + "");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public void deletePlano(int id_plano){
+    public void deletePlano(int idPlano){
         
         try (Statement statement = conn.createStatement()){
-            statement.execute("DELETE FROM tipoplano WHERE tipoplano.id=" + id_plano + "");
+            statement.execute("DELETE FROM tipoplano WHERE tipoplano.id=" + idPlano + "");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public ArrayList<ArrayList<Integer>> getIdDeletePlano(int id_plano){
+    public ArrayList<ArrayList<Integer>> getIdDeletePlano(int idPlano){
         
-        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> idCompilado = new ArrayList<>();
         
-        ArrayList<Integer> id_pacientes = new ArrayList<>();
-        ArrayList<Integer> id_consultas = new ArrayList<>();
-        ArrayList<Integer> id_exames = new ArrayList<>();
+        ArrayList<Integer> idPacientes = new ArrayList<>();
+        ArrayList<Integer> idConsultas = new ArrayList<>();
+        ArrayList<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
             "FROM tipoplano INNER JOIN paciente ON tipoplano.id=paciente.idtipoplano " +
             "INNER JOIN consulta ON consulta.idpaciente=paciente.id " +
             "INNER JOIN exames ON exames.idconsulta=consulta.id " +
-            "WHERE tipoplano.id=" + id_plano + "");
+            "WHERE tipoplano.id=" + idPlano + "");
             
             while(resultSet.next()) {
-                id_exames.add(resultSet.getInt("id"));
+                idExames.add(resultSet.getInt("id"));
             }
             
             resultSet = statement.executeQuery("SELECT consulta.id " +
             "FROM tipoplano INNER JOIN paciente ON tipoplano.id=paciente.idtipoplano " +
             "INNER JOIN consulta ON consulta.idpaciente=paciente.id " +
-            "WHERE tipoplano.id=" + id_plano + "");
+            "WHERE tipoplano.id=" + idPlano + "");
             
             while(resultSet.next()) {
-                id_consultas.add(resultSet.getInt("id"));
+                idConsultas.add(resultSet.getInt("id"));
             }
             
             resultSet = statement.executeQuery("SELECT paciente.id " +
             "FROM tipoplano INNER JOIN paciente ON tipoplano.id=paciente.idtipoplano " +
-            "WHERE tipoplano.id=" + id_plano + "");
+            "WHERE tipoplano.id=" + idPlano + "");
             
             while(resultSet.next()) {
-                id_pacientes.add(resultSet.getInt("id"));
+                idPacientes.add(resultSet.getInt("id"));
             }
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
         
-        id_compilado.add(id_exames);
-        id_compilado.add(id_consultas);
-        id_compilado.add(id_pacientes);
+        idCompilado.add(idExames);
+        idCompilado.add(idConsultas);
+        idCompilado.add(idPacientes);
         
-        return id_compilado;
+        return idCompilado;
     }
 }    
