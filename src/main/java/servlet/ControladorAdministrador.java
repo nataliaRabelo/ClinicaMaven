@@ -548,103 +548,111 @@ public class ControladorAdministrador extends HttpServlet {
                 else if(request.getParameter("action").equals("Editar")){
                         novoMedDAO.updateMedico(Integer.parseInt(request.getParameter("id")),medico);
                         
-                        RequestDispatcher med_Edit = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Medico");
-                        med_Edit.forward(request, response);
+                        RequestDispatcher medEdit = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Medico");
+                        medEdit.forward(request, response);
                 }
             break;
 
                 
             case "Administrador":
-                AdministradorDAO novo_AdmDAO = new AdministradorDAO();
-                Administrador novo_adm = new Administrador();
+                AdministradorDAO novoAdmDAO = new AdministradorDAO();
+                Administrador novoAdm = new Administrador();
                 
                 if(request.getParameter("action").equals("Cadastrar")){
-                        novo_adm.setNome(request.getParameter("nome"));
-                        novo_adm.setCpf(request.getParameter("CPF"));
-                        novo_adm.setSenha(request.getParameter("senha"));
+                        novoAdm.setNome(request.getParameter("nome"));
+                        novoAdm.setCpf(request.getParameter("CPF"));
+                        novoAdm.setSenha(request.getParameter("senha"));
 
-                        novo_AdmDAO.createAdministrador(novo_adm);
+                        novoAdmDAO.createAdministrador(novoAdm);
                         
                         session.setAttribute("identidade", 2);
                         RequestDispatcher adm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Administrador");
                         adm.forward(request, response);           
                 }
                 else if(request.getParameter("action").equals("Editar")){
-                        novo_adm.setNome(request.getParameter("nome"));
-                        novo_adm.setCpf(request.getParameter("CPF"));
-                        novo_adm.setSenha(request.getParameter("senha")); 
+                        novoAdm.setNome(request.getParameter("nome"));
+                        novoAdm.setCpf(request.getParameter("CPF"));
+                        novoAdm.setSenha(request.getParameter("senha")); 
                         
-                        novo_AdmDAO.updateAdministrador(Integer.parseInt(request.getParameter("id")),novo_adm);
+                        novoAdmDAO.updateAdministrador(Integer.parseInt(request.getParameter("id")),novoAdm);
                         
-                        RequestDispatcher edt_adm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Administrador");
-                        edt_adm.forward(request, response);
+                        RequestDispatcher edtAdm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Administrador");
+                        edtAdm.forward(request, response);
                 }
             break;
 
+
+
             
             case "Plano":
-                Plano novo_plano = new Plano();
-                PlanoDAO novo_planDAO = new PlanoDAO();
+                Plano novoPlano = new Plano();
+                PlanoDAO novoPlanoDAO = new PlanoDAO();
                 
                 if(request.getParameter("action").equals("Cadastrar")){
-                        novo_plano.setDescricao(request.getParameter("nomePlano"));
+                        novoPlano.setDescricao(request.getParameter("nomePlano"));
                         
-                        novo_planDAO.createPlano(novo_plano);
+                        novoPlanoDAO.createPlano(novoPlano);
                         
                         session.setAttribute("identidade", 2);
                         RequestDispatcher pln = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Plano");
                         pln.forward(request, response);           
                 }
                 else if(request.getParameter("action").equals("Editar")){
-                        novo_plano.setDescricao(request.getParameter("nomePlano"));
-                        novo_planDAO.updatePlano(Integer.parseInt(request.getParameter("id")),novo_plano);
+                        novoPlano.setDescricao(request.getParameter("nomePlano"));
+                        novoPlanoDAO.updatePlano(Integer.parseInt(request.getParameter("id")),novoPlano);
                         
                         RequestDispatcher novopln = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Plano");
                         novopln.forward(request, response);
                 }
             break;
+
+
             
             case "Especialidade":
-                EspecialidadeDAO nova_espDAO = new EspecialidadeDAO();
-                Especialidade nova_especialidade = new Especialidade();
+                EspecialidadeDAO novaEspDAO = new EspecialidadeDAO();
+                Especialidade novaEspecialidade = new Especialidade();
                 
                 if(request.getParameter("action").equals("Cadastrar")){
-                        nova_especialidade.setDescricao(request.getParameter("nomeEspecialidade"));
-                        nova_espDAO.createEspecialidade(nova_especialidade);
+                        novaEspecialidade.setDescricao(request.getParameter("nomeEspecialidade"));
+                        novaEspDAO.createEspecialidade(novaEspecialidade);
                         
                         session.setAttribute("identidade", 2);
                         RequestDispatcher esp = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Especialidade");
                         esp.forward(request, response);           
                 }
                 else if(request.getParameter("action").equals("Editar")){
-                        nova_especialidade.setDescricao(request.getParameter("nomeEspecialidade"));
-                        nova_espDAO.updateEspecialidade(Integer.parseInt(request.getParameter("id")),nova_especialidade);
+                        novaEspecialidade.setDescricao(request.getParameter("nomeEspecialidade"));
+                        novaEspDAO.updateEspecialidade(Integer.parseInt(request.getParameter("id")),novaEspecialidade);
                         
                         RequestDispatcher novaesp = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Especialidade");
                         novaesp.forward(request, response);
                 }
             break;
+
+
             
             case "Exame":
-                ExameDAO novo_exmDAO = new ExameDAO();
-                Exame novo_exame = new Exame();
+                ExameDAO novoExmDAO = new ExameDAO();
+                Exame novoExame = new Exame();
                 
                 if(request.getParameter("action").equals("Cadastrar")){
-                        novo_exame.setDescricao(request.getParameter("nomeExame"));
-                        novo_exmDAO.createExame(novo_exame);
+                        novoExame.setDescricao(request.getParameter("nomeExame"));
+                        novoExmDAO.createExame(novoExame);
                         
                         session.setAttribute("identidade", 2);
                         RequestDispatcher exm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Exame");
                         exm.forward(request, response);           
                 }
                 else if (request.getParameter("action").equals("Editar")){   
-                        novo_exame.setDescricao(request.getParameter("nomeExame"));
-                        novo_exmDAO.updateExame(Integer.parseInt(request.getParameter("id")),novo_exame);
+                        novoExame.setDescricao(request.getParameter("nomeExame"));
+                        novoExmDAO.updateExame(Integer.parseInt(request.getParameter("id")),novoExame);
                         
                         RequestDispatcher novoexm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Exame");
                         novoexm.forward(request, response);
                 }
             break;
+
+
         }
     }
 }

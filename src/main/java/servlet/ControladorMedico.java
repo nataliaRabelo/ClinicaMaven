@@ -33,37 +33,37 @@ public class ControladorMedico extends HttpServlet {
                 
                 ExameDAO exameDAO = new ExameDAO();
                 
-                ArrayList<Consulta> lista_consultas = new ArrayList<>();                
-                lista_consultas = medicoDAO.getConsultas(medico.getId());
+                ArrayList<Consulta> listaConsultas = new ArrayList<>();                
+                listaConsultas = medicoDAO.getConsultas(medico.getId());
                 
-                if(lista_consultas.size() > 0){
+                if(listaConsultas.size() > 0){
                     
-                    ArrayList<ArrayList<String>>lista_exames_compilado = new ArrayList<>();
+                    ArrayList<ArrayList<String>>listaExamesCompilado = new ArrayList<>();
                     
-                    for(int i=0;i<lista_consultas.size();i++){
+                    for(int i=0;i<listaConsultas.size();i++){
                         
-                        ArrayList<String>lista_exames = new ArrayList<>();
-                        lista_exames = exameDAO.getExamesDaConsulta(lista_consultas.get(i).getId(),lista_exames);
+                        ArrayList<String>listaExames = new ArrayList<>();
+                        listaExames = exameDAO.getExamesDaConsulta(listaConsultas.get(i).getId(),listaExames);
                         
-                        if(lista_exames.isEmpty()){
-                            lista_exames_compilado.add(null);
+                        if(listaExames.isEmpty()){
+                            listaExamesCompilado.add(null);
                         }
                         else{
-                            lista_exames_compilado.add(lista_exames);
+                            listaExamesCompilado.add(listaExames);
                         }
                     }
                     
-                    ArrayList<String> nome_pacientes = new ArrayList<>();                    
+                    ArrayList<String> nomePacientes = new ArrayList<>();                    
                     ClienteDAO clienteDAO = new ClienteDAO();
                     
-                    for(int i=0;i<lista_consultas.size();i++){
-                        String nome_paciente = clienteDAO.getNomePaciente(lista_consultas.get(i).getIdpaciente());
-                        nome_pacientes.add(nome_paciente);
+                    for(int i=0;i<listaConsultas.size();i++){
+                        String nomePaciente = clienteDAO.getNomePaciente(listaConsultas.get(i).getIdpaciente());
+                        nomePacientes.add(nomePaciente);
                     }
                     
-                    session.setAttribute("lista_nomes", nome_pacientes);
-                    session.setAttribute("lista_exames", lista_exames_compilado);
-                    session.setAttribute("lista_consultas", lista_consultas);
+                    session.setAttribute("lista_nomes", nomePacientes);
+                    session.setAttribute("lista_exames", listaExamesCompilado);
+                    session.setAttribute("lista_consultas", listaConsultas);
                     RequestDispatcher visualiz = request.getRequestDispatcher("./view/VisualizarConsultaMedico.jsp");
                     visualiz.forward(request, response);
                 }
@@ -73,29 +73,32 @@ public class ControladorMedico extends HttpServlet {
                 }
                 
             break;
+
             
             case "SolicitarExame":
                 
-                String id_consulta_ex = request.getParameter("id");
+                String idConsultaEx = request.getParameter("id");
                 ArrayList<Object> lista = new ArrayList<>();
                 
-                lista = medicoDAO.getExames(Integer.parseInt(id_consulta_ex),medico.getId());
+                lista = medicoDAO.getExames(Integer.parseInt(idConsultaEx),medico.getId());
                 
                 session.setAttribute("lista_exames", lista);
-                session.setAttribute("id_consulta", id_consulta_ex);
+                session.setAttribute("id_consulta", idConsultaEx);
                 RequestDispatcher medex = request.getRequestDispatcher("./view/MarcarExame.jsp");
                 medex.forward(request, response);                
             
             break;
+
             
             case "ConcluirConsulta":
                 
-                String id_consulta = request.getParameter("id");
-                session.setAttribute("id_consulta", id_consulta);
+                String idConsulta = request.getParameter("id");
+                session.setAttribute("id_consulta", idConsulta);
                 RequestDispatcher med = request.getRequestDispatcher("./view/EditarConsultaMedico.jsp");
                 med.forward(request, response);
                 
             break;
+
         
             case "Dashboard":
                 
