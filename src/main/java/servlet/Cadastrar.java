@@ -16,7 +16,7 @@ import model.PlanoDAO;
 @WebServlet(name = "Cadastrar", urlPatterns = {"/Cadastrar"})
 public class Cadastrar extends HttpServlet {
     
-    ClienteDAO novo_cltDAO = new ClienteDAO();
+    ClienteDAO novocltDAO = new ClienteDAO();
     PlanoDAO planoDAO = new PlanoDAO();
 
     @Override
@@ -25,7 +25,7 @@ public class Cadastrar extends HttpServlet {
         
         if(request.getParameter("arg").equals("Cadastrar")){
             
-            ArrayList<Plano> planos = new ArrayList<Plano>();
+            ArrayList<Plano> planos = new ArrayList<>();
             
             planos = planoDAO.get_planos();
             
@@ -55,12 +55,12 @@ public class Cadastrar extends HttpServlet {
             novo_paciente.setIdtipoplano(Integer.parseInt(request.getParameter("plano")));
             novo_paciente.setAutorizado('S');
             
-            if(novo_cltDAO.jaCadastrado(novo_paciente.getCpf())){
+            if(novocltDAO.jaCadastrado(novo_paciente.getCpf())){
                 RequestDispatcher clt = request.getRequestDispatcher("./view/Confirmacao.jsp?type=JaCadastrado");
                 clt.forward(request, response);
             }else{ 
                 
-                novo_cltDAO.create_paciente(novo_paciente);
+                novocltDAO.create_paciente(novo_paciente);
                 
                 RequestDispatcher clt = request.getRequestDispatcher("./view/Confirmacao.jsp?type=Cadastrado");
                 clt.forward(request, response);
@@ -75,6 +75,6 @@ public class Cadastrar extends HttpServlet {
     }
 
     public void setClienteDAO(ClienteDAO clienteDAO) {
-        this.novo_cltDAO = clienteDAO;
+        this.novocltDAO = clienteDAO;
     }
 }

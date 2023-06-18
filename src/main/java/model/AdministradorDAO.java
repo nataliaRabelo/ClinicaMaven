@@ -23,10 +23,9 @@ public class AdministradorDAO {
         
         Administrador administrador = new Administrador();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM administrador" + 
-                " WHERE cpf = '" + String.valueOf(cpf) + "' AND senha = '" + String.valueOf(senha) + "'");
+                " WHERE cpf = '" + cpf + "' AND senha = '" + senha + "'");
             
             if (resultSet.next()) {
                 administrador.setId(resultSet.getInt("id"));
@@ -43,8 +42,7 @@ public class AdministradorDAO {
     
     public void create_administrador(Administrador administrador){
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO administrador (nome,cpf,senha) VALUES ( '" +
                     administrador.getNome() + "','" + administrador.getCpf() + "','" + administrador.getSenha() + "')");
             
@@ -55,10 +53,9 @@ public class AdministradorDAO {
     
     public ArrayList<Administrador> get_administradores(){
     
-        ArrayList<Administrador> administradores = new ArrayList<Administrador>();
+        ArrayList<Administrador> administradores = new ArrayList<>();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM administrador");
             
             while (resultSet.next()) {
@@ -80,8 +77,7 @@ public class AdministradorDAO {
     
         Administrador adm = new Administrador();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM administrador "
                     + "WHERE administrador.id = '" + id_administrador + "'");
             
@@ -100,8 +96,7 @@ public class AdministradorDAO {
     
     public void update_administrador(int id_administrador, Administrador administrador){
     
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE administrador SET nome='" + administrador.getNome() + "',cpf='" + administrador.getCpf() +
                     "',senha='" + administrador.getSenha() + "'  WHERE administrador.id=" + id_administrador + "");
             
@@ -112,8 +107,7 @@ public class AdministradorDAO {
     
     public void delete_administrador(int id_administradore){
     
-        try{
-            Statement statement = conn.createStatement();
+        try(Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM administrador WHERE administrador.id=" + id_administradore + "");
             
         } catch(SQLException e) {

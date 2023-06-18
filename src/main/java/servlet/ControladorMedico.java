@@ -33,16 +33,16 @@ public class ControladorMedico extends HttpServlet {
                 
                 ExameDAO exameDAO = new ExameDAO();
                 
-                ArrayList<Consulta> lista_consultas = new ArrayList<Consulta>();                
+                ArrayList<Consulta> lista_consultas = new ArrayList<>();                
                 lista_consultas = medicoDAO.get_consultas(medico.getId());
                 
                 if(lista_consultas.size() > 0){
                     
-                    ArrayList<ArrayList<String>>lista_exames_compilado = new ArrayList<ArrayList<String>>();
+                    ArrayList<ArrayList<String>>lista_exames_compilado = new ArrayList<>();
                     
                     for(int i=0;i<lista_consultas.size();i++){
                         
-                        ArrayList<String>lista_exames = new ArrayList<String>();
+                        ArrayList<String>lista_exames = new ArrayList<>();
                         lista_exames = exameDAO.get_examesDaConsulta(lista_consultas.get(i).getId(),lista_exames);
                         
                         if(lista_exames.isEmpty()){
@@ -53,7 +53,7 @@ public class ControladorMedico extends HttpServlet {
                         }
                     }
                     
-                    ArrayList<String> nome_pacientes = new ArrayList<String>();                    
+                    ArrayList<String> nome_pacientes = new ArrayList<>();                    
                     ClienteDAO clienteDAO = new ClienteDAO();
                     
                     for(int i=0;i<lista_consultas.size();i++){
@@ -77,7 +77,7 @@ public class ControladorMedico extends HttpServlet {
             case "SolicitarExame":
                 
                 String id_consulta_ex = request.getParameter("id");
-                ArrayList<Object> lista = new ArrayList<Object>();
+                ArrayList<Object> lista = new ArrayList<>();
                 
                 lista = medicoDAO.get_exames(Integer.parseInt(id_consulta_ex),medico.getId());
                 
@@ -111,10 +111,7 @@ public class ControladorMedico extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        switch(request.getParameter("acao")){
-            
-            case "Enviar":
-                
+        if(request.getParameter("acao").equals("Enviar")){
                 Consulta consulta = new Consulta();
                 ConsultaDAO consultaDAO = new ConsultaDAO();
                 
@@ -127,19 +124,14 @@ public class ControladorMedico extends HttpServlet {
                 
                 RequestDispatcher med = request.getRequestDispatcher("./view/Confirmacao.jsp?type=Concluido");
                 med.forward(request, response);
-                
-            break;
-            
-            case "Marcar Exame":
-                
+        }
+        else if(request.getParameter("acao").equals("Marcar Exame")){   
                 MedicoDAO medicoDAO = new MedicoDAO();
                 
                 medicoDAO.create_exame(Integer.parseInt(request.getParameter("id_exame")),Integer.parseInt(request.getParameter("id_consulta")));
                 
                 RequestDispatcher marcar = request.getRequestDispatcher("./view/Confirmacao.jsp?type=Exame");
                 marcar.forward(request, response);
-                
-            break;
         }
     }
 }
