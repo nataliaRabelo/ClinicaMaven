@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import conexao.ConexaoBancoDeDados;
+import java.util.List;
+
 import aplicacao.Medico;
 import aplicacao.Consulta;
 
@@ -79,9 +81,9 @@ public class MedicoDAO {
         }
     }
     
-    public ArrayList<Consulta> getConsultas(int idMedico){
+    public List<Consulta> getConsultas(int idMedico){
     
-        ArrayList<Consulta> consultasMedico = new ArrayList<>();
+        List<Consulta> consultasMedico = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM consulta" + 
@@ -129,9 +131,9 @@ public class MedicoDAO {
         return medico;
     }
     
-    public ArrayList<Object> getExames(){
+    public List<Object> getExames(){
         
-        ArrayList<Object> examesDisponiveis = new ArrayList<>();
+        List<Object> examesDisponiveis = new ArrayList<>();
     
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoexame");
@@ -147,9 +149,9 @@ public class MedicoDAO {
         return examesDisponiveis;
     }
     
-    public ArrayList<Medico> getMedicos(){
+    public List<Medico> getMedicos(){
     
-        ArrayList<Medico> medicos = new ArrayList<>();
+        List<Medico> medicos = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM medico");
@@ -196,12 +198,11 @@ public class MedicoDAO {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> getIdDeleteMedico(int idMedico){
+    public List<List<Integer>> getIdDeleteMedico(int idMedico){
     
-        ArrayList<ArrayList<Integer>> idCompilado = new ArrayList<>();
-        
-        ArrayList<Integer> idConsultas = new ArrayList<>();
-        ArrayList<Integer> idExames = new ArrayList<>();
+        List<List<Integer>> idCompilado = new ArrayList<>();
+        List<Integer> idConsultas = new ArrayList<>();
+        List<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
@@ -231,9 +232,9 @@ public class MedicoDAO {
         return idCompilado;
     }
     
-    public ArrayList<Integer> medicoAvailable(int idMedico, String data){
+    public List<Integer> medicoAvailable(int idMedico, String data){
         
-        ArrayList<Integer>colisoes = new ArrayList<>();
+        List<Integer>colisoes = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
 //            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) as total " +

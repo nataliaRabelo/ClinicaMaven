@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Especialidade;
 
@@ -39,9 +41,9 @@ public class EspecialidadeDAO {
         }
     }
     
-    public ArrayList<Especialidade> getEspecialidades(){
+    public List<Especialidade> getEspecialidades(){
     
-        ArrayList<Especialidade> especialidades = new ArrayList<>();
+        List<Especialidade> especialidades = new ArrayList<>();
        
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM especialidade");
@@ -99,13 +101,13 @@ public class EspecialidadeDAO {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> getIdDeleteEspecialidade(int idEspecialidade){
+    public List<List<Integer>> getIdDeleteEspecialidade(int idEspecialidade){
         
-        ArrayList<ArrayList<Integer>> idCompilado = new ArrayList<>();
+        List<List<Integer>> idCompilado = new ArrayList<>();
         
-        ArrayList<Integer> idMedicos = new ArrayList<>();
-        ArrayList<Integer> idConsultas = new ArrayList<>();
-        ArrayList<Integer> idExames = new ArrayList<>();
+        List<Integer> idMedicos = new ArrayList<>();
+        List<Integer> idConsultas = new ArrayList<>();
+        List<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +

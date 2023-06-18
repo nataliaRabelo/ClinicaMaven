@@ -22,6 +22,7 @@ import model.PlanoDAO;
 import model.EspecialidadeDAO;
 import model.ConsultaDAO;
 import model.ExameDAO;
+import java.util.List;
 
 @WebServlet(name = "ControladorAdministrador", urlPatterns = {"/ControladorAdministrador"})
 public class ControladorAdministrador extends HttpServlet {
@@ -46,12 +47,12 @@ public class ControladorAdministrador extends HttpServlet {
                 switch(request.getParameter("arg")){
                     case "Visualizar":
                         
-                        ArrayList<Cliente> pacientes = new ArrayList<>();
+                        List<Cliente> pacientes = new ArrayList<>();
                         pacientes = clienteDAO.getPacientes();
                         
                         if(pacientes.size() > 0){
                         
-                            ArrayList<Plano> planosPacientes = new ArrayList<>();
+                            List<Plano> planosPacientes = new ArrayList<>();
 
                             for(int i=0;i<pacientes.size();i++){
                                 planosPacientes.add(planoDAO.getPlano(pacientes.get(i).getIdtipoplano()));
@@ -68,7 +69,7 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                     
                     case "Excluir":
-                        ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
+                        List<List<Integer>> compiladoIds = new ArrayList<>();
                         
                         compiladoIds = clienteDAO.getIdDeletePaciente(Integer.parseInt(request.getParameter("id")));
                         
@@ -90,7 +91,7 @@ public class ControladorAdministrador extends HttpServlet {
                     case "Editar":
                         Cliente paciente = new Cliente();
                         Plano plano = new Plano();
-                        ArrayList<Plano> planosDisponiveis = new ArrayList<>();
+                        List<Plano> planosDisponiveis = new ArrayList<>();
                         
                         paciente = clienteDAO.getPaciente(Integer.parseInt(request.getParameter("id")));
                         plano = planoDAO.getPlano(paciente.getIdtipoplano());
@@ -107,7 +108,7 @@ public class ControladorAdministrador extends HttpServlet {
 
                     
                     case "Cadastrar":
-                        ArrayList<Plano> planos = new ArrayList<>();
+                        List<Plano> planos = new ArrayList<>();
                         planos = planoDAO.getPlanos();
                         
                         session.setAttribute("paciente",null);
@@ -129,13 +130,13 @@ public class ControladorAdministrador extends HttpServlet {
                 Medico medico = new Medico();
                 switch(request.getParameter("arg")){
                     case "Visualizar":
-                        ArrayList<Medico> medicos = new ArrayList<>();
+                        List<Medico> medicos = new ArrayList<>();
 
                         medicos = medicoDAO.getMedicos();
                         
                         if(medicos.size() > 0){
                         
-                            ArrayList<Especialidade> especialidadesMedicos = new ArrayList<>();
+                            List<Especialidade> especialidadesMedicos = new ArrayList<>();
 
                             for(int i=0;i<medicos.size();i++){
                                 especialidadesMedicos.add(especialidadeDAO.getEspecialidade(medicos.get(i).getIdespecialidade()));
@@ -152,7 +153,7 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                 
                     case "Excluir":
-                        ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
+                        List<List<Integer>> compiladoIds = new ArrayList<>();
                         
                         compiladoIds = medicoDAO.getIdDeleteMedico(Integer.parseInt(request.getParameter("id")));
                         
@@ -174,7 +175,7 @@ public class ControladorAdministrador extends HttpServlet {
                     case "Editar":
                         
                         Especialidade especialidade  = new Especialidade();
-                        ArrayList<Especialidade> especsDisponiveis = new ArrayList<>();
+                        List<Especialidade> especsDisponiveis = new ArrayList<>();
                         
                         medico = medicoDAO.getMedico(Integer.parseInt(request.getParameter("id")));
                         especialidade = especialidadeDAO.getEspecialidade(medico.getIdespecialidade());
@@ -191,7 +192,7 @@ public class ControladorAdministrador extends HttpServlet {
 
                     
                     case "Cadastrar":
-                        ArrayList<Especialidade> especs = new ArrayList<>();
+                        List<Especialidade> especs = new ArrayList<>();
 
                         especs = especialidadeDAO.getEspecialidades();
                         
@@ -208,16 +209,16 @@ public class ControladorAdministrador extends HttpServlet {
                     
                     case "VerConsultas":
                         
-                        ArrayList<Consulta> listaConsultas = new ArrayList<>();                
+                        List<Consulta> listaConsultas = new ArrayList<>();                
                         listaConsultas = medicoDAO.getConsultas(Integer.parseInt(request.getParameter("id")));
                     
                         if(listaConsultas.size() > 0){
                             
-                            ArrayList<ArrayList<String>>listaExamesCompilado = new ArrayList<>();
+                            List<List<String>>listaExamesCompilado = new ArrayList<>();
 
                             for(int i=0;i<listaConsultas.size();i++){
 
-                                ArrayList<String>listaExames = new ArrayList<>();
+                                List<String>listaExames = new ArrayList<>();
                                 listaExames = exameDAO.getExamesDaConsulta(listaConsultas.get(i).getId(),listaExames);
 
                                 if(listaExames.isEmpty()){
@@ -228,7 +229,7 @@ public class ControladorAdministrador extends HttpServlet {
                                 }
                             }
 
-                            ArrayList<String> nomePacientes = new ArrayList<>();
+                            List<String> nomePacientes = new ArrayList<>();
 
                             for(int i=0;i<listaConsultas.size();i++){
 
@@ -259,7 +260,7 @@ public class ControladorAdministrador extends HttpServlet {
                 switch(request.getParameter("arg")){
                     
                     case "Visualizar":     
-                        ArrayList<Administrador> adms = new ArrayList<>();
+                        List<Administrador> adms = new ArrayList<>();
 
                         adms = administradorDAO.getAdministradores();
                         
@@ -302,7 +303,7 @@ public class ControladorAdministrador extends HttpServlet {
                 switch(request.getParameter("arg")){
                     case "Visualizar":
                         
-                        ArrayList<Plano> planos = new ArrayList<>();
+                        List<Plano> planos = new ArrayList<>();
 
                         planos = planoDAO.getPlanos();
 
@@ -318,7 +319,7 @@ public class ControladorAdministrador extends HttpServlet {
                     
                     case "Excluir":
                         
-                        ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
+                        List<List<Integer>> compiladoIds = new ArrayList<>();
                         
                         compiladoIds = planoDAO.getIdDeletePlano(Integer.parseInt(request.getParameter("id")));
                         
@@ -367,7 +368,7 @@ public class ControladorAdministrador extends HttpServlet {
                 switch(request.getParameter("arg")){
                     case "Visualizar":
                         
-                        ArrayList<Especialidade> especs = new ArrayList<>();
+                        List<Especialidade> especs = new ArrayList<>();
 
                         especs = especialidadeDAO.getEspecialidades();
 
@@ -382,7 +383,7 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                     
                     case "Excluir":
-                        ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
+                        List<List<Integer>> compiladoIds = new ArrayList<>();
                         
                         compiladoIds = especialidadeDAO.getIdDeleteEspecialidade(Integer.parseInt(request.getParameter("id")));
                         
@@ -431,7 +432,7 @@ public class ControladorAdministrador extends HttpServlet {
                 switch(request.getParameter("arg")){
                     case "Visualizar":
                         
-                        ArrayList<Exame> exames = new ArrayList<>();
+                        List<Exame> exames = new ArrayList<>();
 
                         exames = exameDAO.getExames();
 
@@ -446,7 +447,7 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                     
                     case "Excluir":
-                        ArrayList<Integer> compiladoIds = new ArrayList<>();
+                        List<Integer> compiladoIds = new ArrayList<>();
                         
                         compiladoIds = exameDAO.getIdDeleteExame(Integer.parseInt(request.getParameter("id")));
                         

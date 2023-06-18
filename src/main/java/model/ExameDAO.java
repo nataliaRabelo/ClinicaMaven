@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Exame;
 
@@ -44,9 +46,9 @@ public class ExameDAO {
         }
     }
     
-    public ArrayList<Exame> getExames(){
+    public List<Exame> getExames(){
     
-        ArrayList<Exame> exames = new ArrayList<>();
+        List<Exame> exames = new ArrayList<>();
        
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoexame");
@@ -83,7 +85,7 @@ public class ExameDAO {
         return exame;
     }
     
-    public ArrayList<String> getExamesDaConsulta(int idConsulta, ArrayList<String> listaExames){
+    public List<String> getExamesDaConsulta(int idConsulta, List<String> listaExames){
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT tipoexame.descricao " +
@@ -131,9 +133,9 @@ public class ExameDAO {
         }
     }
     
-    public ArrayList<Integer> getIdDeleteExame(int idExame){
+    public List<Integer> getIdDeleteExame(int idExame){
         
-        ArrayList<Integer> idExames = new ArrayList<>();
+        List<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +

@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Plano;
 
@@ -40,9 +42,9 @@ public class PlanoDAO {
         }
     }
   
-    public ArrayList<Plano> getPlanos(){
+    public List<Plano> getPlanos(){
     
-        ArrayList<Plano> planos = new ArrayList<>();
+        List<Plano> planos = new ArrayList<>();
        
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoplano");
@@ -99,13 +101,13 @@ public class PlanoDAO {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> getIdDeletePlano(int idPlano){
+    public List<List<Integer>> getIdDeletePlano(int idPlano){
         
-        ArrayList<ArrayList<Integer>> idCompilado = new ArrayList<>();
+        List<List<Integer>> idCompilado = new ArrayList<>();
         
-        ArrayList<Integer> idPacientes = new ArrayList<>();
-        ArrayList<Integer> idConsultas = new ArrayList<>();
-        ArrayList<Integer> idExames = new ArrayList<>();
+        List<Integer> idPacientes = new ArrayList<>();
+        List<Integer> idConsultas = new ArrayList<>();
+        List<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
