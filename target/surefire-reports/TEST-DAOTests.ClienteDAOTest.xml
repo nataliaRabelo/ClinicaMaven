@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<<<<<<< HEAD
 <testsuite tests="16" failures="0" name="DAOTests.ClienteDAOTest" time="1.157" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -6,6 +7,15 @@
     <property name="java.vm.version" value="25.341-b10"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="maven.multiModuleProjectDirectory" value="C:\ClinicaMaven"/>
+=======
+<testsuite tests="16" failures="0" name="DAOTests.ClienteDAOTest" time="0.955" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_361\jre\bin"/>
+    <property name="java.vm.version" value="25.361-b09"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven"/>
+>>>>>>> 9f744dd4715cc626078db10388c95ccf06519401
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=";"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -16,12 +26,21 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+<<<<<<< HEAD
     <property name="user.dir" value="C:\ClinicaMaven"/>
     <property name="java.runtime.version" value="1.8.0_341-b10"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_341\jre\lib\endorsed"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.io.tmpdir" value="C:\Users\natyn\AppData\Local\Temp\"/>
+=======
+    <property name="user.dir" value="C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven"/>
+    <property name="java.runtime.version" value="1.8.0_361-b09"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_361\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\DANIEL~1\AppData\Local\Temp\"/>
+>>>>>>> 9f744dd4715cc626078db10388c95ccf06519401
     <property name="line.separator" value="
 "/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
@@ -30,32 +49,55 @@
     <property name="maven.ext.class.path" value="C:\Program Files\NetBeans-12.4\netbeans\java\maven-nblib\netbeans-eventspy.jar"/>
     <property name="classworlds.conf" value="C:\Program Files\NetBeans-12.4\netbeans\java\maven\bin\..\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
+<<<<<<< HEAD
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_341\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Oculus\Support\oculus-runtime;C:\Program Files\Eclipse Foundation\jdk-8.0.302.8-hotspot\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\VMware\VMware Player\bin\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\exiftool;C:\MinGW\mingw32\bin;C:\MinGW\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\nodejs\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\natyn\AppData\Local\Microsoft\WindowsApps;C:\Users\natyn\AppData\Local\Programs\Microsoft VS Code\bin;C:\MinGW\mingw32\bin;C:\MinGW\bin;C:\Users\natyn\.dotnet\tools;C:\Program Files\Azure Data Studio\bin;C:\Users\natyn\AppData\Roaming\npm;."/>
+=======
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_361\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python311\Scripts\;C:\Python311\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Users\DanielNeves\AppData\Local\Microsoft\WindowsApps;;C:\Users\DanielNeves\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Azure Data Studio\bin;C:\Users\DanielNeves\AppData\Roaming\npm;."/>
+>>>>>>> 9f744dd4715cc626078db10388c95ccf06519401
     <property name="maven.conf" value="C:\Program Files\NetBeans-12.4\netbeans\java\maven\bin\../conf"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="os.version" value="10.0"/>
     <property name="library.jansi.path" value="C:\Program Files\NetBeans-12.4\netbeans\java\maven\bin\..\lib\jansi-native"/>
+<<<<<<< HEAD
     <property name="user.home" value="C:\Users\natyn"/>
+=======
+    <property name="user.home" value="C:\Users\DanielNeves"/>
+>>>>>>> 9f744dd4715cc626078db10388c95ccf06519401
     <property name="user.timezone" value="America/Sao_Paulo"/>
     <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
     <property name="java.specification.version" value="1.8"/>
     <property name="file.encoding" value="UTF-8"/>
+<<<<<<< HEAD
     <property name="user.name" value="natyn"/>
     <property name="java.class.path" value="C:\Program Files\NetBeans-12.4\netbeans\java\maven\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_341\jre"/>
+=======
+    <property name="user.name" value="DanielNeves"/>
+    <property name="java.class.path" value="C:\Program Files\NetBeans-12.4\netbeans\java\maven\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_361\jre"/>
+>>>>>>> 9f744dd4715cc626078db10388c95ccf06519401
     <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=C:\Program Files\NetBeans-12.4\netbeans\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 install"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="pt"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
     <property name="java.vm.info" value="mixed mode"/>
+<<<<<<< HEAD
     <property name="java.version" value="1.8.0_341"/>
     <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_341\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
     <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_341\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_341\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_341\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_341\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_341\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_341\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_341\jre\classes"/>
+=======
+    <property name="java.version" value="1.8.0_361"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_361\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_361\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_361\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_361\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_361\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_361\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_361\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_361\jre\classes"/>
+>>>>>>> 9f744dd4715cc626078db10388c95ccf06519401
     <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.maintenance.version" value="4"/>
     <property name="maven.home" value="C:\Program Files\NetBeans-12.4\netbeans\java\maven\bin\.."/>
     <property name="file.separator" value="\"/>
     <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
@@ -64,6 +106,7 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
+<<<<<<< HEAD
   <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetNomePacienteMock" time="1.091"/>
   <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetIdDeletePacienteMock" time="0"/>
   <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testJaCadastradoMock" time="0.001"/>
@@ -79,5 +122,22 @@
   <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetPacientes" time="0.005"/>
   <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testLogin" time="0.001"/>
   <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetPaciente" time="0.001"/>
+=======
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetPacienteMock" time="0.895"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testCreatePaciente" time="0.027"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetIdDeletePaciente" time="0.01"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetNomePacienteMock" time="0.001"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testJaCadastradoMock" time="0.001"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testUpdatePacienteMock" time="0.001"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testUpdatePaciente" time="0.008"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetIdDeletePacienteMock" time="0.001"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testDeletePaciente" time="0.002"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetNomePaciente" time="0.001"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testDeletePacienteMock" time="0"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetPacientesMock" time="0.001"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testLogin" time="0.003"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetPacientes" time="0.001"/>
+  <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testGetPaciente" time="0"/>
+>>>>>>> 9f744dd4715cc626078db10388c95ccf06519401
   <testcase classname="DAOTests.ClienteDAOTest" name="DAOTests.ClienteDAOTest.testLoginMock" time="0.003"/>
 </testsuite>

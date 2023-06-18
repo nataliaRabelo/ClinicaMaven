@@ -25,8 +25,7 @@ public class PlanoDAO {
     
     public void create_plano(Plano novo_plano){
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO tipoplano "
                     + "(descricao) VALUES ( '" + novo_plano.getDescricao() + "')");
             
@@ -37,10 +36,9 @@ public class PlanoDAO {
   
     public ArrayList<Plano> get_planos(){
     
-        ArrayList<Plano> planos = new ArrayList<Plano>();
+        ArrayList<Plano> planos = new ArrayList<>();
        
-        try{
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoplano");
             
             while(resultSet.next()){
@@ -60,8 +58,7 @@ public class PlanoDAO {
     
         Plano plano = new Plano();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoplano "
                     + "WHERE tipoplano.id=" + id_plano + "");
             
@@ -78,8 +75,7 @@ public class PlanoDAO {
      
     public void update_plano(int id_plano, Plano novo_plano){
     
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE tipoplano SET descricao='" + novo_plano.getDescricao() + "' WHERE tipoplano.id=" + id_plano + "");
             
         } catch(SQLException e) {
@@ -89,8 +85,7 @@ public class PlanoDAO {
     
     public void delete_plano(int id_plano){
         
-        try{
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM tipoplano WHERE tipoplano.id=" + id_plano + "");
             
         } catch(SQLException e) {
@@ -100,14 +95,13 @@ public class PlanoDAO {
     
     public ArrayList<ArrayList<Integer>> get_idDeletePlano(int id_plano){
         
-        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<>();
         
-        ArrayList<Integer> id_pacientes = new ArrayList<Integer>();
-        ArrayList<Integer> id_consultas = new ArrayList<Integer>();
-        ArrayList<Integer> id_exames = new ArrayList<Integer>();
+        ArrayList<Integer> id_pacientes = new ArrayList<>();
+        ArrayList<Integer> id_consultas = new ArrayList<>();
+        ArrayList<Integer> id_exames = new ArrayList<>();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
             "FROM tipoplano INNER JOIN paciente ON tipoplano.id=paciente.idtipoplano " +
             "INNER JOIN consulta ON consulta.idpaciente=paciente.id " +

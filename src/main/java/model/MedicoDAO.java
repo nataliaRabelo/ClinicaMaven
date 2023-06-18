@@ -24,10 +24,9 @@ public class MedicoDAO {
         
         Medico medico = new Medico();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM medico" + 
-                " WHERE cpf = '" + String.valueOf(cpf) + "' AND senha = '" + String.valueOf(senha) + "'");
+                " WHERE cpf = '" + cpf + "' AND senha = '" + senha + "'");
             
             if (resultSet.next()) {
                 medico.setId(resultSet.getInt("id"));
@@ -48,8 +47,7 @@ public class MedicoDAO {
    
     public void create_exame(int id_tipoexame, int id_consulta){
     
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO exames (idtipoexame,idconsulta) VALUES ('" +
                     id_tipoexame + "','" + id_consulta + "')");
             
@@ -60,8 +58,7 @@ public class MedicoDAO {
     
     public void create_medico(Medico novo_medico){
     
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO medico "
                     + "(nome,crm,estadocrm,cpf,senha,autorizado,idespecialidade) "
                     + "VALUES ( '" + novo_medico.getNome() + "','" + novo_medico.getCrm()  + "','" + novo_medico.getEstadocrm()  + "','" + 
@@ -74,10 +71,9 @@ public class MedicoDAO {
     
     public ArrayList<Consulta> get_consultas(int id_medico){
     
-        ArrayList<Consulta> consultasMedico = new ArrayList<Consulta>();
+        ArrayList<Consulta> consultasMedico = new ArrayList<>();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM consulta" + 
                 " WHERE idmedico = '" + id_medico + "'");
             
@@ -102,8 +98,7 @@ public class MedicoDAO {
         
         Medico medico = new Medico();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM medico "
                     + "WHERE medico.id = '" + id_medico + "'");
             
@@ -126,10 +121,9 @@ public class MedicoDAO {
     
     public ArrayList<Object> get_exames(int id_consulta, int id_medico){
         
-        ArrayList<Object> exames_disponiveis = new ArrayList<Object>();
+        ArrayList<Object> exames_disponiveis = new ArrayList<>();
     
-        try{
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoexame");
             
             while(resultSet.next()){
@@ -145,10 +139,9 @@ public class MedicoDAO {
     
     public ArrayList<Medico> get_medicos(){
     
-        ArrayList<Medico> medicos = new ArrayList<Medico>();
+        ArrayList<Medico> medicos = new ArrayList<>();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM medico");
             
             while (resultSet.next()) {
@@ -172,8 +165,7 @@ public class MedicoDAO {
     
     public void update_medico(int id_medico, Medico medico){
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE medico SET nome='" + medico.getNome() + "', crm='" +
                     medico.getCrm() + "', estadocrm='" + medico.getEstadocrm() + "', cpf='" + medico.getCpf() +
                     "', senha='" + medico.getSenha() + "', autorizado='" + medico.getAutorizado() +
@@ -186,8 +178,7 @@ public class MedicoDAO {
     
     public void delete_medico(int id_medico){
         
-        try{
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM medico WHERE medico.id=" + id_medico + "");
             
         } catch(SQLException e) {
@@ -197,13 +188,12 @@ public class MedicoDAO {
     
     public ArrayList<ArrayList<Integer>> get_idDeleteMedico(int id_medico){
     
-        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<>();
         
-        ArrayList<Integer> id_consultas = new ArrayList<Integer>();
-        ArrayList<Integer> id_exames = new ArrayList<Integer>();
+        ArrayList<Integer> id_consultas = new ArrayList<>();
+        ArrayList<Integer> id_exames = new ArrayList<>();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
             "FROM medico INNER JOIN consulta ON medico.id=consulta.idmedico " +
             "INNER JOIN exames ON consulta.id=exames.idconsulta " +
@@ -233,10 +223,9 @@ public class MedicoDAO {
     
     public ArrayList<Integer> medico_available(int id_medico, String data){
         
-        ArrayList<Integer>colisoes = new ArrayList<Integer>();
+        ArrayList<Integer>colisoes = new ArrayList<>();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
 //            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) as total " +
             ResultSet resultSet = statement.executeQuery("SELECT consulta.id " +        
             "FROM consulta WHERE data LIKE '%" + data + "%' AND consulta.idmedico=" + id_medico + "");

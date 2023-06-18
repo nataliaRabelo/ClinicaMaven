@@ -21,8 +21,7 @@ public class ExameDAO {
     
     public void create_exame(Exame novo_exame){
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO tipoexame "
                     + "(descricao) VALUES ( '" + novo_exame.getDescricao() + "')");
             
@@ -33,10 +32,9 @@ public class ExameDAO {
     
     public ArrayList<Exame> get_exames(){
     
-        ArrayList<Exame> exames = new ArrayList<Exame>();
+        ArrayList<Exame> exames = new ArrayList<>();
        
-        try{
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoexame");
             
             while(resultSet.next()){
@@ -56,8 +54,7 @@ public class ExameDAO {
     
         Exame exame = new Exame();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoexame "
                     + "WHERE tipoexame.id=" + id_exame + "");
             
@@ -74,8 +71,7 @@ public class ExameDAO {
     
     public ArrayList<String> get_examesDaConsulta(int id_consulta, ArrayList<String> lista_exames){
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT tipoexame.descricao " +
                 "FROM consulta INNER JOIN exames ON consulta.id = exames.idconsulta " +
                 "INNER JOIN tipoexame ON exames.idtipoexame = tipoexame.id " +
@@ -93,8 +89,7 @@ public class ExameDAO {
     
     public void update_exame(int id_exame, Exame novo_exame){
     
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE tipoexame SET descricao='" + novo_exame.getDescricao() + "' WHERE tipoexame.id=" + id_exame + "");
             
         } catch(SQLException e) {
@@ -104,8 +99,7 @@ public class ExameDAO {
     
     public void delete_exame(int id_exame){
         
-        try{
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM exames WHERE exames.id=" + id_exame + "");
             
         } catch(SQLException e) {
@@ -115,8 +109,7 @@ public class ExameDAO {
     
     public void delete_tipoExame(int id_exame){
         
-        try{
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM tipoexame WHERE tipoexame.id=" + id_exame + "");
             
         } catch(SQLException e) {
@@ -126,10 +119,9 @@ public class ExameDAO {
     
     public ArrayList<Integer> get_idDeleteExame(int id_exame){
         
-        ArrayList<Integer> id_exames = new ArrayList<Integer>();
+        ArrayList<Integer> id_exames = new ArrayList<>();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
             "FROM exames WHERE exames.idtipoexame=" + id_exame + "");
             

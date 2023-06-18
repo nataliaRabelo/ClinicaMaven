@@ -20,8 +20,7 @@ public class EspecialidadeDAO {
     }
     
     public void create_especialidade(Especialidade nova_especialidade){
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO especialidade "
                     + "(descricao) VALUES ( '" + nova_especialidade.getDescricao() + "')");
             
@@ -32,10 +31,9 @@ public class EspecialidadeDAO {
     
     public ArrayList<Especialidade> get_especialidades(){
     
-        ArrayList<Especialidade> especialidades = new ArrayList<Especialidade>();
+        ArrayList<Especialidade> especialidades = new ArrayList<>();
        
-        try{
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM especialidade");
             
             while(resultSet.next()){
@@ -55,8 +53,7 @@ public class EspecialidadeDAO {
         
         Especialidade espec = new Especialidade();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM especialidade "
                     + "WHERE especialidade.id = '" + id_especialidade + "'");
             
@@ -73,8 +70,7 @@ public class EspecialidadeDAO {
     
     public void update_especialidade(int id_especialidade, Especialidade nova_especialidade){
     
-       try {
-            Statement statement = conn.createStatement();
+       try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE especialidade SET descricao='" + nova_especialidade.getDescricao() + "' "
                     + "WHERE especialidade.id=" + id_especialidade + "");
             
@@ -85,8 +81,7 @@ public class EspecialidadeDAO {
     
     public void delete_especialidade(int id_especialidade){
     
-        try{
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM especialidade WHERE especialidade.id=" + id_especialidade + "");
             
         } catch(SQLException e) {
@@ -96,14 +91,13 @@ public class EspecialidadeDAO {
     
     public ArrayList<ArrayList<Integer>> get_idDeleteEspecialidade(int id_especialidade){
         
-        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<>();
         
-        ArrayList<Integer> id_medicos = new ArrayList<Integer>();
-        ArrayList<Integer> id_consultas = new ArrayList<Integer>();
-        ArrayList<Integer> id_exames = new ArrayList<Integer>();
+        ArrayList<Integer> id_medicos = new ArrayList<>();
+        ArrayList<Integer> id_consultas = new ArrayList<>();
+        ArrayList<Integer> id_exames = new ArrayList<>();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
             "FROM especialidade INNER JOIN medico ON especialidade.id=medico.idespecialidade " +
             "INNER JOIN consulta ON consulta.idmedico=medico.id " +

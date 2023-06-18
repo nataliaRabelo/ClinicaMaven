@@ -27,10 +27,9 @@ public class ClienteDAO {
         
         Cliente paciente = new Cliente();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente" + 
-                " WHERE cpf = '" + String.valueOf(cpf) + "' AND senha = '" + String.valueOf(senha) + "'");
+                " WHERE cpf = '" + cpf + "' AND senha = '" + senha + "'");
             
             if (resultSet.next()) {
                 paciente.setId(resultSet.getInt("id"));
@@ -51,12 +50,11 @@ public class ClienteDAO {
     
         boolean resp = false;
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente "
                     + "WHERE paciente.cpf=" + cpf_paciente + "");
             
-            if (resultSet.next() == true) {
+            if (resultSet.next()) {
                 resp = true;
             }
         } catch(SQLException e) {
@@ -67,8 +65,7 @@ public class ClienteDAO {
     
     public void create_paciente(Cliente novo_paciente){
  
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO paciente"
                     + " (nome, cpf, senha, autorizado, idtipoplano) VALUES ( '" +
                     novo_paciente.getNome() + "','" + novo_paciente.getCpf() + "','" +
@@ -84,8 +81,7 @@ public class ClienteDAO {
         
         String nome = null;
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT nome FROM paciente " +
                 "WHERE paciente.id='" + id_paciente + "'");
             
@@ -101,10 +97,9 @@ public class ClienteDAO {
     
     public ArrayList<Cliente> get_pacientes(){
     
-        ArrayList<Cliente> pacientes = new ArrayList<Cliente>();
+        ArrayList<Cliente> pacientes = new ArrayList<>();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente");
             
             while (resultSet.next()) {
@@ -127,8 +122,7 @@ public class ClienteDAO {
     
         Cliente paciente = new Cliente();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente "
                     + "WHERE paciente.id = '" + id_paciente + "'");
             
@@ -148,8 +142,7 @@ public class ClienteDAO {
     
     public void update_paciente(int id_paciente, Cliente paciente){
         
-        try {
-            Statement statement = conn.createStatement();
+        try(Statement statement = conn.createStatement()){
             statement.execute("UPDATE paciente SET nome='" + paciente.getNome() + "' , cpf='" +
                     paciente.getCpf() + "' , senha='" + paciente.getSenha() +
                     "' , autorizado='" + paciente.getAutorizado() +
@@ -162,8 +155,7 @@ public class ClienteDAO {
     
     public void delete_paciente(int id_paciente){
         
-        try{
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM paciente WHERE paciente.id=" + id_paciente + "");
             
         } catch(SQLException e) {
@@ -173,12 +165,11 @@ public class ClienteDAO {
     
     public ArrayList<ArrayList<Integer>> get_idDeletePaciente(int id_paciente){
     
-        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> id_consultas = new ArrayList<Integer>();
-        ArrayList<Integer> id_exames = new ArrayList<Integer>();
+        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<>();
+        ArrayList<Integer> id_consultas = new ArrayList<>();
+        ArrayList<Integer> id_exames = new ArrayList<>();
         
-        try {
-            Statement statement = conn.createStatement();
+        try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
             "FROM paciente INNER JOIN consulta ON paciente.id=consulta.idpaciente " +
             "INNER JOIN exames ON consulta.id=exames.idconsulta " +
