@@ -129,7 +129,7 @@ public class MedicoDAO {
         return medico;
     }
     
-    public ArrayList<Object> getExames(int idConsulta, int idMedico){
+    public ArrayList<Object> getExames(){
         
         ArrayList<Object> examesDisponiveis = new ArrayList<>();
     

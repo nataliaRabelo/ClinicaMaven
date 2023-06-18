@@ -80,7 +80,7 @@ public class ControladorMedico extends HttpServlet {
                 String idConsultaEx = request.getParameter("id");
                 ArrayList<Object> lista = new ArrayList<>();
                 
-                lista = medicoDAO.getExames(Integer.parseInt(idConsultaEx),medico.getId());
+                lista = medicoDAO.getExames();
                 
                 session.setAttribute("lista_exames", lista);
                 session.setAttribute("id_consulta", idConsultaEx);
