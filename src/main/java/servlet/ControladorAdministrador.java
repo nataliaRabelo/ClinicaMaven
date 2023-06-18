@@ -23,11 +23,8 @@ import model.PlanoDAO;
 import model.EspecialidadeDAO;
 import model.ConsultaDAO;
 import model.ExameDAO;
-<<<<<<< HEAD
 import utils.Constantes;
-=======
 import java.util.List;
->>>>>>> 73581439bfea1975e73f8888de621921480e9d74
 
 @WebServlet(name = "ControladorAdministrador", urlPatterns = {"/ControladorAdministrador"})
 public class ControladorAdministrador extends HttpServlet {
@@ -73,13 +70,8 @@ public class ControladorAdministrador extends HttpServlet {
                         }
                     break;
                     
-<<<<<<< HEAD
-                    case Constantes.EXCLUIR:
-                        ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
-=======
                     case "Excluir":
                         List<List<Integer>> compiladoIds = new ArrayList<>();
->>>>>>> 73581439bfea1975e73f8888de621921480e9d74
                         
                         compiladoIds = clienteDAO.getIdDeletePaciente(Integer.parseInt(request.getParameter("id")));
                         
@@ -115,15 +107,8 @@ public class ControladorAdministrador extends HttpServlet {
                         edtPac.forward(request, response);
                     break;
 
-
-                    
-<<<<<<< HEAD
-                    case Constantes.CADASTRAR:
-                        ArrayList<Plano> planos = new ArrayList<>();
-=======
                     case "Cadastrar":
                         List<Plano> planos = new ArrayList<>();
->>>>>>> 73581439bfea1975e73f8888de621921480e9d74
                         planos = planoDAO.getPlanos();
                         
                         session.setAttribute(Constantes.PACIENTE,null);
@@ -143,15 +128,9 @@ public class ControladorAdministrador extends HttpServlet {
                 
             case "Medico":
                 Medico medico = new Medico();
-<<<<<<< HEAD
-                switch(request.getParameter(Constantes.)){
-                    case Constantes.VISUALIZAR:
-                        ArrayList<Medico> medicos = new ArrayList<>();
-=======
                 switch(request.getParameter("arg")){
                     case "Visualizar":
                         List<Medico> medicos = new ArrayList<>();
->>>>>>> 73581439bfea1975e73f8888de621921480e9d74
 
                         medicos = medicoDAO.getMedicos();
                         
@@ -173,13 +152,8 @@ public class ControladorAdministrador extends HttpServlet {
                         }
                     break;
                 
-<<<<<<< HEAD
-                    case Constantes.EXCLUIR:
-                        ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
-=======
                     case "Excluir":
                         List<List<Integer>> compiladoIds = new ArrayList<>();
->>>>>>> 73581439bfea1975e73f8888de621921480e9d74
                         
                         compiladoIds = medicoDAO.getIdDeleteMedico(Integer.parseInt(request.getParameter("id")));
                         
@@ -215,15 +189,8 @@ public class ControladorAdministrador extends HttpServlet {
                         edtMed.forward(request, response);
                     break;
 
-
-                    
-<<<<<<< HEAD
-                    case Constantes.CADASTRAR:
-                        ArrayList<Especialidade> especs = new ArrayList<>();
-=======
                     case "Cadastrar":
                         List<Especialidade> especs = new ArrayList<>();
->>>>>>> 73581439bfea1975e73f8888de621921480e9d74
 
                         especs = especialidadeDAO.getEspecialidades();
                         

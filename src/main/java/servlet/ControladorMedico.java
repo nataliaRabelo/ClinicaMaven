@@ -14,12 +14,9 @@ import model.MedicoDAO;
 import model.ExameDAO;
 import aplicacao.Medico;
 import aplicacao.Consulta;
-<<<<<<< HEAD
 import utils.Constantes;
-=======
 import java.util.List;
 import java.util.Collection;
->>>>>>> 73581439bfea1975e73f8888de621921480e9d74
 
 @WebServlet(name = "ControladorMedico", urlPatterns = {"/ControladorMedico"})
 public class ControladorMedico extends HttpServlet {

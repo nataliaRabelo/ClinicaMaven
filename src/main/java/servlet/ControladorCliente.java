@@ -13,12 +13,8 @@ import aplicacao.Consulta;
 import model.ExameDAO;
 import model.ConsultaDAO;
 import model.MedicoDAO;
-<<<<<<< HEAD
 import utils.Constantes;
-=======
 import java.util.List;
-
->>>>>>> 73581439bfea1975e73f8888de621921480e9d74
 
 @WebServlet(name = "ControladorCliente", urlPatterns = {"/ControladorCliente"})
 public class ControladorCliente extends HttpServlet {
