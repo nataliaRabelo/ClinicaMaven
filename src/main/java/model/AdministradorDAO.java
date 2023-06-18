@@ -1,11 +1,14 @@
 package model;
+
+import conexao.ConexaoBancoDeDados;
+import aplicacao.Administrador;
+import utils.Constantes;
+
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import conexao.ConexaoBancoDeDados;
-import aplicacao.Administrador;
 
 public class AdministradorDAO {
     
@@ -38,14 +41,14 @@ public class AdministradorDAO {
                 " WHERE cpf = '" + cpf + "' AND senha = '" + senha + "'");
             
             if (resultSet.next()) {
-                administrador.setId(resultSet.getInt("id"));
-                administrador.setNome(resultSet.getString("nome"));
-                administrador.setCpf(resultSet.getString("cpf"));
-                administrador.setSenha(resultSet.getString("senha"));
+                administrador.setId(resultSet.getInt(Constantes.ID));
+                administrador.setNome(resultSet.getString(Constantes.NOME));
+                administrador.setCpf(resultSet.getString(Constantes.CPF));
+                administrador.setSenha(resultSet.getString(Constantes.SENHA));
             } 
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return administrador;
     }
@@ -57,7 +60,7 @@ public class AdministradorDAO {
                     administrador.getNome() + "','" + administrador.getCpf() + "','" + administrador.getSenha() + "')");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -70,15 +73,15 @@ public class AdministradorDAO {
             
             while (resultSet.next()) {
                 Administrador adm = new Administrador();
-                adm.setId(resultSet.getInt("id"));
-                adm.setNome(resultSet.getString("nome"));
-                adm.setCpf(resultSet.getString("cpf"));
-                adm.setSenha(resultSet.getString("senha"));
+                adm.setId(resultSet.getInt(Constantes.ID));
+                adm.setNome(resultSet.getString(Constantes.NOME));
+                adm.setCpf(resultSet.getString(Constantes.CPF));
+                adm.setSenha(resultSet.getString(Constantes.SENHA));
                 administradores.add(adm);
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLError + e.getMessage());
         }
         return administradores;
     }
@@ -92,14 +95,14 @@ public class AdministradorDAO {
                     + "WHERE administrador.id = '" + idAdministrador + "'");
             
             if (resultSet.next()) {
-                adm.setId(resultSet.getInt("id"));
-                adm.setNome(resultSet.getString("nome"));
-                adm.setCpf(resultSet.getString("cpf"));
-                adm.setSenha(resultSet.getString("senha"));
+                adm.setId(resultSet.getInt(Constantes.ID));
+                adm.setNome(resultSet.getString(Constantes.NOME));
+                adm.setCpf(resultSet.getString(Constantes.CPF));
+                adm.setSenha(resultSet.getString(Constantes.SENHA));
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return adm;
     }
@@ -111,7 +114,7 @@ public class AdministradorDAO {
                     "',senha='" + administrador.getSenha() + "'  WHERE administrador.id=" + idAdministrador + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -121,7 +124,7 @@ public class AdministradorDAO {
             statement.execute("DELETE FROM administrador WHERE administrador.id=" + idAdministrador + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
 }
