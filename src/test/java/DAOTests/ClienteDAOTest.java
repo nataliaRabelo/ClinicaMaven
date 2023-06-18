@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import conexao.conexao_bancodedados;
+import conexao.ConexaoBancoDeDados;
 
 import org.junit.jupiter.api.BeforeAll;
 
@@ -31,7 +31,7 @@ public class ClienteDAOTest {
     @BeforeAll
     public static void setUp() {
         try {
-            conn = conexao_bancodedados.newConnection();
+            conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
@@ -49,7 +49,7 @@ public class ClienteDAOTest {
         novoPaciente.setIdtipoplano(1);
 
         // Act
-        dao.create_paciente(novoPaciente);
+        dao.createPaciente(novoPaciente);
 
         // Assert
         boolean isCadastrado = dao.jaCadastrado("12345678901");
@@ -75,7 +75,7 @@ public class ClienteDAOTest {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        Cliente paciente = dao.get_paciente(1); // Necessário que exista um paciente com ID 1 no banco de dados de teste
+        Cliente paciente = dao.getPaciente(1); // Necessário que exista um paciente com ID 1 no banco de dados de teste
 
         // Assert
         assertNotNull(paciente);
@@ -86,19 +86,19 @@ public class ClienteDAOTest {
     public void testUpdatePaciente() {
         // Arrange
         ClienteDAO dao = new ClienteDAO(conn);
-        Cliente paciente = dao.get_paciente(1); // Certifique-se de que existe um paciente com ID 1
+        Cliente paciente = dao.getPaciente(1); // Certifique-se de que existe um paciente com ID 1
         paciente.setNome("Maria2");
 
         // Act
-        dao.update_paciente(1, paciente);
+        dao.updatePaciente(1, paciente);
 
         // Assert
-        Cliente pacienteAtualizado = dao.get_paciente(1);
+        Cliente pacienteAtualizado = dao.getPaciente(1);
         assertEquals("Maria2", pacienteAtualizado.getNome());
         
         //Retornando o nome como estava antes para não causar inconsistências no banco
         paciente.setNome("Maria");
-        dao.update_paciente(1, paciente);
+        dao.updatePaciente(1, paciente);
     }
     
     @Test
@@ -107,7 +107,7 @@ public class ClienteDAOTest {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        String nome = dao.get_nomePaciente(1); // Certifique-se de que existe um paciente com ID 1
+        String nome = dao.getNomePaciente(1); // Certifique-se de que existe um paciente com ID 1
 
         // Assert
         assertEquals("Maria", nome);
@@ -119,7 +119,7 @@ public class ClienteDAOTest {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        ArrayList<Cliente> pacientes = dao.get_pacientes();
+        ArrayList<Cliente> pacientes = dao.getPacientes();
 
         // Assert
         assertFalse(pacientes.isEmpty(), "A lista de pacientes não deve estar vazia");
@@ -133,7 +133,7 @@ public class ClienteDAOTest {
             Cliente cliente = new Cliente(); // Criando um paciente para testar a deleção
             cliente.setNome("natalia");
             cliente.setCpf("123");
-            dao.create_paciente(cliente);
+            dao.createPaciente(cliente);
 
             // Criando o Statement para executar a query
             Statement statement = conn.createStatement();
@@ -144,11 +144,11 @@ public class ClienteDAOTest {
                 // Act
                 int id = resultSet.getInt("id"); // Supondo que a coluna do id na tabela seja 'id'
                 idResultSet = id;
-                dao.delete_paciente(id); // deletando o usuário que acabei de criar, onde o id é inserido no banco
+                dao.deletePaciente(id); // deletando o usuário que acabei de criar, onde o id é inserido no banco
             }
 
             // Assert
-            Cliente paciente = dao.get_paciente(idResultSet);
+            Cliente paciente = dao.getPaciente(idResultSet);
             assertNull(paciente.getNome(), "O paciente deveria ser null após ser deletado");
         } catch (SQLException e) {
             System.out.println("Erro SQL: " + e.getMessage());
@@ -164,7 +164,7 @@ public void testGetIdDeletePaciente() {
         Cliente cliente = new Cliente(); // Criando um paciente para testar a deleção
         cliente.setNome("natalia");
         cliente.setCpf("123");
-        dao.create_paciente(cliente);
+        dao.createPaciente(cliente);
 
         // Criando o Statement para executar a query
         Statement statement = conn.createStatement();
@@ -174,7 +174,7 @@ public void testGetIdDeletePaciente() {
         if(resultSet.next()) {
             // Act
             int id = resultSet.getInt("id"); // Supondo que a coluna do id na tabela seja 'id'
-            ArrayList<ArrayList<Integer>> id_compilado = dao.get_idDeletePaciente(id);
+            ArrayList<ArrayList<Integer>> id_compilado = dao.getIdDeletePaciente(id);
 
             // Assert
             assertFalse(id_compilado.get(0).isEmpty(), "A lista de ids de exames não deve estar vazia");
@@ -253,7 +253,7 @@ public void testGetIdDeletePaciente() {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        String result = dao.get_nomePaciente(1);
+        String result = dao.getNomePaciente(1);
 
         // Assert
         assertEquals("Teste", result);
@@ -279,7 +279,7 @@ public void testGetIdDeletePaciente() {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        List<Cliente> result = dao.get_pacientes();
+        List<Cliente> result = dao.getPacientes();
 
         // Assert
         assertNotNull(result);
@@ -307,7 +307,7 @@ public void testGetIdDeletePaciente() {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        Cliente result = dao.get_paciente(1);
+        Cliente result = dao.getPaciente(1);
 
         // Assert
         assertNotNull(result);
@@ -332,7 +332,7 @@ public void testGetIdDeletePaciente() {
         paciente.setIdtipoplano(1);
 
         // Act
-        dao.update_paciente(1, paciente);
+        dao.updatePaciente(1, paciente);
 
         // Assert
         verify(conn, times(1)).createStatement();
@@ -355,7 +355,7 @@ public void testGetIdDeletePaciente() {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        ArrayList<ArrayList<Integer>> result = dao.get_idDeletePaciente(1);
+        ArrayList<ArrayList<Integer>> result = dao.getIdDeletePaciente(1);
 
         // Assert
         assertNotNull(result);
@@ -377,7 +377,7 @@ public void testGetIdDeletePaciente() {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        dao.delete_paciente(1);
+        dao.deletePaciente(1);
 
         // Assert
         verify(conn, times(1)).createStatement();

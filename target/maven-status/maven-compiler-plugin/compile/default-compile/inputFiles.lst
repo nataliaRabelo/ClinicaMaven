@@ -1,4 +1,5 @@
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\aplicacao\Medico.java
+C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\conexao\ConexaoBancoDeDados.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\servlet\ControladorCliente.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\model\MedicoDAO.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\aplicacao\Exame.java
@@ -12,7 +13,6 @@ C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\servlet\Cont
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\model\ConsultaDAO.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\servlet\Autenticar.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\model\ClienteDAO.java
-C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\conexao\conexao_bancodedados.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\model\EspecialidadeDAO.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\aplicacao\Administrador.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\aplicacao\Especialidade.java

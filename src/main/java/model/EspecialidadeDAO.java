@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import conexao.conexao_bancodedados;
+import conexao.ConexaoBancoDeDados;
 import aplicacao.Especialidade;
 
 public class EspecialidadeDAO {
@@ -13,13 +13,13 @@ public class EspecialidadeDAO {
 
     public EspecialidadeDAO() {
         try {
-            conn = conexao_bancodedados.newConnection();
+            conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
     }
     
-    public void create_especialidade(Especialidade nova_especialidade){
+    public void createEspecialidade(Especialidade nova_especialidade){
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO especialidade "
                     + "(descricao) VALUES ( '" + nova_especialidade.getDescricao() + "')");
@@ -29,7 +29,7 @@ public class EspecialidadeDAO {
         }
     }
     
-    public ArrayList<Especialidade> get_especialidades(){
+    public ArrayList<Especialidade> getEspecialidades(){
     
         ArrayList<Especialidade> especialidades = new ArrayList<>();
        
@@ -49,7 +49,7 @@ public class EspecialidadeDAO {
         return especialidades;
     }
     
-    public Especialidade get_especialidade(int id_especialidade){
+    public Especialidade getEspecialidade(int id_especialidade){
         
         Especialidade espec = new Especialidade();
         
@@ -68,7 +68,7 @@ public class EspecialidadeDAO {
         return espec;
     }
     
-    public void update_especialidade(int id_especialidade, Especialidade nova_especialidade){
+    public void updateEspecialidade(int id_especialidade, Especialidade nova_especialidade){
     
        try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE especialidade SET descricao='" + nova_especialidade.getDescricao() + "' "
@@ -79,7 +79,7 @@ public class EspecialidadeDAO {
         }
     }
     
-    public void delete_especialidade(int id_especialidade){
+    public void deleteEspecialidade(int id_especialidade){
     
         try (Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM especialidade WHERE especialidade.id=" + id_especialidade + "");
@@ -89,7 +89,7 @@ public class EspecialidadeDAO {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> get_idDeleteEspecialidade(int id_especialidade){
+    public ArrayList<ArrayList<Integer>> getIdDeleteEspecialidade(int id_especialidade){
         
         ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<>();
         

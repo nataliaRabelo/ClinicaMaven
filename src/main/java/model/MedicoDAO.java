@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import conexao.conexao_bancodedados;
+import conexao.ConexaoBancoDeDados;
 import aplicacao.Medico;
 import aplicacao.Consulta;
 
@@ -14,7 +14,7 @@ public class MedicoDAO {
 
     public MedicoDAO() {
         try {
-            conn = conexao_bancodedados.newConnection();
+            conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
@@ -45,7 +45,7 @@ public class MedicoDAO {
         return medico;
     }
    
-    public void create_exame(int id_tipoexame, int id_consulta){
+    public void createExame(int id_tipoexame, int id_consulta){
     
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO exames (idtipoexame,idconsulta) VALUES ('" +
@@ -56,7 +56,7 @@ public class MedicoDAO {
         }
     }
     
-    public void create_medico(Medico novo_medico){
+    public void createMedico(Medico novo_medico){
     
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO medico "
@@ -69,7 +69,7 @@ public class MedicoDAO {
         }
     }
     
-    public ArrayList<Consulta> get_consultas(int id_medico){
+    public ArrayList<Consulta> getConsultas(int id_medico){
     
         ArrayList<Consulta> consultasMedico = new ArrayList<>();
         
@@ -94,7 +94,7 @@ public class MedicoDAO {
         return consultasMedico;
     }
     
-    public Medico get_medico(int id_medico){
+    public Medico getMedico(int id_medico){
         
         Medico medico = new Medico();
         
@@ -119,7 +119,7 @@ public class MedicoDAO {
         return medico;
     }
     
-    public ArrayList<Object> get_exames(int id_consulta, int id_medico){
+    public ArrayList<Object> getExames(int id_consulta, int id_medico){
         
         ArrayList<Object> exames_disponiveis = new ArrayList<>();
     
@@ -137,7 +137,7 @@ public class MedicoDAO {
         return exames_disponiveis;
     }
     
-    public ArrayList<Medico> get_medicos(){
+    public ArrayList<Medico> getMedicos(){
     
         ArrayList<Medico> medicos = new ArrayList<>();
         
@@ -163,7 +163,7 @@ public class MedicoDAO {
         return medicos;
     }
     
-    public void update_medico(int id_medico, Medico medico){
+    public void updateMedico(int id_medico, Medico medico){
         
         try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE medico SET nome='" + medico.getNome() + "', crm='" +
@@ -176,7 +176,7 @@ public class MedicoDAO {
         }
     }
     
-    public void delete_medico(int id_medico){
+    public void deleteMedico(int id_medico){
         
         try (Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM medico WHERE medico.id=" + id_medico + "");
@@ -186,7 +186,7 @@ public class MedicoDAO {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> get_idDeleteMedico(int id_medico){
+    public ArrayList<ArrayList<Integer>> getIdDeleteMedico(int id_medico){
     
         ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<>();
         
@@ -221,7 +221,7 @@ public class MedicoDAO {
         return id_compilado;
     }
     
-    public ArrayList<Integer> medico_available(int id_medico, String data){
+    public ArrayList<Integer> medicoAvailable(int id_medico, String data){
         
         ArrayList<Integer>colisoes = new ArrayList<>();
         

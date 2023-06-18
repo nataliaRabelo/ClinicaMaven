@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import conexao.conexao_bancodedados;
+import conexao.ConexaoBancoDeDados;
 import aplicacao.Plano;
 
 public class PlanoDAO {
@@ -13,7 +13,7 @@ public class PlanoDAO {
 
     public PlanoDAO() {
         try {
-            conn = conexao_bancodedados.newConnection();
+            conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
@@ -23,7 +23,7 @@ public class PlanoDAO {
         this.conn = conn; 
     }
     
-    public void create_plano(Plano novo_plano){
+    public void createPlano(Plano novo_plano){
         
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO tipoplano "
@@ -34,7 +34,7 @@ public class PlanoDAO {
         }
     }
   
-    public ArrayList<Plano> get_planos(){
+    public ArrayList<Plano> getPlanos(){
     
         ArrayList<Plano> planos = new ArrayList<>();
        
@@ -54,7 +54,7 @@ public class PlanoDAO {
         return planos;
     }
     
-    public Plano get_plano(int id_plano){
+    public Plano getPlano(int id_plano){
     
         Plano plano = new Plano();
         
@@ -73,7 +73,7 @@ public class PlanoDAO {
         return plano;
     }
      
-    public void update_plano(int id_plano, Plano novo_plano){
+    public void updatePlano(int id_plano, Plano novo_plano){
     
         try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE tipoplano SET descricao='" + novo_plano.getDescricao() + "' WHERE tipoplano.id=" + id_plano + "");
@@ -83,7 +83,7 @@ public class PlanoDAO {
         }
     }
     
-    public void delete_plano(int id_plano){
+    public void deletePlano(int id_plano){
         
         try (Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM tipoplano WHERE tipoplano.id=" + id_plano + "");
@@ -93,7 +93,7 @@ public class PlanoDAO {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> get_idDeletePlano(int id_plano){
+    public ArrayList<ArrayList<Integer>> getIdDeletePlano(int id_plano){
         
         ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<>();
         

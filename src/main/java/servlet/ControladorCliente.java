@@ -40,14 +40,14 @@ public class ControladorCliente extends HttpServlet {
                
                 Consulta consultaOriginal = new Consulta();
                 
-                consultaOriginal = consultaDAO.get_consulta(Integer.parseInt(request.getParameter("id")));
+                consultaOriginal = consultaDAO.getConsulta(Integer.parseInt(request.getParameter("id")));
                
                 ArrayList<Object>lista_medico_espec = new ArrayList<>();
                 ArrayList<Object>lista_disponiveis = new ArrayList<>();
                 
-                consultaDAO.get_medicoEspecialidade(consultaOriginal.getId(),lista_medico_espec);
+                consultaDAO.getMedicoEspecialidade(consultaOriginal.getId(),lista_medico_espec);
                     
-                lista_disponiveis = consultaDAO.get_procedimentosDisponiveis();
+                lista_disponiveis = consultaDAO.getProcedimentosDisponiveis();
    
                 session.setAttribute("lista_disponiveis", lista_disponiveis);
                 session.setAttribute("consulta_edit", consultaOriginal);
@@ -62,7 +62,7 @@ public class ControladorCliente extends HttpServlet {
                 ArrayList<Consulta> lista_consultas = new ArrayList<>();
                 ExameDAO exameDAO = new ExameDAO();
                 
-                lista_consultas = consultaDAO.get_consultas(cliente.getId());
+                lista_consultas = consultaDAO.getConsultas(cliente.getId());
                 
                 if(lista_consultas.size() > 0){
                     
@@ -70,10 +70,10 @@ public class ControladorCliente extends HttpServlet {
                     ArrayList<ArrayList<String>>lista_exames_compilado = new ArrayList<>();
                     
                     for(int i=0;i<lista_consultas.size();i++){
-                        consultaDAO.get_medicoEspecialidade(lista_consultas.get(i).getId(),lista_med_esp);
+                        consultaDAO.getMedicoEspecialidade(lista_consultas.get(i).getId(),lista_med_esp);
                         
                         ArrayList<String>lista_exames = new ArrayList<>();
-                        lista_exames = exameDAO.get_examesDaConsulta(lista_consultas.get(i).getId(),lista_exames);
+                        lista_exames = exameDAO.getExamesDaConsulta(lista_consultas.get(i).getId(),lista_exames);
                         
                         if(lista_exames.isEmpty()){
                             lista_exames_compilado.add(null);
@@ -99,7 +99,7 @@ public class ControladorCliente extends HttpServlet {
 
                 ArrayList<Object> lista_procedimentos = new ArrayList<>();
                 
-                lista_procedimentos = consultaDAO.get_procedimentosDisponiveis();
+                lista_procedimentos = consultaDAO.getProcedimentosDisponiveis();
    
                 if(!lista_procedimentos.isEmpty()){
                     session.setAttribute("lista", lista_procedimentos);
@@ -113,7 +113,7 @@ public class ControladorCliente extends HttpServlet {
             
             case "Excluir":
                 
-                consultaDAO.delete_consulta(Integer.parseInt(request.getParameter("id")));
+                consultaDAO.deleteConsulta(Integer.parseInt(request.getParameter("id")));
                 RequestDispatcher excluir = request.getRequestDispatcher("./view/Confirmacao.jsp?type=Excluido");
                 excluir.forward(request, response);
             
@@ -141,12 +141,12 @@ public class ControladorCliente extends HttpServlet {
         String[] datahora = consulta.getData().split(" ");
         
         ArrayList<Integer> colisoes = new ArrayList<>();
-        colisoes = medicoDAO.medico_available(consulta.getIdmedico(),datahora[0]);
+        colisoes = medicoDAO.medicoAvailable(consulta.getIdmedico(),datahora[0]);
         
         if(request.getParameter("acao").equals("Enviar")){
 
                 if(colisoes.size() < 2){
-                    consultaDAO.create_consulta(consulta);
+                    consultaDAO.createConsulta(consulta);
                     RequestDispatcher voltar = request.getRequestDispatcher("./view/Confirmacao.jsp?type=Marcado");
                     voltar.forward(request, response);
                 }else{
@@ -159,7 +159,7 @@ public class ControladorCliente extends HttpServlet {
                 
                 if(colisoes.size() < 2 || colisoes.contains(id)){
                     consulta.setId(id);
-                    consultaDAO.update_consulta(consulta.getId(),consulta);
+                    consultaDAO.updateConsulta(consulta.getId(),consulta);
                     RequestDispatcher voltar = request.getRequestDispatcher("./view/Confirmacao.jsp?type=Editado");
                     voltar.forward(request, response);
                 }else{

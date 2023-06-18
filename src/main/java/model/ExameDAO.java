@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import conexao.conexao_bancodedados;
+import conexao.ConexaoBancoDeDados;
 import aplicacao.Exame;
 
 public class ExameDAO {
@@ -13,13 +13,13 @@ public class ExameDAO {
 
     public ExameDAO() {
         try {
-            conn = conexao_bancodedados.newConnection();
+            conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
     }
     
-    public void create_exame(Exame novo_exame){
+    public void createExame(Exame novo_exame){
         
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO tipoexame "
@@ -30,7 +30,7 @@ public class ExameDAO {
         }
     }
     
-    public ArrayList<Exame> get_exames(){
+    public ArrayList<Exame> getExames(){
     
         ArrayList<Exame> exames = new ArrayList<>();
        
@@ -50,7 +50,7 @@ public class ExameDAO {
         return exames;
     }
     
-    public Exame get_exame(int id_exame){
+    public Exame getExame(int id_exame){
     
         Exame exame = new Exame();
         
@@ -69,7 +69,7 @@ public class ExameDAO {
         return exame;
     }
     
-    public ArrayList<String> get_examesDaConsulta(int id_consulta, ArrayList<String> lista_exames){
+    public ArrayList<String> getExamesDaConsulta(int id_consulta, ArrayList<String> lista_exames){
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT tipoexame.descricao " +
@@ -87,7 +87,7 @@ public class ExameDAO {
         return lista_exames;
     }
     
-    public void update_exame(int id_exame, Exame novo_exame){
+    public void updateExame(int id_exame, Exame novo_exame){
     
         try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE tipoexame SET descricao='" + novo_exame.getDescricao() + "' WHERE tipoexame.id=" + id_exame + "");
@@ -97,7 +97,7 @@ public class ExameDAO {
         }
     }
     
-    public void delete_exame(int id_exame){
+    public void deleteExame(int id_exame){
         
         try (Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM exames WHERE exames.id=" + id_exame + "");
@@ -107,7 +107,7 @@ public class ExameDAO {
         }
     }
     
-    public void delete_tipoExame(int id_exame){
+    public void deleteTipoExame(int id_exame){
         
         try (Statement statement = conn.createStatement()){
             statement.execute("DELETE FROM tipoexame WHERE tipoexame.id=" + id_exame + "");
@@ -117,7 +117,7 @@ public class ExameDAO {
         }
     }
     
-    public ArrayList<Integer> get_idDeleteExame(int id_exame){
+    public ArrayList<Integer> getIdDeleteExame(int id_exame){
         
         ArrayList<Integer> id_exames = new ArrayList<>();
         

@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import conexao.conexao_bancodedados;
+import conexao.ConexaoBancoDeDados;
 import aplicacao.Cliente;
 
 public class ClienteDAO {
@@ -17,7 +17,7 @@ public class ClienteDAO {
 
     public ClienteDAO() {
         try {
-            conn = conexao_bancodedados.newConnection();
+            conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
@@ -46,13 +46,13 @@ public class ClienteDAO {
         return paciente;
     }
     
-    public boolean jaCadastrado(String cpf_paciente){
+    public boolean jaCadastrado(String cpfPaciente){
     
         boolean resp = false;
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente "
-                    + "WHERE paciente.cpf=" + cpf_paciente + "");
+                    + "WHERE paciente.cpf=" + cpfPaciente + "");
             
             if (resultSet.next()) {
                 resp = true;
@@ -63,27 +63,27 @@ public class ClienteDAO {
         return resp;
     }
     
-    public void create_paciente(Cliente novo_paciente){
+    public void createPaciente(Cliente novoPaciente){
  
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO paciente"
                     + " (nome, cpf, senha, autorizado, idtipoplano) VALUES ( '" +
-                    novo_paciente.getNome() + "','" + novo_paciente.getCpf() + "','" +
-                    novo_paciente.getSenha() + "','" + novo_paciente.getAutorizado() +
-                    "','" + novo_paciente.getIdtipoplano() + "')");
+                    novoPaciente.getNome() + "','" + novoPaciente.getCpf() + "','" +
+                    novoPaciente.getSenha() + "','" + novoPaciente.getAutorizado() +
+                    "','" + novoPaciente.getIdtipoplano() + "')");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
         
-    public String get_nomePaciente(int id_paciente){
+    public String getNomePaciente(int idPaciente){
         
         String nome = null;
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT nome FROM paciente " +
-                "WHERE paciente.id='" + id_paciente + "'");
+                "WHERE paciente.id='" + idPaciente + "'");
             
             if (resultSet.next()) {
                 nome = resultSet.getString("nome");
@@ -95,7 +95,7 @@ public class ClienteDAO {
         return nome;
     }
     
-    public ArrayList<Cliente> get_pacientes(){
+    public ArrayList<Cliente> getPacientes(){
     
         ArrayList<Cliente> pacientes = new ArrayList<>();
         
@@ -118,13 +118,13 @@ public class ClienteDAO {
         return pacientes;
     }
     
-    public Cliente get_paciente(int id_paciente){
+    public Cliente getPaciente(int idPaciente){
     
         Cliente paciente = new Cliente();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente "
-                    + "WHERE paciente.id = '" + id_paciente + "'");
+                    + "WHERE paciente.id = '" + idPaciente + "'");
             
             if (resultSet.next()) {
                 paciente.setId(resultSet.getInt("id"));
@@ -140,60 +140,60 @@ public class ClienteDAO {
         return paciente;
     }
     
-    public void update_paciente(int id_paciente, Cliente paciente){
+    public void updatePaciente(int idPaciente, Cliente paciente){
         
         try(Statement statement = conn.createStatement()){
             statement.execute("UPDATE paciente SET nome='" + paciente.getNome() + "' , cpf='" +
                     paciente.getCpf() + "' , senha='" + paciente.getSenha() +
                     "' , autorizado='" + paciente.getAutorizado() +
-                    "' , idtipoplano='" + paciente.getIdtipoplano() + "' WHERE paciente.id='" + id_paciente + "'");
+                    "' , idtipoplano='" + paciente.getIdtipoplano() + "' WHERE paciente.id='" + idPaciente + "'");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public void delete_paciente(int id_paciente){
+    public void deletePaciente(int idPaciente){
         
         try (Statement statement = conn.createStatement()){
-            statement.execute("DELETE FROM paciente WHERE paciente.id=" + id_paciente + "");
+            statement.execute("DELETE FROM paciente WHERE paciente.id=" + idPaciente + "");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public ArrayList<ArrayList<Integer>> get_idDeletePaciente(int id_paciente){
+    public ArrayList<ArrayList<Integer>> getIdDeletePaciente(int idPaciente){
     
-        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<>();
-        ArrayList<Integer> id_consultas = new ArrayList<>();
-        ArrayList<Integer> id_exames = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> idCompilado = new ArrayList<>();
+        ArrayList<Integer> idConsultas = new ArrayList<>();
+        ArrayList<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
             "FROM paciente INNER JOIN consulta ON paciente.id=consulta.idpaciente " +
             "INNER JOIN exames ON consulta.id=exames.idconsulta " +
-            "WHERE paciente.id=" + id_paciente + "");
+            "WHERE paciente.id=" + idPaciente + "");
             
             while(resultSet.next()) {
-                id_exames.add(resultSet.getInt("id"));
+                idExames.add(resultSet.getInt("id"));
             }
             
             resultSet = statement.executeQuery("SELECT consulta.id " +
             "FROM paciente INNER JOIN consulta ON paciente.id=consulta.idpaciente " +
-            "WHERE paciente.id=" + id_paciente + "");
+            "WHERE paciente.id=" + idPaciente + "");
             
             while(resultSet.next()) {
-                id_consultas.add(resultSet.getInt("id"));
+                idConsultas.add(resultSet.getInt("id"));
             }
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
         
-        id_compilado.add(id_exames);
-        id_compilado.add(id_consultas);
+        idCompilado.add(idExames);
+        idCompilado.add(idConsultas);
         
-        return id_compilado;
+        return idCompilado;
     }
 }

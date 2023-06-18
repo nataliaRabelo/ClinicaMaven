@@ -27,7 +27,7 @@ public class Cadastrar extends HttpServlet {
             
             ArrayList<Plano> planos = new ArrayList<>();
             
-            planos = planoDAO.get_planos();
+            planos = planoDAO.getPlanos();
             
             if(planos.size() > 0){
                 HttpSession session = request.getSession();
@@ -47,20 +47,20 @@ public class Cadastrar extends HttpServlet {
         
         try{
             
-            Cliente novo_paciente = new Cliente();
+            Cliente novoPaciente = new Cliente();
             
-            novo_paciente.setNome(request.getParameter("nome"));
-            novo_paciente.setCpf(request.getParameter("CPF"));
-            novo_paciente.setSenha(request.getParameter("senha"));
-            novo_paciente.setIdtipoplano(Integer.parseInt(request.getParameter("plano")));
-            novo_paciente.setAutorizado('S');
+            novoPaciente.setNome(request.getParameter("nome"));
+            novoPaciente.setCpf(request.getParameter("CPF"));
+            novoPaciente.setSenha(request.getParameter("senha"));
+            novoPaciente.setIdtipoplano(Integer.parseInt(request.getParameter("plano")));
+            novoPaciente.setAutorizado('S');
             
-            if(novocltDAO.jaCadastrado(novo_paciente.getCpf())){
+            if(novocltDAO.jaCadastrado(novoPaciente.getCpf())){
                 RequestDispatcher clt = request.getRequestDispatcher("./view/Confirmacao.jsp?type=JaCadastrado");
                 clt.forward(request, response);
             }else{ 
                 
-                novocltDAO.create_paciente(novo_paciente);
+                novocltDAO.createPaciente(novoPaciente);
                 
                 RequestDispatcher clt = request.getRequestDispatcher("./view/Confirmacao.jsp?type=Cadastrado");
                 clt.forward(request, response);

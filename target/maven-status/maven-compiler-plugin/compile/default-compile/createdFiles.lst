@@ -1,7 +1,7 @@
+conexao\ConexaoBancoDeDados.class
 aplicacao\Medico.class
 model\AdministradorDAO.class
 model\EspecialidadeDAO.class
-conexao\conexao_bancodedados.class
 model\ConsultaDAO.class
 aplicacao\Especialidade.class
 aplicacao\Exame.class

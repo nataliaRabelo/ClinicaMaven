@@ -31,7 +31,7 @@ public class ControladorAdministrador extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-        Administrador administrador_sessao = (Administrador)session.getAttribute("adm");
+        Administrador administradorSessao = (Administrador)session.getAttribute("adm");
         
         ClienteDAO clienteDAO = new ClienteDAO();
         MedicoDAO medicoDAO = new MedicoDAO();
@@ -47,18 +47,18 @@ public class ControladorAdministrador extends HttpServlet {
                     case "Visualizar":
                         
                         ArrayList<Cliente> pacientes = new ArrayList<>();
-                        pacientes = clienteDAO.get_pacientes();
+                        pacientes = clienteDAO.getPacientes();
                         
                         if(pacientes.size() > 0){
                         
-                            ArrayList<Plano> planos_pacientes = new ArrayList<>();
+                            ArrayList<Plano> planosPacientes = new ArrayList<>();
 
                             for(int i=0;i<pacientes.size();i++){
-                                planos_pacientes.add(planoDAO.get_plano(pacientes.get(i).getIdtipoplano()));
+                                planosPacientes.add(planoDAO.getPlano(pacientes.get(i).getIdtipoplano()));
                             }
 
                             session.setAttribute("pacientes", pacientes);
-                            session.setAttribute("planos_pacientes", planos_pacientes);
+                            session.setAttribute("planos_pacientes", planosPacientes);
                             RequestDispatcher cadpac = request.getRequestDispatcher("./view/RelacaoPacientes.jsp");
                             cadpac.forward(request, response);
                         }else{
@@ -68,43 +68,47 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                     
                     case "Excluir":
-                        ArrayList<ArrayList<Integer>> compilado_ids = new ArrayList<>();
+                        ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
                         
-                        compilado_ids = clienteDAO.get_idDeletePaciente(Integer.parseInt(request.getParameter("id")));
+                        compiladoIds = clienteDAO.getIdDeletePaciente(Integer.parseInt(request.getParameter("id")));
                         
-                        for(int i=0;i<compilado_ids.get(0).size();i++){
-                            exameDAO.delete_exame(compilado_ids.get(0).get(i));
+                        for(int i=0;i<compiladoIds.get(0).size();i++){
+                            exameDAO.deleteExame(compiladoIds.get(0).get(i));
                         }
-                        for(int i=0;i<compilado_ids.get(1).size();i++){
-                            consultaDAO.delete_consulta(compilado_ids.get(1).get(i));
+                        for(int i=0;i<compiladoIds.get(1).size();i++){
+                            consultaDAO.deleteConsulta(compiladoIds.get(1).get(i));
                         }
                         
-                        clienteDAO.delete_paciente(Integer.parseInt(request.getParameter("id")));
+                        clienteDAO.deletePaciente(Integer.parseInt(request.getParameter("id")));
                         
-                        RequestDispatcher del_adm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Paciente");
-                        del_adm.forward(request, response);
+                        RequestDispatcher delAdm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Paciente");
+                        delAdm.forward(request, response);
                     break;
+
+
                     
                     case "Editar":
                         Cliente paciente = new Cliente();
                         Plano plano = new Plano();
-                        ArrayList<Plano> planos_disponiveis = new ArrayList<>();
+                        ArrayList<Plano> planosDisponiveis = new ArrayList<>();
                         
-                        paciente = clienteDAO.get_paciente(Integer.parseInt(request.getParameter("id")));
-                        plano = planoDAO.get_plano(paciente.getIdtipoplano());
-                        planos_disponiveis = planoDAO.get_planos();
+                        paciente = clienteDAO.getPaciente(Integer.parseInt(request.getParameter("id")));
+                        plano = planoDAO.getPlano(paciente.getIdtipoplano());
+                        planosDisponiveis = planoDAO.getPlanos();
                         
                         session.setAttribute("paciente",paciente);
                         session.setAttribute("plano",plano);
-                        session.setAttribute("planos", planos_disponiveis);
+                        session.setAttribute("planos", planosDisponiveis);
                         
-                        RequestDispatcher edt_pac = request.getRequestDispatcher("/view/EditarPacienteAdm.jsp");
-                        edt_pac.forward(request, response);
+                        RequestDispatcher edtPac = request.getRequestDispatcher("/view/EditarPacienteAdm.jsp");
+                        edtPac.forward(request, response);
                     break;
+
+
                     
                     case "Cadastrar":
                         ArrayList<Plano> planos = new ArrayList<>();
-                        planos = planoDAO.get_planos();
+                        planos = planoDAO.getPlanos();
                         
                         session.setAttribute("paciente",null);
                         session.setAttribute("plano",null);
@@ -127,18 +131,18 @@ public class ControladorAdministrador extends HttpServlet {
                     case "Visualizar":
                         ArrayList<Medico> medicos = new ArrayList<>();
 
-                        medicos = medicoDAO.get_medicos();
+                        medicos = medicoDAO.getMedicos();
                         
                         if(medicos.size() > 0){
                         
-                            ArrayList<Especialidade> especialidades_medicos = new ArrayList<>();
+                            ArrayList<Especialidade> especialidadesMedicos = new ArrayList<>();
 
                             for(int i=0;i<medicos.size();i++){
-                                especialidades_medicos.add(especialidadeDAO.get_especialidade(medicos.get(i).getIdespecialidade()));
+                                especialidadesMedicos.add(especialidadeDAO.getEspecialidade(medicos.get(i).getIdespecialidade()));
                             }
 
                             session.setAttribute("medicos",medicos);
-                            session.setAttribute("especialidades_medicos",especialidades_medicos);
+                            session.setAttribute("especialidades_medicos",especialidadesMedicos);
                             RequestDispatcher cadmed = request.getRequestDispatcher("./view/RelacaoMedicos.jsp");
                             cadmed.forward(request, response);
                         }else{
@@ -148,50 +152,54 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                 
                     case "Excluir":
-                        ArrayList<ArrayList<Integer>> compilado_ids = new ArrayList<>();
+                        ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
                         
-                        compilado_ids = medicoDAO.get_idDeleteMedico(Integer.parseInt(request.getParameter("id")));
+                        compiladoIds = medicoDAO.getIdDeleteMedico(Integer.parseInt(request.getParameter("id")));
                         
-                        for(int i=0;i<compilado_ids.get(0).size();i++){
-                            exameDAO.delete_exame(compilado_ids.get(0).get(i));
+                        for(int i=0;i<compiladoIds.get(0).size();i++){
+                            exameDAO.deleteExame(compiladoIds.get(0).get(i));
                         }
-                        for(int i=0;i<compilado_ids.get(1).size();i++){
-                            consultaDAO.delete_consulta(compilado_ids.get(1).get(i));
+                        for(int i=0;i<compiladoIds.get(1).size();i++){
+                            consultaDAO.deleteConsulta(compiladoIds.get(1).get(i));
                         }
                         
-                        medicoDAO.delete_medico(Integer.parseInt(request.getParameter("id")));
+                        medicoDAO.deleteMedico(Integer.parseInt(request.getParameter("id")));
                         
-                        RequestDispatcher del_adm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Medico");
-                        del_adm.forward(request, response);
+                        RequestDispatcher delAdm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Medico");
+                        delAdm.forward(request, response);
                     break;
+
+
                 
                     case "Editar":
                         
                         Especialidade especialidade  = new Especialidade();
-                        ArrayList<Especialidade> especs_disponiveis = new ArrayList<>();
+                        ArrayList<Especialidade> especsDisponiveis = new ArrayList<>();
                         
-                        medico = medicoDAO.get_medico(Integer.parseInt(request.getParameter("id")));
-                        especialidade = especialidadeDAO.get_especialidade(medico.getIdespecialidade());
-                        especs_disponiveis = especialidadeDAO.get_especialidades();
+                        medico = medicoDAO.getMedico(Integer.parseInt(request.getParameter("id")));
+                        especialidade = especialidadeDAO.getEspecialidade(medico.getIdespecialidade());
+                        especsDisponiveis = especialidadeDAO.getEspecialidades();
                         
                         session.setAttribute("medico",medico);
                         session.setAttribute("especialidade",especialidade);
-                        session.setAttribute("especialidades", especs_disponiveis);
+                        session.setAttribute("especialidades", especsDisponiveis);
                         
-                        RequestDispatcher edt_med = request.getRequestDispatcher("/view/EditarMedicoAdm.jsp");
-                        edt_med.forward(request, response);
+                        RequestDispatcher edtMed = request.getRequestDispatcher("/view/EditarMedicoAdm.jsp");
+                        edtMed.forward(request, response);
                     break;
+
+
                     
                     case "Cadastrar":
                         ArrayList<Especialidade> especs = new ArrayList<>();
 
-                        especs = especialidadeDAO.get_especialidades();
+                        especs = especialidadeDAO.getEspecialidades();
                         
                         if(especs.size() > 0){
                             
                             session.setAttribute("especialidades", especs);
-                            RequestDispatcher cad_med = request.getRequestDispatcher("/view/CadastrarMedico.jsp");
-                            cad_med.forward(request, response);
+                            RequestDispatcher cadMed = request.getRequestDispatcher("/view/CadastrarMedico.jsp");
+                            cadMed.forward(request, response);
                         }else{
                             RequestDispatcher cad = request.getRequestDispatcher("/view/ConfirmacaoAdm.jsp?arg=SemRequisito&type=Medico");
                             cad.forward(request, response);
@@ -200,49 +208,50 @@ public class ControladorAdministrador extends HttpServlet {
                     
                     case "VerConsultas":
                         
-                        ArrayList<Consulta> lista_consultas = new ArrayList<>();                
-                        lista_consultas = medicoDAO.get_consultas(Integer.parseInt(request.getParameter("id")));
+                        ArrayList<Consulta> listaConsultas = new ArrayList<>();                
+                        listaConsultas = medicoDAO.getConsultas(Integer.parseInt(request.getParameter("id")));
                     
-                        if(lista_consultas.size() > 0){
+                        if(listaConsultas.size() > 0){
                             
-                            ArrayList<ArrayList<String>>lista_exames_compilado = new ArrayList<>();
+                            ArrayList<ArrayList<String>>listaExamesCompilado = new ArrayList<>();
 
-                            for(int i=0;i<lista_consultas.size();i++){
+                            for(int i=0;i<listaConsultas.size();i++){
 
-                                ArrayList<String>lista_exames = new ArrayList<>();
-                                lista_exames = exameDAO.get_examesDaConsulta(lista_consultas.get(i).getId(),lista_exames);
+                                ArrayList<String>listaExames = new ArrayList<>();
+                                listaExames = exameDAO.getExamesDaConsulta(listaConsultas.get(i).getId(),listaExames);
 
-                                if(lista_exames.isEmpty()){
-                                    lista_exames_compilado.add(null);
+                                if(listaExames.isEmpty()){
+                                    listaExamesCompilado.add(null);
                                 }
                                 else{
-                                    lista_exames_compilado.add(lista_exames);
+                                    listaExamesCompilado.add(listaExames);
                                 }
                             }
 
-                            ArrayList<String> nome_pacientes = new ArrayList<>();
+                            ArrayList<String> nomePacientes = new ArrayList<>();
 
-                            for(int i=0;i<lista_consultas.size();i++){
+                            for(int i=0;i<listaConsultas.size();i++){
 
-                                String nome_paciente = clienteDAO.get_nomePaciente(lista_consultas.get(i).getIdpaciente());
-                                nome_pacientes.add(nome_paciente);
+                                String nomePaciente = clienteDAO.getNomePaciente(listaConsultas.get(i).getIdpaciente());
+                                nomePacientes.add(nomePaciente);
                             }
                             
-                            medico = medicoDAO.get_medico(Integer.parseInt(request.getParameter("id")));
-                            String nome_medico = medico.getNome();
+                            medico = medicoDAO.getMedico(Integer.parseInt(request.getParameter("id")));
+                            String nomeMedico = medico.getNome();
                             
-                            session.setAttribute("lista_nomes", nome_pacientes);
-                            session.setAttribute("lista_exames", lista_exames_compilado);
-                            session.setAttribute("lista_consultas", lista_consultas);
-                            session.setAttribute("nome_medico", nome_medico);
-                            RequestDispatcher adm_cons = request.getRequestDispatcher("./view/RelacaoConsultas.jsp");
-                            adm_cons.forward(request, response);
+                            session.setAttribute("lista_nomes", nomePacientes);
+                            session.setAttribute("lista_exames", listaExamesCompilado);
+                            session.setAttribute("lista_consultas", listaConsultas);
+                            session.setAttribute("nome_medico", nomeMedico);
+                            RequestDispatcher admCons = request.getRequestDispatcher("./view/RelacaoConsultas.jsp");
+                            admCons.forward(request, response);
                         }
                         else{
                             RequestDispatcher clt = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=SemConsulta");
                             clt.forward(request, response);
                         }
                     break;
+
                 }
             break;
                 
@@ -252,35 +261,40 @@ public class ControladorAdministrador extends HttpServlet {
                     case "Visualizar":     
                         ArrayList<Administrador> adms = new ArrayList<>();
 
-                        adms = administradorDAO.get_administradores();
+                        adms = administradorDAO.getAdministradores();
                         
                         session.setAttribute("adms",adms);
-                        session.setAttribute("administrador_sessao",administrador_sessao);
-                        RequestDispatcher vi_adm = request.getRequestDispatcher("./view/RelacaoAdministradores.jsp");
-                        vi_adm.forward(request, response);
+                        session.setAttribute("administrador_sessao",administradorSessao);
+                        RequestDispatcher viAdm = request.getRequestDispatcher("./view/RelacaoAdministradores.jsp");
+                        viAdm.forward(request, response);
                     break;
+
                     
                     case "Excluir":
-                        administradorDAO.delete_administrador(Integer.parseInt(request.getParameter("id")));
-                        RequestDispatcher del_adm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Administrador");
-                        del_adm.forward(request, response);
+                        administradorDAO.deleteAdministrador(Integer.parseInt(request.getParameter("id")));
+                        RequestDispatcher delAdm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Administrador");
+                        delAdm.forward(request, response);
                     break;
+
                 
                     case "Editar": 
                         Administrador administrador = new Administrador();
                         
-                        administrador = administradorDAO.get_administrador(Integer.parseInt(request.getParameter("id")));
+                        administrador = administradorDAO.getAdministrador(Integer.parseInt(request.getParameter("id")));
                         
                         session.setAttribute("administrador",administrador);
-                        RequestDispatcher edt_adm = request.getRequestDispatcher("/view/EditarAdministradorAdm.jsp");
-                        edt_adm.forward(request, response);
+                        RequestDispatcher edtAdm = request.getRequestDispatcher("/view/EditarAdministradorAdm.jsp");
+                        edtAdm.forward(request, response);
                     break;
+
                     
                     case "Cadastrar":
                         session.setAttribute("administrador",null);
-                        RequestDispatcher cr_adm = request.getRequestDispatcher("/view/CadastrarAdministrador.jsp");
-                        cr_adm.forward(request, response);
+                        RequestDispatcher crAdm = request.getRequestDispatcher("/view/CadastrarAdministrador.jsp");
+                        crAdm.forward(request, response);
                     break;
+
+
                 }  
             break;
             
@@ -290,7 +304,7 @@ public class ControladorAdministrador extends HttpServlet {
                         
                         ArrayList<Plano> planos = new ArrayList<>();
 
-                        planos = planoDAO.get_planos();
+                        planos = planoDAO.getPlanos();
 
                         if(planos.size() > 0){
                             session.setAttribute("planos",planos);
@@ -304,43 +318,48 @@ public class ControladorAdministrador extends HttpServlet {
                     
                     case "Excluir":
                         
-                        ArrayList<ArrayList<Integer>> compilado_ids = new ArrayList<>();
+                        ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
                         
-                        compilado_ids = planoDAO.get_idDeletePlano(Integer.parseInt(request.getParameter("id")));
+                        compiladoIds = planoDAO.getIdDeletePlano(Integer.parseInt(request.getParameter("id")));
                         
-                        for(int i=0;i<compilado_ids.get(0).size();i++){
-                            exameDAO.delete_exame(compilado_ids.get(0).get(i));
+                        for(int i=0;i<compiladoIds.get(0).size();i++){
+                            exameDAO.deleteExame(compiladoIds.get(0).get(i));
                         }
-                        for(int i=0;i<compilado_ids.get(1).size();i++){
-                            consultaDAO.delete_consulta(compilado_ids.get(1).get(i));
+                        for(int i=0;i<compiladoIds.get(1).size();i++){
+                            consultaDAO.deleteConsulta(compiladoIds.get(1).get(i));
                         }
-                        for(int i=0;i<compilado_ids.get(2).size();i++){
-                            clienteDAO.delete_paciente(compilado_ids.get(2).get(i));
+                        for(int i=0;i<compiladoIds.get(2).size();i++){
+                            clienteDAO.deletePaciente(compiladoIds.get(2).get(i));
                         }
                         
-                        planoDAO.delete_plano(Integer.parseInt(request.getParameter("id")));
+                        planoDAO.deletePlano(Integer.parseInt(request.getParameter("id")));
                         
                         session.setAttribute("identidade", 2);
-                        RequestDispatcher del_adm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Plano");
-                        del_adm.forward(request, response);
+                        RequestDispatcher delAdm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Plano");
+                        delAdm.forward(request, response);
                     break;
+
+
+
 
                     case "Editar":
                         Plano plano = new Plano();
                         
-                        plano = planoDAO.get_plano(Integer.parseInt(request.getParameter("id")));
+                        plano = planoDAO.getPlano(Integer.parseInt(request.getParameter("id")));
                         session.setAttribute("plano",plano);
                         
-                        RequestDispatcher edt_pln = request.getRequestDispatcher("/view/CadastrarPlano.jsp");
-                        edt_pln.forward(request, response);
+                        RequestDispatcher edtPln = request.getRequestDispatcher("/view/CadastrarPlano.jsp");
+                        edtPln.forward(request, response);
                     break;
+
 
                     case "Cadastrar":
                         session.setAttribute("plano",null);
                         
-                        RequestDispatcher cad_plan = request.getRequestDispatcher("/view/CadastrarPlano.jsp");
-                        cad_plan.forward(request, response);
+                        RequestDispatcher cadPlan = request.getRequestDispatcher("/view/CadastrarPlano.jsp");
+                        cadPlan.forward(request, response);
                     break;
+
                 }  
             break;
             
@@ -350,7 +369,7 @@ public class ControladorAdministrador extends HttpServlet {
                         
                         ArrayList<Especialidade> especs = new ArrayList<>();
 
-                        especs = especialidadeDAO.get_especialidades();
+                        especs = especialidadeDAO.getEspecialidades();
 
                         if(especs.size() > 0){
                             session.setAttribute("especs",especs);
@@ -363,44 +382,48 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                     
                     case "Excluir":
-                        ArrayList<ArrayList<Integer>> compilado_ids = new ArrayList<>();
+                        ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
                         
-                        compilado_ids = especialidadeDAO.get_idDeleteEspecialidade(Integer.parseInt(request.getParameter("id")));
+                        compiladoIds = especialidadeDAO.getIdDeleteEspecialidade(Integer.parseInt(request.getParameter("id")));
                         
-                        for(int i=0;i<compilado_ids.get(0).size();i++){
-                            exameDAO.delete_exame(compilado_ids.get(0).get(i));
+                        for(int i=0;i<compiladoIds.get(0).size();i++){
+                            exameDAO.deleteExame(compiladoIds.get(0).get(i));
                         }
-                        for(int i=0;i<compilado_ids.get(1).size();i++){
-                            consultaDAO.delete_consulta(compilado_ids.get(1).get(i));
+                        for(int i=0;i<compiladoIds.get(1).size();i++){
+                            consultaDAO.deleteConsulta(compiladoIds.get(1).get(i));
                         }
-                        for(int i=0;i<compilado_ids.get(2).size();i++){
-                            medicoDAO.delete_medico(compilado_ids.get(2).get(i));
+                        for(int i=0;i<compiladoIds.get(2).size();i++){
+                            medicoDAO.deleteMedico(compiladoIds.get(2).get(i));
                         }
                         
-                        especialidadeDAO.delete_especialidade(Integer.parseInt(request.getParameter("id")));
+                        especialidadeDAO.deleteEspecialidade(Integer.parseInt(request.getParameter("id")));
                         
                         session.setAttribute("identidade", 2);
-                        RequestDispatcher del_adm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Especialidade");
-                        del_adm.forward(request, response);   
+                        RequestDispatcher delAdm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Especialidade");
+                        delAdm.forward(request, response);   
                     break;
+
+
 
                     case "Editar":
                         Especialidade especialidade = new Especialidade();
                         
-                        especialidade = especialidadeDAO.get_especialidade(Integer.parseInt(request.getParameter("id")));
+                        especialidade = especialidadeDAO.getEspecialidade(Integer.parseInt(request.getParameter("id")));
                         session.setAttribute("especialidade",especialidade);
                         
-                        RequestDispatcher edt_esp = request.getRequestDispatcher("/view/CadastrarEspecialidade.jsp");
-                        edt_esp.forward(request, response);
+                        RequestDispatcher edtEsp = request.getRequestDispatcher("/view/CadastrarEspecialidade.jsp");
+                        edtEsp.forward(request, response);
 
                     break;
+
 
                     case "Cadastrar":
                         session.setAttribute("especialidade",null);
                         
-                        RequestDispatcher cad_esp = request.getRequestDispatcher("/view/CadastrarEspecialidade.jsp");
-                        cad_esp.forward(request, response);
+                        RequestDispatcher cadEsp = request.getRequestDispatcher("/view/CadastrarEspecialidade.jsp");
+                        cadEsp.forward(request, response);
                     break;
+
                 }
             break;
         
@@ -410,7 +433,7 @@ public class ControladorAdministrador extends HttpServlet {
                         
                         ArrayList<Exame> exames = new ArrayList<>();
 
-                        exames = exameDAO.get_exames();
+                        exames = exameDAO.getExames();
 
                         if(exames.size() > 0){
                             session.setAttribute("exames",exames);
@@ -423,44 +446,48 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                     
                     case "Excluir":
-                        ArrayList<Integer> compilado_ids = new ArrayList<>();
+                        ArrayList<Integer> compiladoIds = new ArrayList<>();
                         
-                        compilado_ids = exameDAO.get_idDeleteExame(Integer.parseInt(request.getParameter("id")));
+                        compiladoIds = exameDAO.getIdDeleteExame(Integer.parseInt(request.getParameter("id")));
                         
-                        for(int i=0;i<compilado_ids.size();i++){
-                            exameDAO.delete_exame(compilado_ids.get(i));
+                        for(int i=0;i<compiladoIds.size();i++){
+                            exameDAO.deleteExame(compiladoIds.get(i));
                         }
                         
-                        exameDAO.delete_tipoExame(Integer.parseInt(request.getParameter("id")));
+                        exameDAO.deleteTipoExame(Integer.parseInt(request.getParameter("id")));
                         
                         session.setAttribute("identidade", 2);
-                        RequestDispatcher del_adm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Exame");
-                        del_adm.forward(request, response);   
+                        RequestDispatcher delAdm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Exame");
+                        delAdm.forward(request, response);   
                     break;
+
+
                     
                     case "Editar":
                         Exame exame = new Exame();
                         
-                        exame = exameDAO.get_exame(Integer.parseInt(request.getParameter("id")));
+                        exame = exameDAO.getExame(Integer.parseInt(request.getParameter("id")));
                         session.setAttribute("exame",exame);
                         
-                        RequestDispatcher edt_exm = request.getRequestDispatcher("/view/CadastrarExame.jsp");
-                        edt_exm.forward(request, response);
+                        RequestDispatcher edtExm = request.getRequestDispatcher("/view/CadastrarExame.jsp");
+                        edtExm.forward(request, response);
 
                     break;
+
 
                     case "Cadastrar":
                         session.setAttribute("exame",null);
                         
-                        RequestDispatcher cad_exm = request.getRequestDispatcher("/view/CadastrarExame.jsp");
-                        cad_exm.forward(request, response);
+                        RequestDispatcher cadExm = request.getRequestDispatcher("/view/CadastrarExame.jsp");
+                        cadExm.forward(request, response);
                     break;
+
                 }
             break;
             
             case "Dashboard":
             
-                session.setAttribute("adm", administrador_sessao);
+                session.setAttribute("adm", administradorSessao);
                 RequestDispatcher admin = request.getRequestDispatcher("./view/AreaAdministrador.jsp");
                 admin.forward(request, response);    
             break;
@@ -475,7 +502,7 @@ public class ControladorAdministrador extends HttpServlet {
         switch(request.getParameter("type")){
             
             case "Paciente":
-                ClienteDAO novo_cltDAO = new ClienteDAO();
+                ClienteDAO novoCltDAO = new ClienteDAO();
                 Cliente paciente = new Cliente();
                 
                 paciente.setNome(request.getParameter("nome"));
@@ -485,21 +512,22 @@ public class ControladorAdministrador extends HttpServlet {
                 paciente.setAutorizado(request.getParameter("autorizado").charAt(0));
                 
                 if(request.getParameter("action").equals("Cadastrar")){
-                        novo_cltDAO.create_paciente(paciente);
+                        novoCltDAO.createPaciente(paciente);
                         
-                        RequestDispatcher cad_pac = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Paciente");
-                        cad_pac.forward(request, response);
+                        RequestDispatcher cadPac = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Paciente");
+                        cadPac.forward(request, response);
                 }
                 else if(request.getParameter("action").equals("Editar")){  
-                        novo_cltDAO.update_paciente(Integer.parseInt(request.getParameter("id")),paciente);
+                        novoCltDAO.updatePaciente(Integer.parseInt(request.getParameter("id")),paciente);
                         
-                        RequestDispatcher clt_edit = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Paciente");
-                        clt_edit.forward(request, response);
+                        RequestDispatcher cltEdit = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Paciente");
+                        cltEdit.forward(request, response);
                 }  
             break;
+
             
             case "Medico":
-                MedicoDAO novo_medDAO = new MedicoDAO();
+                MedicoDAO novoMedDAO = new MedicoDAO();
                 Medico medico = new Medico();
                 
                 medico.setNome(request.getParameter("nome"));
@@ -511,22 +539,23 @@ public class ControladorAdministrador extends HttpServlet {
                 medico.setAutorizado(request.getParameter("autorizado").charAt(0));
                 
                 if(request.getParameter("action").equals("Cadastrar")){
-                        novo_medDAO.create_medico(medico);
+                        novoMedDAO.createMedico(medico);
                         
                         session.setAttribute("identidade", 2);
                         RequestDispatcher med = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Medico");
                         med.forward(request, response);
                 }
                 else if(request.getParameter("action").equals("Editar")){
-                        novo_medDAO.update_medico(Integer.parseInt(request.getParameter("id")),medico);
+                        novoMedDAO.updateMedico(Integer.parseInt(request.getParameter("id")),medico);
                         
-                        RequestDispatcher med_edit = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Medico");
-                        med_edit.forward(request, response);
+                        RequestDispatcher med_Edit = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Medico");
+                        med_Edit.forward(request, response);
                 }
             break;
+
                 
             case "Administrador":
-                AdministradorDAO novo_admDAO = new AdministradorDAO();
+                AdministradorDAO novo_AdmDAO = new AdministradorDAO();
                 Administrador novo_adm = new Administrador();
                 
                 if(request.getParameter("action").equals("Cadastrar")){
@@ -534,7 +563,7 @@ public class ControladorAdministrador extends HttpServlet {
                         novo_adm.setCpf(request.getParameter("CPF"));
                         novo_adm.setSenha(request.getParameter("senha"));
 
-                        novo_admDAO.create_administrador(novo_adm);
+                        novo_AdmDAO.createAdministrador(novo_adm);
                         
                         session.setAttribute("identidade", 2);
                         RequestDispatcher adm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Administrador");
@@ -545,12 +574,13 @@ public class ControladorAdministrador extends HttpServlet {
                         novo_adm.setCpf(request.getParameter("CPF"));
                         novo_adm.setSenha(request.getParameter("senha")); 
                         
-                        novo_admDAO.update_administrador(Integer.parseInt(request.getParameter("id")),novo_adm);
+                        novo_AdmDAO.updateAdministrador(Integer.parseInt(request.getParameter("id")),novo_adm);
                         
                         RequestDispatcher edt_adm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Administrador");
                         edt_adm.forward(request, response);
                 }
             break;
+
             
             case "Plano":
                 Plano novo_plano = new Plano();
@@ -559,7 +589,7 @@ public class ControladorAdministrador extends HttpServlet {
                 if(request.getParameter("action").equals("Cadastrar")){
                         novo_plano.setDescricao(request.getParameter("nomePlano"));
                         
-                        novo_planDAO.create_plano(novo_plano);
+                        novo_planDAO.createPlano(novo_plano);
                         
                         session.setAttribute("identidade", 2);
                         RequestDispatcher pln = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Plano");
@@ -567,7 +597,7 @@ public class ControladorAdministrador extends HttpServlet {
                 }
                 else if(request.getParameter("action").equals("Editar")){
                         novo_plano.setDescricao(request.getParameter("nomePlano"));
-                        novo_planDAO.update_plano(Integer.parseInt(request.getParameter("id")),novo_plano);
+                        novo_planDAO.updatePlano(Integer.parseInt(request.getParameter("id")),novo_plano);
                         
                         RequestDispatcher novopln = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Plano");
                         novopln.forward(request, response);
@@ -580,7 +610,7 @@ public class ControladorAdministrador extends HttpServlet {
                 
                 if(request.getParameter("action").equals("Cadastrar")){
                         nova_especialidade.setDescricao(request.getParameter("nomeEspecialidade"));
-                        nova_espDAO.create_especialidade(nova_especialidade);
+                        nova_espDAO.createEspecialidade(nova_especialidade);
                         
                         session.setAttribute("identidade", 2);
                         RequestDispatcher esp = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Especialidade");
@@ -588,7 +618,7 @@ public class ControladorAdministrador extends HttpServlet {
                 }
                 else if(request.getParameter("action").equals("Editar")){
                         nova_especialidade.setDescricao(request.getParameter("nomeEspecialidade"));
-                        nova_espDAO.update_especialidade(Integer.parseInt(request.getParameter("id")),nova_especialidade);
+                        nova_espDAO.updateEspecialidade(Integer.parseInt(request.getParameter("id")),nova_especialidade);
                         
                         RequestDispatcher novaesp = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Especialidade");
                         novaesp.forward(request, response);
@@ -601,7 +631,7 @@ public class ControladorAdministrador extends HttpServlet {
                 
                 if(request.getParameter("action").equals("Cadastrar")){
                         novo_exame.setDescricao(request.getParameter("nomeExame"));
-                        novo_exmDAO.create_exame(novo_exame);
+                        novo_exmDAO.createExame(novo_exame);
                         
                         session.setAttribute("identidade", 2);
                         RequestDispatcher exm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Exame");
@@ -609,7 +639,7 @@ public class ControladorAdministrador extends HttpServlet {
                 }
                 else if (request.getParameter("action").equals("Editar")){   
                         novo_exame.setDescricao(request.getParameter("nomeExame"));
-                        novo_exmDAO.update_exame(Integer.parseInt(request.getParameter("id")),novo_exame);
+                        novo_exmDAO.updateExame(Integer.parseInt(request.getParameter("id")),novo_exame);
                         
                         RequestDispatcher novoexm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Exame");
                         novoexm.forward(request, response);
