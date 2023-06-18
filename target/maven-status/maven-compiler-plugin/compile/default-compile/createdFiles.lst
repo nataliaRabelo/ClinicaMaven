@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 conexao\ConexaoBancoDeDados.class
 aplicacao\Medico.class
 model\AdministradorDAO.class
@@ -18,3 +19,5 @@ servlet\ControladorMedico.class
 model\ExameDAO.class
 model\MedicoDAO.class
 model\ClienteDAO.class
+=======
+>>>>>>> ada6c0a098810d610166dde2bbc23a811f4c8c2a

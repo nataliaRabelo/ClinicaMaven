@@ -10,7 +10,17 @@ import aplicacao.Administrador;
 public class AdministradorDAO {
     
     private Connection conn;
-
+    
+    /**
+    * Construtor para testes
+    */
+    public AdministradorDAO(Connection conn){
+        this.conn = conn;
+    }
+    
+    /**
+    * Construtor padrão que cria uma nova conexão com o banco.
+    */
     public AdministradorDAO() {
         try {
             conn = ConexaoBancoDeDados.newConnection();

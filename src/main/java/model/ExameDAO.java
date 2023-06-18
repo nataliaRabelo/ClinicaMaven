@@ -7,10 +7,24 @@ import java.util.ArrayList;
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Exame;
 
+/**
+ *
+ * @author Adriano
+ */
 public class ExameDAO {
    
     private Connection conn;
-
+    
+    /**
+    * Construtor para testes
+    */
+    public ExameDAO(Connection conn){
+        this.conn = conn;
+    }
+    
+    /**
+    * Construtor padrão que cria uma nova conexão com o banco.
+    */
     public ExameDAO() {
         try {
             conn = ConexaoBancoDeDados.newConnection();

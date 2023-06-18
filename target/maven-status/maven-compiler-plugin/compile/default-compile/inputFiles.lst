@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\aplicacao\Medico.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\conexao\ConexaoBancoDeDados.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\servlet\ControladorCliente.java
@@ -18,3 +19,25 @@ C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\aplicacao\Ad
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\aplicacao\Especialidade.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\aplicacao\Cliente.java
 C:\Users\DanielNeves\UFF\QualidadeETeste\ClinicaMaven\src\main\java\aplicacao\Plano.java
+=======
+C:\ClinicaMaven\src\main\java\aplicacao\Administrador.java
+C:\ClinicaMaven\src\main\java\servlet\Cadastrar.java
+C:\ClinicaMaven\src\main\java\aplicacao\Consulta.java
+C:\ClinicaMaven\src\main\java\model\PlanoDAO.java
+C:\ClinicaMaven\src\main\java\aplicacao\Cliente.java
+C:\ClinicaMaven\src\main\java\model\MedicoDAO.java
+C:\ClinicaMaven\src\main\java\servlet\ControladorMedico.java
+C:\ClinicaMaven\src\main\java\model\ExameDAO.java
+C:\ClinicaMaven\src\main\java\aplicacao\Medico.java
+C:\ClinicaMaven\src\main\java\model\EspecialidadeDAO.java
+C:\ClinicaMaven\src\main\java\aplicacao\Exame.java
+C:\ClinicaMaven\src\main\java\model\ClienteDAO.java
+C:\ClinicaMaven\src\main\java\servlet\ControladorCliente.java
+C:\ClinicaMaven\src\main\java\conexao\conexao_bancodedados.java
+C:\ClinicaMaven\src\main\java\aplicacao\Plano.java
+C:\ClinicaMaven\src\main\java\servlet\Autenticar.java
+C:\ClinicaMaven\src\main\java\servlet\ControladorAdministrador.java
+C:\ClinicaMaven\src\main\java\aplicacao\Especialidade.java
+C:\ClinicaMaven\src\main\java\model\AdministradorDAO.java
+C:\ClinicaMaven\src\main\java\model\ConsultaDAO.java
+>>>>>>> ada6c0a098810d610166dde2bbc23a811f4c8c2a

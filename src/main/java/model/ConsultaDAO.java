@@ -10,7 +10,17 @@ import aplicacao.Consulta;
 public class ConsultaDAO {
    
     private Connection conn;
-
+    
+    /**
+    * Construtor para testes
+    */
+    public ConsultaDAO(Connection conn){
+        this.conn = conn;
+    }
+    
+    /**
+    * Construtor padrão que cria uma nova conexão com o banco.
+    */
     public ConsultaDAO() {
         try {
             conn = ConexaoBancoDeDados.newConnection();

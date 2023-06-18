@@ -2,17 +2,19 @@ package DAOTests;
 
 import aplicacao.Cliente;
 import model.ClienteDAO;
+import conexao.ConexaoBancoDeDados;
 
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
+
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.Statement;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

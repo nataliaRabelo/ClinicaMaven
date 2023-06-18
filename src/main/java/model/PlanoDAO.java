@@ -11,16 +11,22 @@ public class PlanoDAO {
    
     private Connection conn;
 
+    /**
+    * Construtor para testes
+    */
+    public PlanoDAO(Connection conn) {
+        this.conn = conn; 
+    }
+
+    /**
+    * Construtor padrão que cria uma nova conexão com o banco.
+    */
     public PlanoDAO() {
         try {
             conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
-    }
-
-    public PlanoDAO(Connection conn) {
-        this.conn = conn; 
     }
     
     public void createPlano(Plano novo_plano){

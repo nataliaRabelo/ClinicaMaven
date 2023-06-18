@@ -10,11 +10,17 @@ import aplicacao.Cliente;
 public class ClienteDAO {
     
     private Connection conn;
-
+    
+    /**
+    * Construtor para testes
+    */
     public ClienteDAO(Connection conn){
         this.conn = conn;
     }
-
+    
+    /**
+    * Construtor padrão que cria uma nova conexão com o banco.
+    */
     public ClienteDAO() {
         try {
             conn = ConexaoBancoDeDados.newConnection();
