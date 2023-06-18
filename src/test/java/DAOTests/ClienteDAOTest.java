@@ -2,7 +2,6 @@ package DAOTests;
 
 import aplicacao.Cliente;
 import model.ClienteDAO;
-import conexao.ConexaoBancoDeDados;
 
 import java.util.List;
 import java.util.ArrayList;
