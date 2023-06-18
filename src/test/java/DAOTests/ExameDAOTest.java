@@ -112,7 +112,7 @@ public class ExameDAOTest {
             
             novo_exame = instance.get_exame(id_exame);
             
-            assertNotEquals(exp_exame.getDescricao(),novo_exame.getDescricao());
+            assertEquals(exp_exame.getDescricao(),novo_exame.getDescricao());
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
         }
