@@ -7,9 +7,17 @@ import java.util.ArrayList;
 import conexao.conexao_bancodedados;
 import aplicacao.Exame;
 
+/**
+ *
+ * @author Adriano
+ */
 public class ExameDAO {
    
     private Connection conn;
+    
+    public ExameDAO(Connection conn){
+        this.conn = conn;
+    }
 
     public ExameDAO() {
         try {
