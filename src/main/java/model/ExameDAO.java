@@ -15,10 +15,16 @@ public class ExameDAO {
    
     private Connection conn;
     
+    /**
+    * Construtor para testes
+    */
     public ExameDAO(Connection conn){
         this.conn = conn;
     }
-
+    
+    /**
+    * Construtor padrão que cria uma nova conexão com o banco.
+    */
     public ExameDAO() {
         try {
             conn = conexao_bancodedados.newConnection();

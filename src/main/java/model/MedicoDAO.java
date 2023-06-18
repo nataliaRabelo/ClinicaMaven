@@ -12,6 +12,16 @@ public class MedicoDAO {
     
     private Connection conn;
 
+    /**
+    * Construtor para testes
+    */
+    public MedicoDAO(Connection conn){
+        this.conn = conn;
+    }
+    
+    /**
+    * Construtor padrão que cria uma nova conexão com o banco.
+    */
     public MedicoDAO() {
         try {
             conn = conexao_bancodedados.newConnection();

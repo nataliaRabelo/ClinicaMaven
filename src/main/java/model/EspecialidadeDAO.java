@@ -10,7 +10,17 @@ import aplicacao.Especialidade;
 public class EspecialidadeDAO {
    
     private Connection conn;
-
+    
+    /**
+    * Construtor para testes
+    */
+    public EspecialidadeDAO(Connection conn){
+        this.conn = conn;
+    }
+    
+    /**
+    * Construtor padrão que cria uma nova conexão com o banco.
+    */
     public EspecialidadeDAO() {
         try {
             conn = conexao_bancodedados.newConnection();
