@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Cliente;
+import utils.Constantes;
 
 public class ClienteDAO {
     
@@ -38,16 +39,16 @@ public class ClienteDAO {
                 " WHERE cpf = '" + cpf + "' AND senha = '" + senha + "'");
             
             if (resultSet.next()) {
-                paciente.setId(resultSet.getInt("id"));
-                paciente.setNome(resultSet.getString("nome"));
-                paciente.setCpf(resultSet.getString("cpf"));
-                paciente.setSenha(resultSet.getString("senha"));
-                paciente.setAutorizado(resultSet.getString("autorizado").charAt(0));
-                paciente.setIdtipoplano(resultSet.getInt("idtipoplano"));
+                paciente.setId(resultSet.getInt(Constantes.ID));
+                paciente.setNome(resultSet.getString(Constantes.NOME));
+                paciente.setCpf(resultSet.getString(Constantes.CPF));
+                paciente.setSenha(resultSet.getString(Constantes.ID));
+                paciente.setAutorizado(resultSet.getString(Constantes.AUTORIZADO).charAt(0));
+                paciente.setIdtipoplano(resultSet.getInt(Constantes.IDTIPOPLANO));
             } 
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return paciente;
     }
@@ -64,7 +65,7 @@ public class ClienteDAO {
                 resp = true;
             }
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return resp;
     }
@@ -79,7 +80,7 @@ public class ClienteDAO {
                     "','" + novoPaciente.getIdtipoplano() + "')");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
         
@@ -96,7 +97,7 @@ public class ClienteDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return nome;
     }
@@ -119,7 +120,7 @@ public class ClienteDAO {
                 pacientes.add(paciente);
             }
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return pacientes;
     }
@@ -141,7 +142,7 @@ public class ClienteDAO {
                 paciente.setIdtipoplano(resultSet.getInt("idtipoplano"));
             }
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return paciente;
     }
@@ -155,7 +156,7 @@ public class ClienteDAO {
                     "' , idtipoplano='" + paciente.getIdtipoplano() + "' WHERE paciente.id='" + idPaciente + "'");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -165,7 +166,7 @@ public class ClienteDAO {
             statement.execute("DELETE FROM paciente WHERE paciente.id=" + idPaciente + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -194,7 +195,7 @@ public class ClienteDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         
         idCompilado.add(idExames);

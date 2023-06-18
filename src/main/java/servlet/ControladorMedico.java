@@ -14,6 +14,7 @@ import model.MedicoDAO;
 import model.ExameDAO;
 import aplicacao.Medico;
 import aplicacao.Consulta;
+import utils.Constantes;
 
 @WebServlet(name = "ControladorMedico", urlPatterns = {"/ControladorMedico"})
 public class ControladorMedico extends HttpServlet {
@@ -82,8 +83,8 @@ public class ControladorMedico extends HttpServlet {
                 
                 lista = medicoDAO.getExames();
                 
-                session.setAttribute("lista_exames", lista);
-                session.setAttribute("id_consulta", idConsultaEx);
+                session.setAttribute(Constantes.LISTA_EXAMES, lista);
+                session.setAttribute(Constantes.ID_CONSULTA, idConsultaEx);
                 RequestDispatcher medex = request.getRequestDispatcher("./view/MarcarExame.jsp");
                 medex.forward(request, response);                
             
@@ -92,8 +93,8 @@ public class ControladorMedico extends HttpServlet {
             
             case "ConcluirConsulta":
                 
-                String idConsulta = request.getParameter("id");
-                session.setAttribute("id_consulta", idConsulta);
+                String idConsulta = request.getParameter(Constantes.ID);
+                session.setAttribute(Constantes.ID_CONSULTA, idConsulta);
                 RequestDispatcher med = request.getRequestDispatcher("./view/EditarConsultaMedico.jsp");
                 med.forward(request, response);
                 

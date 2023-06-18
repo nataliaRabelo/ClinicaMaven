@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Exame;
+import utils.Constantes;
 
 /**
  *
@@ -40,7 +41,7 @@ public class ExameDAO {
                     + "(descricao) VALUES ( '" + novoExame.getDescricao() + "')");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -53,13 +54,13 @@ public class ExameDAO {
             
             while(resultSet.next()){
                 Exame exame = new Exame();
-                exame.setId(resultSet.getInt("id"));
-                exame.setDescricao(resultSet.getString("descricao"));
+                exame.setId(resultSet.getInt(Constantes.ID));
+                exame.setDescricao(resultSet.getString(Constantes.DESCRICAO));
                 exames.add(exame);
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return exames;
     }
@@ -78,7 +79,7 @@ public class ExameDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return exame;
     }
@@ -96,7 +97,7 @@ public class ExameDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return listaExames;
     }
@@ -107,7 +108,7 @@ public class ExameDAO {
             statement.execute("UPDATE tipoexame SET descricao='" + novoExame.getDescricao() + "' WHERE tipoexame.id=" + idExame + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -117,7 +118,7 @@ public class ExameDAO {
             statement.execute("DELETE FROM exames WHERE exames.id=" + idExame + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -127,7 +128,7 @@ public class ExameDAO {
             statement.execute("DELETE FROM tipoexame WHERE tipoexame.id=" + idExame + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -144,7 +145,7 @@ public class ExameDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return idExames;
     }

@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Consulta;
+import utils.Constantes;
+
 
 public class ConsultaDAO {
    
@@ -39,7 +41,7 @@ public class ConsultaDAO {
                     "','" + novaConsulta.getIdpaciente() + "')");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -53,17 +55,17 @@ public class ConsultaDAO {
             
             while (resultSet.next()) {
                 Consulta consulta = new Consulta();
-                consulta.setId(resultSet.getInt("id"));
-                consulta.setData(resultSet.getString("data"));
-                consulta.setDescricao(resultSet.getString("descricao"));
-                consulta.setRealizada(resultSet.getString("realizada").charAt(0));
-                consulta.setIdmedico(resultSet.getInt("idmedico"));
-                consulta.setIdpaciente(resultSet.getInt("idpaciente"));
+                consulta.setId(resultSet.getInt(Constantes.ID));
+                consulta.setData(resultSet.getString(Constantes.DATA));
+                consulta.setDescricao(resultSet.getString(Constantes.DESCRICAO));
+                consulta.setRealizada(resultSet.getString(Constantes.REALIZADA).charAt(0));
+                consulta.setIdmedico(resultSet.getInt(Constantes.IDMEDICO));
+                consulta.setIdpaciente(resultSet.getInt(Constantes.IDPACIENTE));
                 listaConsultas.add(consulta);
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return listaConsultas;
     }
@@ -77,16 +79,16 @@ public class ConsultaDAO {
                     + "WHERE consulta.id = '" + idConsulta + "'");
             
             if (resultSet.next()) {
-                consulta.setId(resultSet.getInt("id"));
-                consulta.setData(resultSet.getString("data"));
-                consulta.setDescricao(resultSet.getString("descricao"));
-                consulta.setRealizada(resultSet.getString("realizada").charAt(0));
-                consulta.setIdmedico(resultSet.getInt("idmedico"));
-                consulta.setIdpaciente(resultSet.getInt("idpaciente"));
+                consulta.setId(resultSet.getInt(Constantes.ID));
+                consulta.setData(resultSet.getString(Constantes.DATA));
+                consulta.setDescricao(resultSet.getString(Constantes.DESCRICAO));
+                consulta.setRealizada(resultSet.getString(Constantes.REALIZADA).charAt(0));
+                consulta.setIdmedico(resultSet.getInt(Constantes.IDMEDICO));
+                consulta.setIdpaciente(resultSet.getInt(Constantes.IDPACIENTE));
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return consulta;
     }
@@ -104,7 +106,7 @@ public class ConsultaDAO {
             }  
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return medicoDescricao;
     }
@@ -125,7 +127,7 @@ public class ConsultaDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return medEspecs;
     }
@@ -139,7 +141,7 @@ public class ConsultaDAO {
                     "' WHERE consulta.id='" + idConsulta + "'");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -149,7 +151,7 @@ public class ConsultaDAO {
             statement.execute("DELETE FROM consulta WHERE consulta.id=" + idConsulta + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
 }

@@ -13,6 +13,7 @@ import aplicacao.Consulta;
 import model.ExameDAO;
 import model.ConsultaDAO;
 import model.MedicoDAO;
+import utils.Constantes;
 
 @WebServlet(name = "ControladorCliente", urlPatterns = {"/ControladorCliente"})
 public class ControladorCliente extends HttpServlet {
@@ -22,7 +23,7 @@ public class ControladorCliente extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-        Cliente cliente = (Cliente)session.getAttribute("cliente");
+        Cliente cliente = (Cliente)session.getAttribute(Constantes.CLIENTE);
         
         ConsultaDAO consultaDAO = new ConsultaDAO();
         

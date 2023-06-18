@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Especialidade;
+import utils.Constantes;
 
 public class EspecialidadeDAO {
    
@@ -35,7 +36,7 @@ public class EspecialidadeDAO {
                     + "(descricao) VALUES ( '" + novaEspecialidade.getDescricao() + "')");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -54,7 +55,7 @@ public class EspecialidadeDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return especialidades;
     }
@@ -73,7 +74,7 @@ public class EspecialidadeDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return espec;
     }
@@ -85,7 +86,7 @@ public class EspecialidadeDAO {
                     + "WHERE especialidade.id=" + idEspecialidade + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     

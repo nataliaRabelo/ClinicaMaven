@@ -1,4 +1,5 @@
-package servlet;
+package servlet;import utils.Constantes;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +23,7 @@ import model.PlanoDAO;
 import model.EspecialidadeDAO;
 import model.ConsultaDAO;
 import model.ExameDAO;
+import utils.Constantes;
 
 @WebServlet(name = "ControladorAdministrador", urlPatterns = {"/ControladorAdministrador"})
 public class ControladorAdministrador extends HttpServlet {
@@ -41,10 +43,10 @@ public class ControladorAdministrador extends HttpServlet {
         PlanoDAO planoDAO = new PlanoDAO();
         EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
         
-        switch(request.getParameter("type")){
+        switch(request.getParameter(Constantes.TYPE)){
             case "Paciente": 
-                switch(request.getParameter("arg")){
-                    case "Visualizar":
+                switch(request.getParameter(Constantes.ARG)){
+                    case Constantes.VISUALIZAR:
                         
                         ArrayList<Cliente> pacientes = new ArrayList<>();
                         pacientes = clienteDAO.getPacientes();
@@ -67,7 +69,7 @@ public class ControladorAdministrador extends HttpServlet {
                         }
                     break;
                     
-                    case "Excluir":
+                    case Constantes.EXCLUIR:
                         ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
                         
                         compiladoIds = clienteDAO.getIdDeletePaciente(Integer.parseInt(request.getParameter("id")));
@@ -87,7 +89,7 @@ public class ControladorAdministrador extends HttpServlet {
 
 
                     
-                    case "Editar":
+                    case Constantes.EDITAR:
                         Cliente paciente = new Cliente();
                         Plano plano = new Plano();
                         ArrayList<Plano> planosDisponiveis = new ArrayList<>();
@@ -96,9 +98,9 @@ public class ControladorAdministrador extends HttpServlet {
                         plano = planoDAO.getPlano(paciente.getIdtipoplano());
                         planosDisponiveis = planoDAO.getPlanos();
                         
-                        session.setAttribute("paciente",paciente);
-                        session.setAttribute("plano",plano);
-                        session.setAttribute("planos", planosDisponiveis);
+                        session.setAttribute(Constantes.PACIENTE,paciente);
+                        session.setAttribute(Constantes.PLANO,plano);
+                        session.setAttribute(Constantes.PLANOS, planosDisponiveis);
                         
                         RequestDispatcher edtPac = request.getRequestDispatcher("/view/EditarPacienteAdm.jsp");
                         edtPac.forward(request, response);
@@ -106,13 +108,13 @@ public class ControladorAdministrador extends HttpServlet {
 
 
                     
-                    case "Cadastrar":
+                    case Constantes.CADASTRAR:
                         ArrayList<Plano> planos = new ArrayList<>();
                         planos = planoDAO.getPlanos();
                         
-                        session.setAttribute("paciente",null);
-                        session.setAttribute("plano",null);
-                        session.setAttribute("planos", planos);
+                        session.setAttribute(Constantes.PACIENTE,null);
+                        session.setAttribute(Constantes.PLANO,null);
+                        session.setAttribute(Constantes.PLANOS, planos);
                         
                         if(planos.size() > 0){
                             RequestDispatcher cad = request.getRequestDispatcher("/view/CadastrarPaciente.jsp");
@@ -127,8 +129,8 @@ public class ControladorAdministrador extends HttpServlet {
                 
             case "Medico":
                 Medico medico = new Medico();
-                switch(request.getParameter("arg")){
-                    case "Visualizar":
+                switch(request.getParameter(Constantes.)){
+                    case Constantes.VISUALIZAR:
                         ArrayList<Medico> medicos = new ArrayList<>();
 
                         medicos = medicoDAO.getMedicos();
@@ -151,7 +153,7 @@ public class ControladorAdministrador extends HttpServlet {
                         }
                     break;
                 
-                    case "Excluir":
+                    case Constantes.EXCLUIR:
                         ArrayList<ArrayList<Integer>> compiladoIds = new ArrayList<>();
                         
                         compiladoIds = medicoDAO.getIdDeleteMedico(Integer.parseInt(request.getParameter("id")));
@@ -171,7 +173,7 @@ public class ControladorAdministrador extends HttpServlet {
 
 
                 
-                    case "Editar":
+                    case Constantes.EDITAR:
                         
                         Especialidade especialidade  = new Especialidade();
                         ArrayList<Especialidade> especsDisponiveis = new ArrayList<>();
@@ -180,9 +182,9 @@ public class ControladorAdministrador extends HttpServlet {
                         especialidade = especialidadeDAO.getEspecialidade(medico.getIdespecialidade());
                         especsDisponiveis = especialidadeDAO.getEspecialidades();
                         
-                        session.setAttribute("medico",medico);
-                        session.setAttribute("especialidade",especialidade);
-                        session.setAttribute("especialidades", especsDisponiveis);
+                        session.setAttribute(Constantes.MEDICO,medico);
+                        session.setAttribute(Constantes.ESPECIALIDADE,especialidade);
+                        session.setAttribute(Constantes.ESPECIALIDADE, especsDisponiveis);
                         
                         RequestDispatcher edtMed = request.getRequestDispatcher("/view/EditarMedicoAdm.jsp");
                         edtMed.forward(request, response);
@@ -190,7 +192,7 @@ public class ControladorAdministrador extends HttpServlet {
 
 
                     
-                    case "Cadastrar":
+                    case Constantes.CADASTRAR:
                         ArrayList<Especialidade> especs = new ArrayList<>();
 
                         especs = especialidadeDAO.getEspecialidades();
@@ -334,7 +336,7 @@ public class ControladorAdministrador extends HttpServlet {
                         
                         planoDAO.deletePlano(Integer.parseInt(request.getParameter("id")));
                         
-                        session.setAttribute("identidade", 2);
+                        session.setAttribute(Constantes.IDENTIDADE, 2);
                         RequestDispatcher delAdm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Plano");
                         delAdm.forward(request, response);
                     break;
@@ -398,7 +400,7 @@ public class ControladorAdministrador extends HttpServlet {
                         
                         especialidadeDAO.deleteEspecialidade(Integer.parseInt(request.getParameter("id")));
                         
-                        session.setAttribute("identidade", 2);
+                        session.setAttribute(Constantes.IDENTIDADE, 2);
                         RequestDispatcher delAdm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Especialidade");
                         delAdm.forward(request, response);   
                     break;
@@ -409,7 +411,7 @@ public class ControladorAdministrador extends HttpServlet {
                         Especialidade especialidade = new Especialidade();
                         
                         especialidade = especialidadeDAO.getEspecialidade(Integer.parseInt(request.getParameter("id")));
-                        session.setAttribute("especialidade",especialidade);
+                        session.setAttribute(Constantes.ESPECIALIDADE,especialidade);
                         
                         RequestDispatcher edtEsp = request.getRequestDispatcher("/view/CadastrarEspecialidade.jsp");
                         edtEsp.forward(request, response);
@@ -456,7 +458,7 @@ public class ControladorAdministrador extends HttpServlet {
                         
                         exameDAO.deleteTipoExame(Integer.parseInt(request.getParameter("id")));
                         
-                        session.setAttribute("identidade", 2);
+                        session.setAttribute(Constantes.IDENTIDADE, 2);
                         RequestDispatcher delAdm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Excluido&type=Exame");
                         delAdm.forward(request, response);   
                     break;
@@ -505,19 +507,19 @@ public class ControladorAdministrador extends HttpServlet {
                 ClienteDAO novoCltDAO = new ClienteDAO();
                 Cliente paciente = new Cliente();
                 
-                paciente.setNome(request.getParameter("nome"));
-                paciente.setCpf(request.getParameter("CPF"));
-                paciente.setSenha(request.getParameter("senha"));
-                paciente.setIdtipoplano(Integer.parseInt(request.getParameter("plano")));
-                paciente.setAutorizado(request.getParameter("autorizado").charAt(0));
+                paciente.setNome(request.getParameter(Constantes.NOME));
+                paciente.setCpf(request.getParameter(Constantes.CPF));
+                paciente.setSenha(request.getParameter(Constantes.SENHA));
+                paciente.setIdtipoplano(Integer.parseInt(request.getParameter(Constantes.PLANO)));
+                paciente.setAutorizado(request.getParameter(Constantes.AUTORIZADO).charAt(0));
                 
-                if(request.getParameter("action").equals("Cadastrar")){
+                if(request.getParameter(Constantes.ACTION).equals("Cadastrar")){
                         novoCltDAO.createPaciente(paciente);
                         
                         RequestDispatcher cadPac = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Paciente");
                         cadPac.forward(request, response);
                 }
-                else if(request.getParameter("action").equals("Editar")){  
+                else if(request.getParameter(Constantes.ACTION).equals("Editar")){  
                         novoCltDAO.updatePaciente(Integer.parseInt(request.getParameter("id")),paciente);
                         
                         RequestDispatcher cltEdit = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Paciente");
@@ -530,22 +532,22 @@ public class ControladorAdministrador extends HttpServlet {
                 MedicoDAO novoMedDAO = new MedicoDAO();
                 Medico medico = new Medico();
                 
-                medico.setNome(request.getParameter("nome"));
-                medico.setCrm(Integer.parseInt(request.getParameter("crm")));
-                medico.setEstadocrm(request.getParameter("estadocrm"));
-                medico.setCpf(request.getParameter("CPF"));
-                medico.setSenha(request.getParameter("senha"));
-                medico.setIdespecialidade(Integer.parseInt(request.getParameter("especialidade")));
-                medico.setAutorizado(request.getParameter("autorizado").charAt(0));
+                medico.setNome(request.getParameter(Constantes.NOME));
+                medico.setCrm(Integer.parseInt(request.getParameter(Constantes.CRM)));
+                medico.setEstadocrm(request.getParameter(Constantes.ESTADOCRM));
+                medico.setCpf(request.getParameter(Constantes.CPF));
+                medico.setSenha(request.getParameter(Constantes.SENHA));
+                medico.setIdespecialidade(Integer.parseInt(request.getParameter(Constantes.ESPECIALIDADE)));
+                medico.setAutorizado(request.getParameter(Constantes.AUTORIZADO).charAt(0));
                 
-                if(request.getParameter("action").equals("Cadastrar")){
+                if(request.getParameter(Constantes.ACTION).equals("Cadastrar")){
                         novoMedDAO.createMedico(medico);
                         
-                        session.setAttribute("identidade", 2);
+                        session.setAttribute(Constantes.IDENTIDADE, 2);
                         RequestDispatcher med = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Medico");
                         med.forward(request, response);
                 }
-                else if(request.getParameter("action").equals("Editar")){
+                else if(request.getParameter(Constantes.ACTION).equals("Editar")){
                         novoMedDAO.updateMedico(Integer.parseInt(request.getParameter("id")),medico);
                         
                         RequestDispatcher medEdit = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Editar&type=Medico");
@@ -558,21 +560,21 @@ public class ControladorAdministrador extends HttpServlet {
                 AdministradorDAO novoAdmDAO = new AdministradorDAO();
                 Administrador novoAdm = new Administrador();
                 
-                if(request.getParameter("action").equals("Cadastrar")){
+                if(request.getParameter(Constantes.ACTION).equals("Cadastrar")){
                         novoAdm.setNome(request.getParameter("nome"));
                         novoAdm.setCpf(request.getParameter("CPF"));
                         novoAdm.setSenha(request.getParameter("senha"));
 
                         novoAdmDAO.createAdministrador(novoAdm);
                         
-                        session.setAttribute("identidade", 2);
+                        session.setAttribute(Constantes.IDENTIDADE, 2);
                         RequestDispatcher adm = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Administrador");
                         adm.forward(request, response);           
                 }
-                else if(request.getParameter("action").equals("Editar")){
-                        novoAdm.setNome(request.getParameter("nome"));
-                        novoAdm.setCpf(request.getParameter("CPF"));
-                        novoAdm.setSenha(request.getParameter("senha")); 
+                else if(request.getParameter(Constantes.ACTION).equals(Constantes.EDITAR)){
+                        novoAdm.setNome(request.getParameter(Constantes.NOME));
+                        novoAdm.setCpf(request.getParameter(Constantes.CPF));
+                        novoAdm.setSenha(request.getParameter(Constantes.SENHA)); 
                         
                         novoAdmDAO.updateAdministrador(Integer.parseInt(request.getParameter("id")),novoAdm);
                         
@@ -593,11 +595,11 @@ public class ControladorAdministrador extends HttpServlet {
                         
                         novoPlanoDAO.createPlano(novoPlano);
                         
-                        session.setAttribute("identidade", 2);
+                        session.setAttribute(Constantes.IDENTIDADE, 2);
                         RequestDispatcher pln = request.getRequestDispatcher("./view/ConfirmacaoAdm.jsp?arg=Cadastrado&type=Plano");
                         pln.forward(request, response);           
                 }
-                else if(request.getParameter("action").equals("Editar")){
+                else if(request.getParameter(Constantes.ACTION).equals(Constantes.EDITAR)){
                         novoPlano.setDescricao(request.getParameter("nomePlano"));
                         novoPlanoDAO.updatePlano(Integer.parseInt(request.getParameter("id")),novoPlano);
                         

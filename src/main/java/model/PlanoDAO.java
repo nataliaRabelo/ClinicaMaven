@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Plano;
+import utils.Constantes;
 
 public class PlanoDAO {
    
@@ -36,7 +37,7 @@ public class PlanoDAO {
                     + "(descricao) VALUES ( '" + novoPlano.getDescricao() + "')");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR  + e.getMessage());
         }
     }
   
@@ -55,7 +56,7 @@ public class PlanoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return planos;
     }
@@ -74,7 +75,7 @@ public class PlanoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return plano;
     }
@@ -85,7 +86,7 @@ public class PlanoDAO {
             statement.execute("UPDATE tipoplano SET descricao='" + novoPlano.getDescricao() + "' WHERE tipoplano.id=" + idPlano + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -95,7 +96,7 @@ public class PlanoDAO {
             statement.execute("DELETE FROM tipoplano WHERE tipoplano.id=" + idPlano + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -136,7 +137,7 @@ public class PlanoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         
         idCompilado.add(idExames);

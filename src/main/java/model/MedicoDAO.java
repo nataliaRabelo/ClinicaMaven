@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Medico;
 import aplicacao.Consulta;
+import utils.Constantes;
 
 public class MedicoDAO {
     
@@ -39,18 +40,18 @@ public class MedicoDAO {
                 " WHERE cpf = '" + cpf + "' AND senha = '" + senha + "'");
             
             if (resultSet.next()) {
-                medico.setId(resultSet.getInt("id"));
-                medico.setNome(resultSet.getString("nome"));
-                medico.setCrm(resultSet.getInt("crm"));
-                medico.setEstadocrm(resultSet.getString("estadocrm"));
-                medico.setCpf(resultSet.getString("cpf"));
-                medico.setSenha(resultSet.getString("senha"));
-                medico.setAutorizado(resultSet.getString("autorizado").charAt(0));
-                medico.setIdespecialidade(resultSet.getInt("idespecialidade"));
+                medico.setId(resultSet.getInt(Constantes.ID));
+                medico.setNome(resultSet.getString(Constantes.NOME));
+                medico.setCrm(resultSet.getInt(Constantes.CRM));
+                medico.setEstadocrm(resultSet.getString(Constantes.ESTADOCRM));
+                medico.setCpf(resultSet.getString(Constantes.CPF));
+                medico.setSenha(resultSet.getString(Constantes.SENHA));
+                medico.setAutorizado(resultSet.getString(Constantes.AUTORIZADO).charAt(0));
+                medico.setIdespecialidade(resultSet.getInt(Constantes.ESPECIALIDADE));
             } 
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return medico;
     }
@@ -62,7 +63,7 @@ public class MedicoDAO {
                     idTipoExame + "','" + idConsulta + "')");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -75,7 +76,7 @@ public class MedicoDAO {
                     novoMedico.getCpf()  + "','" + novoMedico.getSenha()  + "','" + novoMedico.getAutorizado()  + "','" + novoMedico.getIdespecialidade() + "')");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -99,7 +100,7 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return consultasMedico;
     }
@@ -124,7 +125,7 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return medico;
     }
@@ -142,7 +143,7 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return examesDisponiveis;
     }
@@ -168,7 +169,7 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR+ e.getMessage());
         }
         return medicos;
     }
@@ -182,7 +183,7 @@ public class MedicoDAO {
                     "', idespecialidade='" + medico.getIdespecialidade() + "' WHERE medico.id='" + idMedico + "'");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -192,7 +193,7 @@ public class MedicoDAO {
             statement.execute("DELETE FROM medico WHERE medico.id=" + idMedico + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -222,7 +223,7 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         
         idCompilado.add(idExames);
@@ -245,7 +246,7 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR+ e.getMessage());
         }
         return colisoes;
     }
