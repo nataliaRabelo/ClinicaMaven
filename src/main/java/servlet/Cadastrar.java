@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 import aplicacao.Cliente;
 import aplicacao.Plano;
 import model.ClienteDAO;
@@ -25,7 +26,7 @@ public class Cadastrar extends HttpServlet {
         
         if(request.getParameter("arg").equals("Cadastrar")){
             
-            ArrayList<Plano> planos = new ArrayList<>();
+            List<Plano> planos = new ArrayList<>();
             
             planos = planoDAO.getPlanos();
             

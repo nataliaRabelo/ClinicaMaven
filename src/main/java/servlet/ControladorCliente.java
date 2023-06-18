@@ -13,7 +13,12 @@ import aplicacao.Consulta;
 import model.ExameDAO;
 import model.ConsultaDAO;
 import model.MedicoDAO;
+<<<<<<< HEAD
 import utils.Constantes;
+=======
+import java.util.List;
+
+>>>>>>> 73581439bfea1975e73f8888de621921480e9d74
 
 @WebServlet(name = "ControladorCliente", urlPatterns = {"/ControladorCliente"})
 public class ControladorCliente extends HttpServlet {
@@ -43,8 +48,8 @@ public class ControladorCliente extends HttpServlet {
                 
                 consultaOriginal = consultaDAO.getConsulta(Integer.parseInt(request.getParameter("id")));
                
-                ArrayList<Object>listaMedicoEspec = new ArrayList<>();
-                ArrayList<Object>listaDisponiveis = new ArrayList<>();
+                List<Object>listaMedicoEspec = new ArrayList<>();
+                List<Object>listaDisponiveis = new ArrayList<>();
                 
                 consultaDAO.getMedicoEspecialidade(consultaOriginal.getId(),listaMedicoEspec);
                     
@@ -62,7 +67,7 @@ public class ControladorCliente extends HttpServlet {
             
             case "Visualizar":
                 
-                ArrayList<Consulta> listaConsultas = new ArrayList<>();
+                List<Consulta> listaConsultas = new ArrayList<>();
                 ExameDAO exameDAO = new ExameDAO();
                 
                 listaConsultas = consultaDAO.getConsultas(cliente.getId());
@@ -70,12 +75,12 @@ public class ControladorCliente extends HttpServlet {
                 if(listaConsultas.size() > 0){
                     
                     ArrayList<Object>listaMedEsp = new ArrayList<>();
-                    ArrayList<ArrayList<String>>listaExamesCompilado = new ArrayList<>();
+                    List<List<String>>listaExamesCompilado = new ArrayList<>();
                     
                     for(int i=0;i<listaConsultas.size();i++){
                         consultaDAO.getMedicoEspecialidade(listaConsultas.get(i).getId(),listaMedEsp);
                         
-                        ArrayList<String>listaExames = new ArrayList<>();
+                        List<String>listaExames = new ArrayList<>();
                         listaExames = exameDAO.getExamesDaConsulta(listaConsultas.get(i).getId(),listaExames);
                         
                         if(listaExames.isEmpty()){
@@ -101,7 +106,7 @@ public class ControladorCliente extends HttpServlet {
         
             case "Marcar":
 
-                ArrayList<Object> listaProcedimentos = new ArrayList<>();
+                List<Object> listaProcedimentos = new ArrayList<>();
                 
                 listaProcedimentos = consultaDAO.getProcedimentosDisponiveis();
    
@@ -145,7 +150,7 @@ public class ControladorCliente extends HttpServlet {
         
         String[] datahora = consulta.getData().split(" ");
         
-        ArrayList<Integer> colisoes = new ArrayList<>();
+        List<Integer> colisoes = new ArrayList<>();
         colisoes = medicoDAO.medicoAvailable(consulta.getIdmedico(),datahora[0]);
         
         if(request.getParameter("acao").equals("Enviar")){

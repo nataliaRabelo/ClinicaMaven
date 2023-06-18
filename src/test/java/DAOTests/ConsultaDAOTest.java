@@ -5,6 +5,7 @@ import model.ConsultaDAO;
 import conexao.ConexaoBancoDeDados;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -56,7 +57,7 @@ public class ConsultaDAOTest {
     public void testGet_consultas() {
         int id_paciente = 1;
         ConsultaDAO instance = new ConsultaDAO(conn);
-        ArrayList<Consulta> expResult = new ArrayList();
+        List<Consulta> expResult = new ArrayList();
         try{
             expResult = instance.getConsultas(id_paciente);
             assertNotNull(expResult);
@@ -81,9 +82,9 @@ public class ConsultaDAOTest {
     @Test
     public void testGet_medicoEspecialidade() {
         int id_consulta = 1;
-        ArrayList<Object> medico_descricao = new ArrayList<Object>();
+        List<Object> medico_descricao = new ArrayList<Object>();
         ConsultaDAO instance = new ConsultaDAO(conn);
-        ArrayList<Object> expResult = null;
+        List<Object> expResult = null;
         try{    
             expResult = instance.getMedicoEspecialidade(id_consulta, medico_descricao);
             assertNotNull(expResult);
@@ -95,7 +96,7 @@ public class ConsultaDAOTest {
     @Test
     public void testGet_procedimentosDisponiveis() {
         ConsultaDAO instance = new ConsultaDAO(conn);
-        ArrayList<Object> expResult = new ArrayList<Object>();
+        List<Object> expResult = new ArrayList<Object>();
         try{
         expResult = instance.getProcedimentosDisponiveis();
         assertNotNull(expResult);

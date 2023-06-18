@@ -5,6 +5,7 @@ import aplicacao.Administrador;
 import utils.Constantes;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -64,9 +65,9 @@ public class AdministradorDAO {
         }
     }
     
-    public ArrayList<Administrador> getAdministradores(){
+    public List<Administrador> getAdministradores(){
     
-        ArrayList<Administrador> administradores = new ArrayList<>();
+        List<Administrador> administradores = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM administrador");
@@ -81,7 +82,7 @@ public class AdministradorDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLError + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return administradores;
     }

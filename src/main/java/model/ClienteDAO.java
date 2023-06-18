@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Cliente;
 import utils.Constantes;
@@ -102,9 +104,9 @@ public class ClienteDAO {
         return nome;
     }
     
-    public ArrayList<Cliente> getPacientes(){
+    public List<Cliente> getPacientes(){
     
-        ArrayList<Cliente> pacientes = new ArrayList<>();
+        List<Cliente> pacientes = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente");
@@ -170,11 +172,11 @@ public class ClienteDAO {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> getIdDeletePaciente(int idPaciente){
+    public List<List<Integer>> getIdDeletePaciente(int idPaciente){
     
-        ArrayList<ArrayList<Integer>> idCompilado = new ArrayList<>();
-        ArrayList<Integer> idConsultas = new ArrayList<>();
-        ArrayList<Integer> idExames = new ArrayList<>();
+        List<List<Integer>> idCompilado = new ArrayList<>();
+        List<Integer> idConsultas = new ArrayList<>();
+        List<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +

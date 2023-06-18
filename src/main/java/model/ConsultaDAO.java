@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Consulta;
 import utils.Constantes;
@@ -45,9 +47,9 @@ public class ConsultaDAO {
         }
     }
     
-    public ArrayList<Consulta> getConsultas(int idPaciente){
+    public List<Consulta> getConsultas(int idPaciente){
         
-        ArrayList<Consulta> listaConsultas = new ArrayList<>();
+        List<Consulta> listaConsultas = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM consulta" + 
@@ -93,7 +95,7 @@ public class ConsultaDAO {
         return consulta;
     }
     
-    public ArrayList<Object> getMedicoEspecialidade(int idConsulta, ArrayList<Object> medicoDescricao){
+    public List<Object> getMedicoEspecialidade(int idConsulta, List<Object> medicoDescricao){
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT medico.nome, especialidade.descricao " +
@@ -111,9 +113,9 @@ public class ConsultaDAO {
         return medicoDescricao;
     }
     
-    public ArrayList<Object> getProcedimentosDisponiveis(){
+    public List<Object> getProcedimentosDisponiveis(){
     
-        ArrayList<Object> medEspecs = new ArrayList<>();
+        List<Object> medEspecs = new ArrayList<>();
     
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT esp.descricao, med.nome, med.id "
