@@ -4,12 +4,13 @@ import aplicacao.Cliente;
 import model.ClienteDAO;
 import conexao.conexao_bancodedados;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.List;
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
