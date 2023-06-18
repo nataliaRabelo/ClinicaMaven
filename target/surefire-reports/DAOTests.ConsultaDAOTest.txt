@@ -1,4 +1,43 @@
 -------------------------------------------------------------------------------
 Test set: DAOTests.ConsultaDAOTest
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.02 sec
+Tests run: 7, Failures: 7, Errors: 0, Skipped: 0, Time elapsed: 28.415 sec <<< FAILURE!
+DAOTests.ConsultaDAOTest.testCreateConsulta()  Time elapsed: 4.038 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at model.ConsultaDAO.getConsultas(ConsultaDAO.java:50)
+	at DAOTests.ConsultaDAOTest.testCreateConsulta(ConsultaDAOTest.java:44)
+
+DAOTests.ConsultaDAOTest.testGet_consulta()  Time elapsed: 4.058 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Não há objeto com a id no banco de dados
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:39)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:117)
+	at DAOTests.ConsultaDAOTest.testGet_consulta(ConsultaDAOTest.java:77)
+
+DAOTests.ConsultaDAOTest.testUpdateConsulta()  Time elapsed: 4.074 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at model.ConsultaDAO.updateConsulta(ConsultaDAO.java:135)
+	at DAOTests.ConsultaDAOTest.testUpdateConsulta(ConsultaDAOTest.java:118)
+
+DAOTests.ConsultaDAOTest.testGet_consultas()  Time elapsed: 4.055 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Não há objeto com a id no banco de dados
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:39)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:117)
+	at DAOTests.ConsultaDAOTest.testGet_consultas(ConsultaDAOTest.java:64)
+
+DAOTests.ConsultaDAOTest.testGet_procedimentosDisponiveis()  Time elapsed: 4.061 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Não há objeto com a id no banco de dados
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:39)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:117)
+	at DAOTests.ConsultaDAOTest.testGet_procedimentosDisponiveis(ConsultaDAOTest.java:103)
+
+DAOTests.ConsultaDAOTest.testGet_medicoEspecialidade()  Time elapsed: 4.066 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Não há objeto com a id no banco de dados
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:39)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:117)
+	at DAOTests.ConsultaDAOTest.testGet_medicoEspecialidade(ConsultaDAOTest.java:91)
+
+DAOTests.ConsultaDAOTest.testDeleteConsulta()  Time elapsed: 4.062 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at model.ConsultaDAO.createConsulta(ConsultaDAO.java:34)
+	at DAOTests.ConsultaDAOTest.testDeleteConsulta(ConsultaDAOTest.java:140)
+

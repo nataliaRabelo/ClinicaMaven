@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import conexao.conexao_bancodedados;
+import conexao.ConexaoBancoDeDados;
 import aplicacao.Administrador;
 
 public class AdministradorDAO {
@@ -23,7 +23,7 @@ public class AdministradorDAO {
     */
     public AdministradorDAO() {
         try {
-            conn = conexao_bancodedados.newConnection();
+            conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
@@ -50,7 +50,7 @@ public class AdministradorDAO {
         return administrador;
     }
     
-    public void create_administrador(Administrador administrador){
+    public void createAdministrador(Administrador administrador){
         
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO administrador (nome,cpf,senha) VALUES ( '" +
@@ -61,7 +61,7 @@ public class AdministradorDAO {
         }
     }
     
-    public ArrayList<Administrador> get_administradores(){
+    public ArrayList<Administrador> getAdministradores(){
     
         ArrayList<Administrador> administradores = new ArrayList<>();
         
@@ -83,13 +83,13 @@ public class AdministradorDAO {
         return administradores;
     }
     
-    public Administrador get_administrador(int id_administrador){
+    public Administrador getAdministrador(int idAdministrador){
     
         Administrador adm = new Administrador();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM administrador "
-                    + "WHERE administrador.id = '" + id_administrador + "'");
+                    + "WHERE administrador.id = '" + idAdministrador + "'");
             
             if (resultSet.next()) {
                 adm.setId(resultSet.getInt("id"));
@@ -104,21 +104,21 @@ public class AdministradorDAO {
         return adm;
     }
     
-    public void update_administrador(int id_administrador, Administrador administrador){
+    public void updateAdministrador(int idAdministrador, Administrador administrador){
     
         try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE administrador SET nome='" + administrador.getNome() + "',cpf='" + administrador.getCpf() +
-                    "',senha='" + administrador.getSenha() + "'  WHERE administrador.id=" + id_administrador + "");
+                    "',senha='" + administrador.getSenha() + "'  WHERE administrador.id=" + idAdministrador + "");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public void delete_administrador(int id_administradore){
+    public void deleteAdministrador(int idAdministrador){
     
         try(Statement statement = conn.createStatement()){
-            statement.execute("DELETE FROM administrador WHERE administrador.id=" + id_administradore + "");
+            statement.execute("DELETE FROM administrador WHERE administrador.id=" + idAdministrador + "");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());

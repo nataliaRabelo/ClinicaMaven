@@ -1,4 +1,44 @@
 -------------------------------------------------------------------------------
 Test set: DAOTests.ClienteDAOTest
 -------------------------------------------------------------------------------
-Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.116 sec
+Tests run: 16, Failures: 8, Errors: 0, Skipped: 0, Time elapsed: 66.161 sec <<< FAILURE!
+DAOTests.ClienteDAOTest.testGetIdDeletePaciente()  Time elapsed: 4.046 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at model.ClienteDAO.createPaciente(ClienteDAO.java:74)
+	at DAOTests.ClienteDAOTest.testGetIdDeletePaciente(ClienteDAOTest.java:168)
+
+DAOTests.ClienteDAOTest.testGetNomePaciente()  Time elapsed: 4.069 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at model.ClienteDAO.getNomePaciente(ClienteDAO.java:90)
+	at DAOTests.ClienteDAOTest.testGetNomePaciente(ClienteDAOTest.java:111)
+
+DAOTests.ClienteDAOTest.testCreatePaciente()  Time elapsed: 4.056 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at model.ClienteDAO.createPaciente(ClienteDAO.java:74)
+	at DAOTests.ClienteDAOTest.testCreatePaciente(ClienteDAOTest.java:53)
+
+DAOTests.ClienteDAOTest.testUpdatePaciente()  Time elapsed: 4.05 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at model.ClienteDAO.getPaciente(ClienteDAO.java:131)
+	at DAOTests.ClienteDAOTest.testUpdatePaciente(ClienteDAOTest.java:90)
+
+DAOTests.ClienteDAOTest.testDeletePaciente()  Time elapsed: 4.047 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at model.ClienteDAO.createPaciente(ClienteDAO.java:74)
+	at DAOTests.ClienteDAOTest.testDeletePaciente(ClienteDAOTest.java:137)
+
+DAOTests.ClienteDAOTest.testGetPaciente()  Time elapsed: 4.064 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at model.ClienteDAO.getPaciente(ClienteDAO.java:131)
+	at DAOTests.ClienteDAOTest.testGetPaciente(ClienteDAOTest.java:79)
+
+DAOTests.ClienteDAOTest.testGetPacientes()  Time elapsed: 4.055 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at model.ClienteDAO.getPacientes(ClienteDAO.java:108)
+	at DAOTests.ClienteDAOTest.testGetPacientes(ClienteDAOTest.java:123)
+
+DAOTests.ClienteDAOTest.testLogin()  Time elapsed: 4.072 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at model.ClienteDAO.login(ClienteDAO.java:36)
+	at DAOTests.ClienteDAOTest.testLogin(ClienteDAOTest.java:66)
+

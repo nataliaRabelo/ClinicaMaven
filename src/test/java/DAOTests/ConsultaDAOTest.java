@@ -2,7 +2,7 @@ package DAOTests;
 
 import aplicacao.Consulta;
 import model.ConsultaDAO;
-import conexao.conexao_bancodedados;
+import conexao.ConexaoBancoDeDados;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class ConsultaDAOTest {
     @BeforeAll
     public static void setUp() {
         try {
-            conn = conexao_bancodedados.newConnection();
+            conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
@@ -41,12 +41,12 @@ public class ConsultaDAOTest {
         consulta.setIdpaciente(1); // ID válido
 
         // Obtenha o número atual de consultas para esse paciente
-        int numConsultasAntes = consultaDAO.get_consultas(consulta.getIdpaciente()).size();
+        int numConsultasAntes = consultaDAO.getConsultas(consulta.getIdpaciente()).size();
 
-        consultaDAO.create_consulta(consulta);
+        consultaDAO.createConsulta(consulta);
 
         // Obtenha o número atual de consultas para esse paciente novamente, após a inserção
-        int numConsultasDepois = consultaDAO.get_consultas(consulta.getIdpaciente()).size();
+        int numConsultasDepois = consultaDAO.getConsultas(consulta.getIdpaciente()).size();
 
         // Verifique se o número de consultas aumentou em 1
         assertEquals(numConsultasAntes + 1, numConsultasDepois);
@@ -58,7 +58,7 @@ public class ConsultaDAOTest {
         ConsultaDAO instance = new ConsultaDAO(conn);
         ArrayList<Consulta> expResult = new ArrayList();
         try{
-            expResult = instance.get_consultas(id_paciente);
+            expResult = instance.getConsultas(id_paciente);
             assertNotNull(expResult);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
@@ -71,7 +71,7 @@ public class ConsultaDAOTest {
         ConsultaDAO instance = new ConsultaDAO(conn);
         Consulta expResult = new Consulta();
         try{
-            expResult = instance.get_consulta(id_consulta);
+            expResult = instance.getConsulta(id_consulta);
             assertNotNull(expResult);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
@@ -85,7 +85,7 @@ public class ConsultaDAOTest {
         ConsultaDAO instance = new ConsultaDAO(conn);
         ArrayList<Object> expResult = null;
         try{    
-            expResult = instance.get_medicoEspecialidade(id_consulta, medico_descricao);
+            expResult = instance.getMedicoEspecialidade(id_consulta, medico_descricao);
             assertNotNull(expResult);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
@@ -97,7 +97,7 @@ public class ConsultaDAOTest {
         ConsultaDAO instance = new ConsultaDAO(conn);
         ArrayList<Object> expResult = new ArrayList<Object>();
         try{
-        expResult = instance.get_procedimentosDisponiveis();
+        expResult = instance.getProcedimentosDisponiveis();
         assertNotNull(expResult);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
@@ -115,10 +115,10 @@ public class ConsultaDAOTest {
         novaConsulta.setIdmedico(1); // ID válido
         novaConsulta.setIdpaciente(1); // ID válido
 
-        consultaDAO.update_consulta(idConsulta, novaConsulta);
+        consultaDAO.updateConsulta(idConsulta, novaConsulta);
 
         // Recupera a consulta atualizada do banco de dados
-        Consulta consultaAtualizada = consultaDAO.get_consulta(idConsulta);
+        Consulta consultaAtualizada = consultaDAO.getConsulta(idConsulta);
 
         // Agora você pode comparar os campos da consulta recuperada com os dados que você usou para a atualização
         assertEquals(novaConsulta.getData(), consultaAtualizada.getData());
@@ -137,7 +137,7 @@ public class ConsultaDAOTest {
             Consulta consulta = new Consulta(); // Criando uma consulta para testar a deleção
             consulta.setDescricao("Exame de sangue");
             consulta.setData("2023-07-17 00:41:00");
-            consultaDAO.create_consulta(consulta);
+            consultaDAO.createConsulta(consulta);
 
             // Criando o Statement para executar a query
             Statement statement = conn.createStatement();
@@ -148,11 +148,11 @@ public class ConsultaDAOTest {
                 // Act
                 int id = resultSet.getInt("id"); // Supondo que a coluna do id na tabela seja 'id'
                 idResultSet = id;
-                Consulta consultaApagada = consultaDAO.get_consulta(id); // deletando a consulta que acabei de criar, onde o id é inserido no banco
+                Consulta consultaApagada = consultaDAO.getConsulta(id); // deletando a consulta que acabei de criar, onde o id é inserido no banco
             }
 
             // Assert
-            Consulta consultaQuery = consultaDAO.get_consulta(idResultSet);
+            Consulta consultaQuery = consultaDAO.getConsulta(idResultSet);
             assertNull(consulta.getDescricao(), "A consulta deveria ser null após ser deletado");
         } catch (SQLException e) {
             System.out.println("Erro SQL: " + e.getMessage());

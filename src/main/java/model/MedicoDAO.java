@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import conexao.conexao_bancodedados;
+import conexao.ConexaoBancoDeDados;
 import aplicacao.Medico;
 import aplicacao.Consulta;
 
@@ -24,7 +24,7 @@ public class MedicoDAO {
     */
     public MedicoDAO() {
         try {
-            conn = conexao_bancodedados.newConnection();
+            conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
@@ -55,37 +55,37 @@ public class MedicoDAO {
         return medico;
     }
    
-    public void create_exame(int id_tipoexame, int id_consulta){
+    public void createExame(int idTipoExame, int idConsulta){
     
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO exames (idtipoexame,idconsulta) VALUES ('" +
-                    id_tipoexame + "','" + id_consulta + "')");
+                    idTipoExame + "','" + idConsulta + "')");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public void create_medico(Medico novo_medico){
+    public void createMedico(Medico novoMedico){
     
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO medico "
                     + "(nome,crm,estadocrm,cpf,senha,autorizado,idespecialidade) "
-                    + "VALUES ( '" + novo_medico.getNome() + "','" + novo_medico.getCrm()  + "','" + novo_medico.getEstadocrm()  + "','" + 
-                    novo_medico.getCpf()  + "','" + novo_medico.getSenha()  + "','" + novo_medico.getAutorizado()  + "','" + novo_medico.getIdespecialidade() + "')");
+                    + "VALUES ( '" + novoMedico.getNome() + "','" + novoMedico.getCrm()  + "','" + novoMedico.getEstadocrm()  + "','" + 
+                    novoMedico.getCpf()  + "','" + novoMedico.getSenha()  + "','" + novoMedico.getAutorizado()  + "','" + novoMedico.getIdespecialidade() + "')");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public ArrayList<Consulta> get_consultas(int id_medico){
+    public ArrayList<Consulta> getConsultas(int idMedico){
     
         ArrayList<Consulta> consultasMedico = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM consulta" + 
-                " WHERE idmedico = '" + id_medico + "'");
+                " WHERE idmedico = '" + idMedico + "'");
             
             while (resultSet.next()) {
                 Consulta consulta = new Consulta();
@@ -104,13 +104,13 @@ public class MedicoDAO {
         return consultasMedico;
     }
     
-    public Medico get_medico(int id_medico){
+    public Medico getMedico(int idMedico){
         
         Medico medico = new Medico();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM medico "
-                    + "WHERE medico.id = '" + id_medico + "'");
+                    + "WHERE medico.id = '" + idMedico + "'");
             
             if (resultSet.next()) {
                 medico.setId(resultSet.getInt("id"));
@@ -129,25 +129,25 @@ public class MedicoDAO {
         return medico;
     }
     
-    public ArrayList<Object> get_exames(int id_consulta, int id_medico){
+    public ArrayList<Object> getExames(int idConsulta, int idMedico){
         
-        ArrayList<Object> exames_disponiveis = new ArrayList<>();
+        ArrayList<Object> examesDisponiveis = new ArrayList<>();
     
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoexame");
             
             while(resultSet.next()){
-                exames_disponiveis.add(resultSet.getInt("id"));
-                exames_disponiveis.add(resultSet.getString("descricao"));
+                examesDisponiveis.add(resultSet.getInt("id"));
+                examesDisponiveis.add(resultSet.getString("descricao"));
             }
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
-        return exames_disponiveis;
+        return examesDisponiveis;
     }
     
-    public ArrayList<Medico> get_medicos(){
+    public ArrayList<Medico> getMedicos(){
     
         ArrayList<Medico> medicos = new ArrayList<>();
         
@@ -173,72 +173,72 @@ public class MedicoDAO {
         return medicos;
     }
     
-    public void update_medico(int id_medico, Medico medico){
+    public void updateMedico(int idMedico, Medico medico){
         
         try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE medico SET nome='" + medico.getNome() + "', crm='" +
                     medico.getCrm() + "', estadocrm='" + medico.getEstadocrm() + "', cpf='" + medico.getCpf() +
                     "', senha='" + medico.getSenha() + "', autorizado='" + medico.getAutorizado() +
-                    "', idespecialidade='" + medico.getIdespecialidade() + "' WHERE medico.id='" + id_medico + "'");
+                    "', idespecialidade='" + medico.getIdespecialidade() + "' WHERE medico.id='" + idMedico + "'");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public void delete_medico(int id_medico){
+    public void deleteMedico(int idMedico){
         
         try (Statement statement = conn.createStatement()){
-            statement.execute("DELETE FROM medico WHERE medico.id=" + id_medico + "");
+            statement.execute("DELETE FROM medico WHERE medico.id=" + idMedico + "");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public ArrayList<ArrayList<Integer>> get_idDeleteMedico(int id_medico){
+    public ArrayList<ArrayList<Integer>> getIdDeleteMedico(int idMedico){
     
-        ArrayList<ArrayList<Integer>> id_compilado = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> idCompilado = new ArrayList<>();
         
-        ArrayList<Integer> id_consultas = new ArrayList<>();
-        ArrayList<Integer> id_exames = new ArrayList<>();
+        ArrayList<Integer> idConsultas = new ArrayList<>();
+        ArrayList<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
             "FROM medico INNER JOIN consulta ON medico.id=consulta.idmedico " +
             "INNER JOIN exames ON consulta.id=exames.idconsulta " +
-            "WHERE medico.id=" + id_medico + "");
+            "WHERE medico.id=" + idMedico + "");
             
             while(resultSet.next()) {
-                id_exames.add(resultSet.getInt("id"));
+                idExames.add(resultSet.getInt("id"));
             }
             
             resultSet = statement.executeQuery("SELECT consulta.id " +
             "FROM medico INNER JOIN consulta ON medico.id=consulta.idmedico " +
-            "WHERE medico.id=" + id_medico + "");
+            "WHERE medico.id=" + idMedico + "");
             
             while(resultSet.next()) {
-                id_consultas.add(resultSet.getInt("id"));
+                idConsultas.add(resultSet.getInt("id"));
             }
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
         
-        id_compilado.add(id_exames);
-        id_compilado.add(id_consultas);
+        idCompilado.add(idExames);
+        idCompilado.add(idConsultas);
         
-        return id_compilado;
+        return idCompilado;
     }
     
-    public ArrayList<Integer> medico_available(int id_medico, String data){
+    public ArrayList<Integer> medicoAvailable(int idMedico, String data){
         
         ArrayList<Integer>colisoes = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
 //            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) as total " +
             ResultSet resultSet = statement.executeQuery("SELECT consulta.id " +        
-            "FROM consulta WHERE data LIKE '%" + data + "%' AND consulta.idmedico=" + id_medico + "");
+            "FROM consulta WHERE data LIKE '%" + data + "%' AND consulta.idmedico=" + idMedico + "");
             
             while (resultSet.next()) {
                 colisoes.add(resultSet.getInt("id"));

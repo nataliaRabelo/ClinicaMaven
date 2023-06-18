@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
 @WebServlet(name = "Conexao", urlPatterns = {"/Conexao"})
-public class conexao_bancodedados extends HttpServlet {
+public class ConexaoBancoDeDados extends HttpServlet {
     
     private static Connection conexao = null;
     public static Connection newConnection() throws SQLException {

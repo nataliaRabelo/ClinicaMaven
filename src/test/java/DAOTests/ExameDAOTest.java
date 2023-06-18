@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 import java.sql.Connection;
 
-import conexao.conexao_bancodedados;
+import conexao.ConexaoBancoDeDados;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class ExameDAOTest {
     @BeforeAll
     public static void setUp() {
         try {
-            conn = conexao_bancodedados.newConnection();
+            conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
@@ -39,12 +39,12 @@ public class ExameDAOTest {
         ArrayList<Exame> total_exames = new ArrayList<Exame>();
         ExameDAO instance = new ExameDAO(conn);
         
-        total_exames = instance.get_exames();
+        total_exames = instance.getExames();
         int qtd = total_exames.size();
         
-        instance.create_exame(novo_exame);
+        instance.createExame(novo_exame);
         
-        total_exames = instance.get_exames();
+        total_exames = instance.getExames();
         assertNotEquals(total_exames.size(),qtd);
     }
 
@@ -56,7 +56,7 @@ public class ExameDAOTest {
         System.out.println("get_exames");
         ExameDAO instance = new ExameDAO(conn);
         ArrayList<Exame> expResult = new ArrayList<Exame>();
-        expResult = instance.get_exames();
+        expResult = instance.getExames();
         assertNotNull(expResult);
         
     }
@@ -70,7 +70,7 @@ public class ExameDAOTest {
         int id_exame = 1;
         ExameDAO instance = new ExameDAO(conn);
         try{
-            Exame result = instance.get_exame(id_exame);
+            Exame result = instance.getExame(id_exame);
             assertNotNull(result);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
@@ -87,7 +87,7 @@ public class ExameDAOTest {
         ArrayList<String> lista_exames = new ArrayList<String>();
         ExameDAO instance = new ExameDAO(conn);
         try{
-            lista_exames = instance.get_examesDaConsulta(id_consulta, lista_exames);
+            lista_exames = instance.getExamesDaConsulta(id_consulta, lista_exames);
             assertNotNull(lista_exames);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
@@ -107,10 +107,10 @@ public class ExameDAOTest {
         ExameDAO instance = new ExameDAO(conn);
         
         try{
-            exp_exame = instance.get_exame(id_exame);
-            instance.update_exame(id_exame, novo_exame);
+            exp_exame = instance.getExame(id_exame);
+            instance.updateExame(id_exame, novo_exame);
             
-            novo_exame = instance.get_exame(id_exame);
+            novo_exame = instance.getExame(id_exame);
             
             assertEquals(exp_exame.getDescricao(),novo_exame.getDescricao());
         } catch (NullPointerException e) {
@@ -127,7 +127,7 @@ public class ExameDAOTest {
         int id_exame = 1;
         ExameDAO instance = new ExameDAO(conn);
         try{
-            instance.delete_exame(id_exame);
+            instance.deleteExame(id_exame);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
         }
@@ -142,7 +142,7 @@ public class ExameDAOTest {
         int id_exame = 1;
         ExameDAO instance = new ExameDAO(conn);
         try{
-            instance.delete_tipoExame(id_exame);
+            instance.deleteTipoExame(id_exame);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
         }
@@ -157,7 +157,7 @@ public class ExameDAOTest {
         int id_exame = 1;
         ExameDAO instance = new ExameDAO(conn);
         try{
-            ArrayList<Integer> result = instance.get_idDeleteExame(id_exame);
+            ArrayList<Integer> result = instance.getIdDeleteExame(id_exame);
             assertNotNull(result);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");

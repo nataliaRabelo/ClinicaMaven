@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import conexao.conexao_bancodedados;
+import conexao.ConexaoBancoDeDados;
 import aplicacao.Consulta;
 
 public class ConsultaDAO {
@@ -23,33 +23,33 @@ public class ConsultaDAO {
     */
     public ConsultaDAO() {
         try {
-            conn = conexao_bancodedados.newConnection();
+            conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             System.out.println("Nao foi possivel conectar");
         }
     }
     
-    public void create_consulta(Consulta nova_consulta){
+    public void createConsulta(Consulta novaConsulta){
         
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO consulta"
                     + " (data,descricao,realizada,idmedico,idpaciente) VALUES ( '" +
-                    nova_consulta.getData() + "','" + nova_consulta.getDescricao() + "','" +
-                    nova_consulta.getRealizada() + "','" + nova_consulta.getIdmedico() +
-                    "','" + nova_consulta.getIdpaciente() + "')");
+                    novaConsulta.getData() + "','" + novaConsulta.getDescricao() + "','" +
+                    novaConsulta.getRealizada() + "','" + novaConsulta.getIdmedico() +
+                    "','" + novaConsulta.getIdpaciente() + "')");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public ArrayList<Consulta> get_consultas(int id_paciente){
+    public ArrayList<Consulta> getConsultas(int idPaciente){
         
-        ArrayList<Consulta> lista_consultas = new ArrayList<>();
+        ArrayList<Consulta> listaConsultas = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM consulta" + 
-                " WHERE idpaciente = '" + id_paciente + "'");
+                " WHERE idpaciente = '" + idPaciente + "'");
             
             while (resultSet.next()) {
                 Consulta consulta = new Consulta();
@@ -59,22 +59,22 @@ public class ConsultaDAO {
                 consulta.setRealizada(resultSet.getString("realizada").charAt(0));
                 consulta.setIdmedico(resultSet.getInt("idmedico"));
                 consulta.setIdpaciente(resultSet.getInt("idpaciente"));
-                lista_consultas.add(consulta);
+                listaConsultas.add(consulta);
             }
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
-        return lista_consultas;
+        return listaConsultas;
     }
     
-    public Consulta get_consulta(int id_consulta){
+    public Consulta getConsulta(int idConsulta){
     
         Consulta consulta = new Consulta();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM consulta "
-                    + "WHERE consulta.id = '" + id_consulta + "'");
+                    + "WHERE consulta.id = '" + idConsulta + "'");
             
             if (resultSet.next()) {
                 consulta.setId(resultSet.getInt("id"));
@@ -91,27 +91,27 @@ public class ConsultaDAO {
         return consulta;
     }
     
-    public ArrayList<Object> get_medicoEspecialidade(int id_consulta, ArrayList<Object> medico_descricao){
+    public ArrayList<Object> getMedicoEspecialidade(int idConsulta, ArrayList<Object> medicoDescricao){
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT medico.nome, especialidade.descricao " +
                     "FROM medico INNER JOIN consulta ON medico.id = consulta.idmedico INNER JOIN especialidade " +
-                    "ON medico.idespecialidade = especialidade.id WHERE consulta.id = '" + id_consulta + "'");
+                    "ON medico.idespecialidade = especialidade.id WHERE consulta.id = '" + idConsulta + "'");
             
             while(resultSet.next()) {
-                medico_descricao.add(resultSet.getString("nome"));
-                medico_descricao.add(resultSet.getString("descricao"));
+                medicoDescricao.add(resultSet.getString("nome"));
+                medicoDescricao.add(resultSet.getString("descricao"));
             }  
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
-        return medico_descricao;
+        return medicoDescricao;
     }
     
-    public ArrayList<Object> get_procedimentosDisponiveis(){
+    public ArrayList<Object> getProcedimentosDisponiveis(){
     
-        ArrayList<Object> med_especs = new ArrayList<>();
+        ArrayList<Object> medEspecs = new ArrayList<>();
     
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT esp.descricao, med.nome, med.id "
@@ -119,34 +119,34 @@ public class ConsultaDAO {
                     + "ON esp.id = med.idespecialidade AND med.autorizado='S'");
             
             while(resultSet.next()){
-                med_especs.add(resultSet.getString("descricao"));
-                med_especs.add(resultSet.getString("nome"));
-                med_especs.add(resultSet.getInt("id"));
+                medEspecs.add(resultSet.getString("descricao"));
+                medEspecs.add(resultSet.getString("nome"));
+                medEspecs.add(resultSet.getInt("id"));
             }
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
-        return med_especs;
+        return medEspecs;
     }
      
-    public void update_consulta(int id_consulta, Consulta nova_consulta){
+    public void updateConsulta(int idConsulta, Consulta novaConsulta){
         
         try (Statement statement = conn.createStatement()){
-            statement.execute("UPDATE consulta SET data='" + nova_consulta.getData() + "' , descricao='" +
-                    nova_consulta.getDescricao() + "' , realizada='" + nova_consulta.getRealizada() +
-                    "' , idmedico='" + nova_consulta.getIdmedico() + "' , idpaciente='" + nova_consulta.getIdpaciente() + 
-                    "' WHERE consulta.id='" + id_consulta + "'");
+            statement.execute("UPDATE consulta SET data='" + novaConsulta.getData() + "' , descricao='" +
+                    novaConsulta.getDescricao() + "' , realizada='" + novaConsulta.getRealizada() +
+                    "' , idmedico='" + novaConsulta.getIdmedico() + "' , idpaciente='" + novaConsulta.getIdpaciente() + 
+                    "' WHERE consulta.id='" + idConsulta + "'");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
         }
     }
     
-    public void delete_consulta(int id_consulta){
+    public void deleteConsulta(int idConsulta){
         
         try (Statement statement = conn.createStatement()){
-            statement.execute("DELETE FROM consulta WHERE consulta.id=" + id_consulta + "");
+            statement.execute("DELETE FROM consulta WHERE consulta.id=" + idConsulta + "");
             
         } catch(SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
