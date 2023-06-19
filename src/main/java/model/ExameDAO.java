@@ -4,8 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Exame;
+import utils.Constantes;
 
 /**
  *
@@ -40,26 +43,26 @@ public class ExameDAO {
                     + "(descricao) VALUES ( '" + novoExame.getDescricao() + "')");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
-    public ArrayList<Exame> getExames(){
+    public List<Exame> getExames(){
     
-        ArrayList<Exame> exames = new ArrayList<>();
+        List<Exame> exames = new ArrayList<>();
        
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoexame");
             
             while(resultSet.next()){
                 Exame exame = new Exame();
-                exame.setId(resultSet.getInt("id"));
-                exame.setDescricao(resultSet.getString("descricao"));
+                exame.setId(resultSet.getInt(Constantes.ID));
+                exame.setDescricao(resultSet.getString(Constantes.DESCRICAO));
                 exames.add(exame);
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return exames;
     }
@@ -78,12 +81,12 @@ public class ExameDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return exame;
     }
     
-    public ArrayList<String> getExamesDaConsulta(int idConsulta, ArrayList<String> listaExames){
+    public List<String> getExamesDaConsulta(int idConsulta, List<String> listaExames){
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT tipoexame.descricao " +
@@ -96,7 +99,7 @@ public class ExameDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return listaExames;
     }
@@ -107,7 +110,7 @@ public class ExameDAO {
             statement.execute("UPDATE tipoexame SET descricao='" + novoExame.getDescricao() + "' WHERE tipoexame.id=" + idExame + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -117,7 +120,7 @@ public class ExameDAO {
             statement.execute("DELETE FROM exames WHERE exames.id=" + idExame + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -127,13 +130,13 @@ public class ExameDAO {
             statement.execute("DELETE FROM tipoexame WHERE tipoexame.id=" + idExame + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
-    public ArrayList<Integer> getIdDeleteExame(int idExame){
+    public List<Integer> getIdDeleteExame(int idExame){
         
-        ArrayList<Integer> idExames = new ArrayList<>();
+        List<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
@@ -144,7 +147,7 @@ public class ExameDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return idExames;
     }

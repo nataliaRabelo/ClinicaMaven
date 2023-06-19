@@ -4,8 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Plano;
+import utils.Constantes;
 
 public class PlanoDAO {
    
@@ -36,13 +39,13 @@ public class PlanoDAO {
                     + "(descricao) VALUES ( '" + novoPlano.getDescricao() + "')");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR  + e.getMessage());
         }
     }
   
-    public ArrayList<Plano> getPlanos(){
+    public List<Plano> getPlanos(){
     
-        ArrayList<Plano> planos = new ArrayList<>();
+        List<Plano> planos = new ArrayList<>();
        
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoplano");
@@ -55,7 +58,7 @@ public class PlanoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return planos;
     }
@@ -74,7 +77,7 @@ public class PlanoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return plano;
     }
@@ -85,7 +88,7 @@ public class PlanoDAO {
             statement.execute("UPDATE tipoplano SET descricao='" + novoPlano.getDescricao() + "' WHERE tipoplano.id=" + idPlano + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -95,17 +98,17 @@ public class PlanoDAO {
             statement.execute("DELETE FROM tipoplano WHERE tipoplano.id=" + idPlano + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
-    public ArrayList<ArrayList<Integer>> getIdDeletePlano(int idPlano){
+    public List<List<Integer>> getIdDeletePlano(int idPlano){
         
-        ArrayList<ArrayList<Integer>> idCompilado = new ArrayList<>();
+        List<List<Integer>> idCompilado = new ArrayList<>();
         
-        ArrayList<Integer> idPacientes = new ArrayList<>();
-        ArrayList<Integer> idConsultas = new ArrayList<>();
-        ArrayList<Integer> idExames = new ArrayList<>();
+        List<Integer> idPacientes = new ArrayList<>();
+        List<Integer> idConsultas = new ArrayList<>();
+        List<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
@@ -136,7 +139,7 @@ public class PlanoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         
         idCompilado.add(idExames);

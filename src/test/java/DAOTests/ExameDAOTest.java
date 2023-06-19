@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 import java.sql.Connection;
+import java.util.List;
 
 import conexao.ConexaoBancoDeDados;
 
@@ -36,7 +37,7 @@ public class ExameDAOTest {
         novo_exame.setId(100);
         novo_exame.setDescricao("Exame de sangue");
         
-        ArrayList<Exame> total_exames = new ArrayList<Exame>();
+        List<Exame> total_exames = new ArrayList<Exame>();
         ExameDAO instance = new ExameDAO(conn);
         
         total_exames = instance.getExames();
@@ -55,7 +56,7 @@ public class ExameDAOTest {
     public void testGet_exames() {
         System.out.println("get_exames");
         ExameDAO instance = new ExameDAO(conn);
-        ArrayList<Exame> expResult = new ArrayList<Exame>();
+        List<Exame> expResult = new ArrayList<Exame>();
         expResult = instance.getExames();
         assertNotNull(expResult);
         
@@ -84,7 +85,7 @@ public class ExameDAOTest {
     public void testGet_examesDaConsulta() {
         System.out.println("get_examesDaConsulta");
         int id_consulta = 1;
-        ArrayList<String> lista_exames = new ArrayList<String>();
+        List<String> lista_exames = new ArrayList<String>();
         ExameDAO instance = new ExameDAO(conn);
         try{
             lista_exames = instance.getExamesDaConsulta(id_consulta, lista_exames);
@@ -157,7 +158,7 @@ public class ExameDAOTest {
         int id_exame = 1;
         ExameDAO instance = new ExameDAO(conn);
         try{
-            ArrayList<Integer> result = instance.getIdDeleteExame(id_exame);
+            List<Integer> result = instance.getIdDeleteExame(id_exame);
             assertNotNull(result);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");

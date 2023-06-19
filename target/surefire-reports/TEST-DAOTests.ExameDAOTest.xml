@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="8" failures="0" name="DAOTests.ExameDAOTest" time="0.026" errors="0" skipped="0">
+<testsuite tests="8" failures="1" name="DAOTests.ExameDAOTest" time="0.015" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_341\jre\bin"/>
@@ -64,12 +64,25 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testCreate_exame" time="0.016"/>
-  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testDelete_exame" time="0.002"/>
-  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testGet_exame" time="0.001"/>
-  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testGet_exames" time="0.001"/>
+  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testGet_exame" time="0"/>
+  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testGet_exames" time="0"/>
+  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testCreate_exame" time="0.009">
+    <failure message="expected: not equal but was: &lt;0&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: not equal but was: &lt;0&gt;
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:39)
+	at org.junit.jupiter.api.AssertNotEquals.failEqual(AssertNotEquals.java:276)
+	at org.junit.jupiter.api.AssertNotEquals.assertNotEquals(AssertNotEquals.java:96)
+	at org.junit.jupiter.api.AssertNotEquals.assertNotEquals(AssertNotEquals.java:88)
+	at org.junit.jupiter.api.Assertions.assertNotEquals(Assertions.java:1960)
+	at DAOTests.ExameDAOTest.testCreate_exame(ExameDAOTest.java:49)
+</failure>
+    <system-out>create_exame
+SQL Error: Column &apos;descrição&apos; not found.
+SQL Error: Column &apos;descrição&apos; not found.
+</system-out>
+  </testcase>
+  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testDelete_exame" time="0.001"/>
   <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testUpdate_exame" time="0.001"/>
-  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testGet_idDeleteExame" time="0.001"/>
   <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testGet_examesDaConsulta" time="0.001"/>
-  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testDelete_tipoExame" time="0.003"/>
+  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testDelete_tipoExame" time="0.002"/>
+  <testcase classname="DAOTests.ExameDAOTest" name="DAOTests.ExameDAOTest.testGet_idDeleteExame" time="0.001"/>
 </testsuite>

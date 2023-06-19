@@ -5,6 +5,7 @@ import aplicacao.Especialidade;
 import conexao.ConexaoBancoDeDados;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -40,7 +41,7 @@ public void testCreateEspecialidade() {
     especialidadeDAO.createEspecialidade(novaEspecialidade);
 
     // Tenta recuperar a especialidade do banco de dados
-    ArrayList<Especialidade> especialidades = especialidadeDAO.getEspecialidades();
+    List<Especialidade> especialidades = especialidadeDAO.getEspecialidades();
 
     boolean found = false;
     for (Especialidade especialidade : especialidades) {
@@ -57,7 +58,7 @@ public void testCreateEspecialidade() {
     @Test
     public void testGetEspecialidades() {
         EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
-        ArrayList<Especialidade> especialidades = especialidadeDAO.getEspecialidades();
+        List<Especialidade> especialidades = especialidadeDAO.getEspecialidades();
 
         Assertions.assertNotNull(especialidades, "A lista de especialidades não deve ser nula");
         Assertions.assertTrue(especialidades.size() > 0, "A lista de especialidades deve ter pelo menos uma especialidade");
@@ -138,7 +139,7 @@ public void testCreateEspecialidade() {
             if(resultSet.next()) {
                 // Act
                 int id = resultSet.getInt("id"); // Supondo que a coluna do id na tabela seja 'id'
-                ArrayList<ArrayList<Integer>> id_compilado = dao.getIdDeleteEspecialidade(id);
+                List<List<Integer>> id_compilado = dao.getIdDeleteEspecialidade(id);
 
                 // Assert
                 assertFalse(id_compilado.get(0).isEmpty(), "A lista de ids de exames não deve estar vazia");

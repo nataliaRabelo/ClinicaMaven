@@ -4,8 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Especialidade;
+import utils.Constantes;
 
 public class EspecialidadeDAO {
    
@@ -35,13 +38,13 @@ public class EspecialidadeDAO {
                     + "(descricao) VALUES ( '" + novaEspecialidade.getDescricao() + "')");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
-    public ArrayList<Especialidade> getEspecialidades(){
+    public List<Especialidade> getEspecialidades(){
     
-        ArrayList<Especialidade> especialidades = new ArrayList<>();
+        List<Especialidade> especialidades = new ArrayList<>();
        
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM especialidade");
@@ -54,7 +57,7 @@ public class EspecialidadeDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return especialidades;
     }
@@ -73,7 +76,7 @@ public class EspecialidadeDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return espec;
     }
@@ -85,7 +88,7 @@ public class EspecialidadeDAO {
                     + "WHERE especialidade.id=" + idEspecialidade + "");
             
         } catch(SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -99,13 +102,13 @@ public class EspecialidadeDAO {
         }
     }
     
-    public ArrayList<ArrayList<Integer>> getIdDeleteEspecialidade(int idEspecialidade){
+    public List<List<Integer>> getIdDeleteEspecialidade(int idEspecialidade){
         
-        ArrayList<ArrayList<Integer>> idCompilado = new ArrayList<>();
+        List<List<Integer>> idCompilado = new ArrayList<>();
         
-        ArrayList<Integer> idMedicos = new ArrayList<>();
-        ArrayList<Integer> idConsultas = new ArrayList<>();
-        ArrayList<Integer> idExames = new ArrayList<>();
+        List<Integer> idMedicos = new ArrayList<>();
+        List<Integer> idConsultas = new ArrayList<>();
+        List<Integer> idExames = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +

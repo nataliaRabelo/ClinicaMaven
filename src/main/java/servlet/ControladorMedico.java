@@ -14,6 +14,9 @@ import model.MedicoDAO;
 import model.ExameDAO;
 import aplicacao.Medico;
 import aplicacao.Consulta;
+import utils.Constantes;
+import java.util.List;
+import java.util.Collection;
 
 @WebServlet(name = "ControladorMedico", urlPatterns = {"/ControladorMedico"})
 public class ControladorMedico extends HttpServlet {
@@ -33,16 +36,16 @@ public class ControladorMedico extends HttpServlet {
                 
                 ExameDAO exameDAO = new ExameDAO();
                 
-                ArrayList<Consulta> listaConsultas = new ArrayList<>();                
+                List<Consulta> listaConsultas = new ArrayList<>();                
                 listaConsultas = medicoDAO.getConsultas(medico.getId());
                 
                 if(listaConsultas.size() > 0){
                     
-                    ArrayList<ArrayList<String>>listaExamesCompilado = new ArrayList<>();
+                    List<List<String>>listaExamesCompilado = new ArrayList<>();
                     
                     for(int i=0;i<listaConsultas.size();i++){
                         
-                        ArrayList<String>listaExames = new ArrayList<>();
+                        List<String>listaExames = new ArrayList<>();
                         listaExames = exameDAO.getExamesDaConsulta(listaConsultas.get(i).getId(),listaExames);
                         
                         if(listaExames.isEmpty()){
@@ -53,7 +56,7 @@ public class ControladorMedico extends HttpServlet {
                         }
                     }
                     
-                    ArrayList<String> nomePacientes = new ArrayList<>();                    
+                    List<String> nomePacientes = new ArrayList<>();                    
                     ClienteDAO clienteDAO = new ClienteDAO();
                     
                     for(int i=0;i<listaConsultas.size();i++){
@@ -78,12 +81,12 @@ public class ControladorMedico extends HttpServlet {
             case "SolicitarExame":
                 
                 String idConsultaEx = request.getParameter("id");
-                ArrayList<Object> lista = new ArrayList<>();
+                List<Object> lista = new ArrayList<>();
                 
                 lista = medicoDAO.getExames();
                 
-                session.setAttribute("lista_exames", lista);
-                session.setAttribute("id_consulta", idConsultaEx);
+                session.setAttribute(Constantes.LISTA_EXAMES, lista);
+                session.setAttribute(Constantes.ID_CONSULTA, idConsultaEx);
                 RequestDispatcher medex = request.getRequestDispatcher("./view/MarcarExame.jsp");
                 medex.forward(request, response);                
             
@@ -92,8 +95,8 @@ public class ControladorMedico extends HttpServlet {
             
             case "ConcluirConsulta":
                 
-                String idConsulta = request.getParameter("id");
-                session.setAttribute("id_consulta", idConsulta);
+                String idConsulta = request.getParameter(Constantes.ID);
+                session.setAttribute(Constantes.ID_CONSULTA, idConsulta);
                 RequestDispatcher med = request.getRequestDispatcher("./view/EditarConsultaMedico.jsp");
                 med.forward(request, response);
                 

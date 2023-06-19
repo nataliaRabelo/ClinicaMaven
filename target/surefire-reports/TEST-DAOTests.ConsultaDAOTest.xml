@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="7" failures="0" name="DAOTests.ConsultaDAOTest" time="0.024" errors="0" skipped="0">
+<testsuite tests="7" failures="2" name="DAOTests.ConsultaDAOTest" time="0.023" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_341\jre\bin"/>
@@ -64,11 +64,34 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testGet_consulta" time="0"/>
-  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testGet_consultas" time="0"/>
-  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testGet_medicoEspecialidade" time="0.006"/>
-  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testCreateConsulta" time="0.01"/>
-  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testDeleteConsulta" time="0.005"/>
-  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testGet_procedimentosDisponiveis" time="0.001"/>
-  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testUpdateConsulta" time="0.002"/>
+  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testGet_procedimentosDisponiveis" time="0"/>
+  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testDeleteConsulta" time="0.002"/>
+  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testGet_consultas" time="0.003"/>
+  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testGet_medicoEspecialidade" time="0.004"/>
+  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testUpdateConsulta" time="0.007">
+    <failure message="expected: &lt;Consulta atualizada&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;Consulta atualizada&gt; but was: &lt;null&gt;
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+	at DAOTests.ConsultaDAOTest.testUpdateConsulta(ConsultaDAOTest.java:126)
+</failure>
+    <system-out>SQL Error: Column &apos;descrição&apos; not found.
+</system-out>
+  </testcase>
+  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testCreateConsulta" time="0.006">
+    <failure message="expected: &lt;1&gt; but was: &lt;0&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;1&gt; but was: &lt;0&gt;
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:510)
+	at DAOTests.ConsultaDAOTest.testCreateConsulta(ConsultaDAOTest.java:53)
+</failure>
+    <system-out>SQL Error: Column &apos;descrição&apos; not found.
+SQL Error: Column &apos;descrição&apos; not found.
+</system-out>
+  </testcase>
+  <testcase classname="DAOTests.ConsultaDAOTest" name="DAOTests.ConsultaDAOTest.testGet_consulta" time="0.001"/>
 </testsuite>

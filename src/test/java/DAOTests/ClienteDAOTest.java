@@ -120,7 +120,7 @@ public class ClienteDAOTest {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        ArrayList<Cliente> pacientes = dao.getPacientes();
+        List<Cliente> pacientes = dao.getPacientes();
 
         // Assert
         assertFalse(pacientes.isEmpty(), "A lista de pacientes não deve estar vazia");
@@ -175,7 +175,7 @@ public void testGetIdDeletePaciente() {
         if(resultSet.next()) {
             // Act
             int id = resultSet.getInt("id"); // Supondo que a coluna do id na tabela seja 'id'
-            ArrayList<ArrayList<Integer>> id_compilado = dao.getIdDeletePaciente(id);
+            List<List<Integer>> id_compilado = dao.getIdDeletePaciente(id);
 
             // Assert
             assertFalse(id_compilado.get(0).isEmpty(), "A lista de ids de exames não deve estar vazia");
@@ -356,7 +356,7 @@ public void testGetIdDeletePaciente() {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        ArrayList<ArrayList<Integer>> result = dao.getIdDeletePaciente(1);
+        List<List<Integer>> result = dao.getIdDeletePaciente(1);
 
         // Assert
         assertNotNull(result);
