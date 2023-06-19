@@ -83,6 +83,9 @@ public class Autenticar extends HttpServlet {
                     return;
                 }
                 break;
+                
+            default:
+                break;
         }
 
         RequestDispatcher erro = request.getRequestDispatcher("./view/Oops.jsp?type=Login");
