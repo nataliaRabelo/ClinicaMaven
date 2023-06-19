@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import conexao.ConexaoBancoDeDados;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import aplicacao.Medico;
 import aplicacao.Consulta;
@@ -29,7 +31,8 @@ public class MedicoDAO {
         try {
             conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
-            System.out.println("Nao foi possivel conectar");
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, "Nao foi possivel conectar");
         }
     }
     
@@ -53,7 +56,8 @@ public class MedicoDAO {
             } 
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return medico;
     }
@@ -65,7 +69,8 @@ public class MedicoDAO {
                     idTipoExame + "','" + idConsulta + "')");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -78,7 +83,8 @@ public class MedicoDAO {
                     novoMedico.getCpf()  + "','" + novoMedico.getSenha()  + "','" + novoMedico.getAutorizado()  + "','" + novoMedico.getIdespecialidade() + "')");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -102,7 +108,8 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return consultasMedico;
     }
@@ -127,7 +134,8 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return medico;
     }
@@ -145,7 +153,8 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return examesDisponiveis;
     }
@@ -171,7 +180,8 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR+ e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return medicos;
     }
@@ -185,7 +195,8 @@ public class MedicoDAO {
                     "', idespecialidade='" + medico.getIdespecialidade() + "' WHERE medico.id='" + idMedico + "'");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -195,7 +206,8 @@ public class MedicoDAO {
             statement.execute("DELETE FROM medico WHERE medico.id=" + idMedico + "");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -224,7 +236,8 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         
         idCompilado.add(idExames);
@@ -247,7 +260,8 @@ public class MedicoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR+ e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return colisoes;
     }

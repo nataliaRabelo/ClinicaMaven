@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Exame;
@@ -32,7 +34,8 @@ public class ExameDAO {
         try {
             conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
-            System.out.println("Nao foi possivel conectar");
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, "Nao foi possivel conectar");
         }
     }
     
@@ -43,7 +46,8 @@ public class ExameDAO {
                     + "(descricao) VALUES ( '" + novoExame.getDescricao() + "')");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -62,7 +66,8 @@ public class ExameDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return exames;
     }
@@ -81,7 +86,8 @@ public class ExameDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return exame;
     }
@@ -99,7 +105,8 @@ public class ExameDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return listaExames;
     }
@@ -110,7 +117,8 @@ public class ExameDAO {
             statement.execute("UPDATE tipoexame SET descricao='" + novoExame.getDescricao() + "' WHERE tipoexame.id=" + idExame + "");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -120,7 +128,8 @@ public class ExameDAO {
             statement.execute("DELETE FROM exames WHERE exames.id=" + idExame + "");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -130,7 +139,8 @@ public class ExameDAO {
             statement.execute("DELETE FROM tipoexame WHERE tipoexame.id=" + idExame + "");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -147,7 +157,8 @@ public class ExameDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return idExames;
     }
