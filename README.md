@@ -11,7 +11,7 @@ O Clinica Web trata-se de um sistema que será desenvolvido em disciplina de Des
 ## 1. Pré-Requisitos
 
 * Windows 10.
-  * [NetBeans 12.4](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html)
+  * [NetBeans 12.4](https://netbeans.apache.org/download/nb124/nb124.html)
   * [Java 7](https://www.oracle.com/br/java/technologies/javase/javase7-archive-downloads.html) - Distribuição: Oracle
   * [Xampp 8.2.4](https://www.apachefriends.org/pt_br/download.html)
   * [MySql 8.0.33](https://dev.mysql.com/downloads/mysql/)

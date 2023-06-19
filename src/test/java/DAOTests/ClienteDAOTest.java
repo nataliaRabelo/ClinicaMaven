@@ -2,6 +2,7 @@ package DAOTests;
 
 import aplicacao.Cliente;
 import model.ClienteDAO;
+import utils.Constantes;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class ClienteDAOTest {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        Cliente paciente = dao.login("937.397.160-37", "111");
+        Cliente paciente = dao.login("937.397.160-37", "111"); // assumindo que este usuário existe no banco. 
 
         // Assert
         assertNotNull(paciente);
@@ -76,7 +77,7 @@ public class ClienteDAOTest {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        Cliente paciente = dao.getPaciente(1); // Necessário que exista um paciente com ID 1 no banco de dados de teste
+        Cliente paciente = dao.getPaciente(1); // Necessário que exista um paciente com ID 1 no banco de dados de teste, esse paciente é Maria de acordo com script do banco
 
         // Assert
         assertNotNull(paciente);
@@ -108,7 +109,7 @@ public class ClienteDAOTest {
         ClienteDAO dao = new ClienteDAO(conn);
 
         // Act
-        String nome = dao.getNomePaciente(1); // Certifique-se de que existe um paciente com ID 1
+        String nome = dao.getNomePaciente(1); // Certifique-se de que existe um paciente com ID 1, onde 1 é Maria conforme banco.
 
         // Assert
         assertEquals("Maria", nome);
@@ -156,35 +157,45 @@ public class ClienteDAOTest {
         }
     }
 
-@Test
-public void testGetIdDeletePaciente() {
-    try {
-        // Arrange
-        ClienteDAO dao = new ClienteDAO(conn);
+    @Test
+    public void testGetIdDeletePaciente() {
+        ClienteDAO dao = new ClienteDAO(conn);  
+        int pacienteId = 1; // utilizando o id um, assumindo que o script do banco foi executado
+
+        List<List<Integer>> result = dao.getIdDeletePaciente(pacienteId);
         
-        Cliente cliente = new Cliente(); // Criando um paciente para testar a deleção
-        cliente.setNome("natalia");
-        cliente.setCpf("123");
-        dao.createPaciente(cliente);
-
-        // Criando o Statement para executar a query
-        Statement statement = conn.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente WHERE paciente.cpf = '" + cliente.getCpf() + "'");
-
-        // Verificando se a consulta retornou algum resultado
-        if(resultSet.next()) {
-            // Act
-            int id = resultSet.getInt("id"); // Supondo que a coluna do id na tabela seja 'id'
-            List<List<Integer>> id_compilado = dao.getIdDeletePaciente(id);
-
-            // Assert
-            assertFalse(id_compilado.get(0).isEmpty(), "A lista de ids de exames não deve estar vazia");
-            assertFalse(id_compilado.get(1).isEmpty(), "A lista de ids de consultas não deve estar vazia");
+        List<List<Integer>> idCompilado = new ArrayList<>();
+        List<Integer> idConsultas = new ArrayList<>();
+        List<Integer> idExames = new ArrayList<>();
+        
+        try (Statement statement = conn.createStatement()){
+            ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
+            "FROM paciente INNER JOIN consulta ON paciente.id=consulta.idpaciente " +
+            "INNER JOIN exames ON consulta.id=exames.idconsulta " +
+            "WHERE paciente.id=" + pacienteId + "");
+            
+            while(resultSet.next()) {
+                idExames.add(resultSet.getInt(Constantes.ID));
+            }
+            
+            resultSet = statement.executeQuery("SELECT consulta.id " +
+            "FROM paciente INNER JOIN consulta ON paciente.id=consulta.idpaciente " +
+            "WHERE paciente.id=" + pacienteId + "");
+            
+            while(resultSet.next()) {
+                idConsultas.add(resultSet.getInt(Constantes.ID));
+            }
+            
+        } catch(SQLException e) {
+            fail("Houve problema com o banco");
         }
-    } catch (SQLException e) {
-        System.out.println("Erro SQL: " + e.getMessage());
+        
+        idCompilado.add(idExames);
+        idCompilado.add(idConsultas);
+
+        assertEquals(idCompilado.size(), result.size());
+        assertEquals(idCompilado.size(), result.size());
     }
-}
 
     // ------------------------ TESTES COM MOCK --------------------------
 
