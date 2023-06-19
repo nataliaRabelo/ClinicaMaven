@@ -40,12 +40,12 @@ public class ControladorCliente extends HttpServlet {
             
             case "Editar":
                
-                Consulta consultaOriginal = new Consulta();
+                Consulta consultaOriginal;
                 
                 consultaOriginal = consultaDAO.getConsulta(Integer.parseInt(request.getParameter("id")));
                
                 List<Object>listaMedicoEspec = new ArrayList<>();
-                List<Object>listaDisponiveis = new ArrayList<>();
+                List<Object>listaDisponiveis;
                 
                 consultaDAO.getMedicoEspecialidade(consultaOriginal.getId(),listaMedicoEspec);
                     
@@ -63,7 +63,7 @@ public class ControladorCliente extends HttpServlet {
             
             case "Visualizar":
                 
-                List<Consulta> listaConsultas = new ArrayList<>();
+                List<Consulta> listaConsultas;
                 ExameDAO exameDAO = new ExameDAO();
                 
                 listaConsultas = consultaDAO.getConsultas(cliente.getId());
@@ -102,7 +102,7 @@ public class ControladorCliente extends HttpServlet {
         
             case "Marcar":
 
-                List<Object> listaProcedimentos = new ArrayList<>();
+                List<Object> listaProcedimentos;
                 
                 listaProcedimentos = consultaDAO.getProcedimentosDisponiveis();
    
@@ -146,7 +146,7 @@ public class ControladorCliente extends HttpServlet {
         
         String[] datahora = consulta.getData().split(" ");
         
-        List<Integer> colisoes = new ArrayList<>();
+        List<Integer> colisoes;
         colisoes = medicoDAO.medicoAvailable(consulta.getIdmedico(),datahora[0]);
         
         if(request.getParameter("acao").equals("Enviar")){

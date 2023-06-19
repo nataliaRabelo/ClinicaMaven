@@ -36,7 +36,7 @@ public class ControladorMedico extends HttpServlet {
                 
                 ExameDAO exameDAO = new ExameDAO();
                 
-                List<Consulta> listaConsultas = new ArrayList<>();                
+                List<Consulta> listaConsultas;                
                 listaConsultas = medicoDAO.getConsultas(medico.getId());
                 
                 if(listaConsultas.size() > 0){
@@ -81,7 +81,7 @@ public class ControladorMedico extends HttpServlet {
             case "SolicitarExame":
                 
                 String idConsultaEx = request.getParameter("id");
-                List<Object> lista = new ArrayList<>();
+                List<Object> lista;
                 
                 lista = medicoDAO.getExames();
                 
@@ -118,7 +118,7 @@ public class ControladorMedico extends HttpServlet {
             throws ServletException, IOException {
         
         if(request.getParameter("acao").equals("Enviar")){
-                Consulta consulta = new Consulta();
+                Consulta consulta;
                 ConsultaDAO consultaDAO = new ConsultaDAO();
                 
                 consulta = consultaDAO.getConsulta(Integer.parseInt(request.getParameter("id_consulta")));

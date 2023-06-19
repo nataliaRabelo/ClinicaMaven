@@ -29,7 +29,7 @@ public class Cadastrar extends HttpServlet {
         
         if(request.getParameter("arg").equals("Cadastrar")){
             
-            List<Plano> planos = new ArrayList<>();
+            List<Plano> planos;
             
             planos = planoDAO.getPlanos();
             

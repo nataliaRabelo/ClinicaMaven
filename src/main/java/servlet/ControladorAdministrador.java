@@ -49,7 +49,7 @@ public class ControladorAdministrador extends HttpServlet {
                 switch(request.getParameter(Constantes.ARG)){
                     case Constantes.VISUALIZAR:
                         
-                        List<Cliente> pacientes = new ArrayList<>();
+                        List<Cliente> pacientes;
                         pacientes = clienteDAO.getPacientes();
                         
                         if(pacientes.size() > 0){
@@ -71,7 +71,7 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                     
                     case "Excluir":
-                        List<List<Integer>> compiladoIds = new ArrayList<>();
+                        List<List<Integer>> compiladoIds;
                         
                         compiladoIds = clienteDAO.getIdDeletePaciente(Integer.parseInt(request.getParameter(Constantes.ID)));
                         
@@ -91,9 +91,9 @@ public class ControladorAdministrador extends HttpServlet {
 
                     
                     case Constantes.EDITAR:
-                        Cliente paciente = new Cliente();
-                        Plano plano = new Plano();
-                        List<Plano> planosDisponiveis = new ArrayList<>();
+                        Cliente paciente;
+                        Plano plano;
+                        List<Plano> planosDisponiveis;
                         
                         paciente = clienteDAO.getPaciente(Integer.parseInt(request.getParameter(Constantes.ID)));
                         plano = planoDAO.getPlano(paciente.getIdtipoplano());
@@ -108,7 +108,7 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
 
                     case Constantes.CADASTRAR:
-                        List<Plano> planos = new ArrayList<>();
+                        List<Plano> planos;
                         planos = planoDAO.getPlanos();
                         
                         session.setAttribute(Constantes.PACIENTE,null);
@@ -127,10 +127,10 @@ public class ControladorAdministrador extends HttpServlet {
             break;
                 
             case "Medico":
-                Medico medico = new Medico();
+                Medico medico;
                 switch(request.getParameter("arg")){
                     case Constantes.VISUALIZAR:
-                        List<Medico> medicos = new ArrayList<>();
+                        List<Medico> medicos;
 
                         medicos = medicoDAO.getMedicos();
                         
@@ -153,7 +153,7 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                 
                     case Constantes.EXCLUIR:
-                        List<List<Integer>> compiladoIds = new ArrayList<>();
+                        List<List<Integer>> compiladoIds;
                         
                         compiladoIds = medicoDAO.getIdDeleteMedico(Integer.parseInt(request.getParameter("id")));
                         
@@ -174,8 +174,8 @@ public class ControladorAdministrador extends HttpServlet {
                 
                     case Constantes.EDITAR:
                         
-                        Especialidade especialidade  = new Especialidade();
-                        List<Especialidade> especsDisponiveis = new ArrayList<>();
+                        Especialidade especialidade;
+                        List<Especialidade> especsDisponiveis;
                         
                         medico = medicoDAO.getMedico(Integer.parseInt(request.getParameter("id")));
                         especialidade = especialidadeDAO.getEspecialidade(medico.getIdespecialidade());
@@ -190,7 +190,7 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
 
                     case Constantes.CADASTRAR:
-                        List<Especialidade> especs = new ArrayList<>();
+                        List<Especialidade> especs;
 
                         especs = especialidadeDAO.getEspecialidades();
                         
@@ -207,7 +207,7 @@ public class ControladorAdministrador extends HttpServlet {
                     
                     case Constantes.VERCONSULTAS:
                         
-                        List<Consulta> listaConsultas = new ArrayList<>();                
+                        List<Consulta> listaConsultas;                
                         listaConsultas = medicoDAO.getConsultas(Integer.parseInt(request.getParameter("id")));
                     
                         if(listaConsultas.size() > 0){
@@ -258,7 +258,7 @@ public class ControladorAdministrador extends HttpServlet {
                 switch(request.getParameter(Constantes.ARG)){
                     
                     case Constantes.VISUALIZAR:     
-                        List<Administrador> adms = new ArrayList<>();
+                        List<Administrador> adms;
 
                         adms = administradorDAO.getAdministradores();
                         
@@ -277,7 +277,7 @@ public class ControladorAdministrador extends HttpServlet {
 
                 
                     case Constantes.EDITAR: 
-                        Administrador administrador = new Administrador();
+                        Administrador administrador;
                         
                         administrador = administradorDAO.getAdministrador(Integer.parseInt(request.getParameter(Constantes.ID)));
                         
@@ -301,7 +301,7 @@ public class ControladorAdministrador extends HttpServlet {
                 switch(request.getParameter(Constantes.ARG)){
                     case Constantes.VISUALIZAR:
                         
-                        List<Plano> planos = new ArrayList<>();
+                        List<Plano> planos;
 
                         planos = planoDAO.getPlanos();
 
@@ -317,7 +317,7 @@ public class ControladorAdministrador extends HttpServlet {
                     
                     case Constantes.EXCLUIR:
                         
-                        List<List<Integer>> compiladoIds = new ArrayList<>();
+                        List<List<Integer>> compiladoIds;
                         
                         compiladoIds = planoDAO.getIdDeletePlano(Integer.parseInt(request.getParameter(Constantes.ID)));
                         
@@ -342,7 +342,7 @@ public class ControladorAdministrador extends HttpServlet {
 
 
                     case Constantes.EDITAR:
-                        Plano plano = new Plano();
+                        Plano plano;
                         
                         plano = planoDAO.getPlano(Integer.parseInt(request.getParameter(Constantes.ID)));
                         session.setAttribute("plano",plano);
@@ -366,7 +366,7 @@ public class ControladorAdministrador extends HttpServlet {
                 switch(request.getParameter(Constantes.ARG)){
                     case Constantes.VISUALIZAR:
                         
-                        List<Especialidade> especs = new ArrayList<>();
+                        List<Especialidade> especs;
 
                         especs = especialidadeDAO.getEspecialidades();
 
@@ -381,7 +381,7 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                     
                     case Constantes.EXCLUIR:
-                        List<List<Integer>> compiladoIds = new ArrayList<>();
+                        List<List<Integer>> compiladoIds;
                         
                         compiladoIds = especialidadeDAO.getIdDeleteEspecialidade(Integer.parseInt(request.getParameter(Constantes.ID)));
                         
@@ -405,7 +405,7 @@ public class ControladorAdministrador extends HttpServlet {
 
 
                     case Constantes.EDITAR:
-                        Especialidade especialidade = new Especialidade();
+                        Especialidade especialidade;
                         
                         especialidade = especialidadeDAO.getEspecialidade(Integer.parseInt(request.getParameter(Constantes.ID)));
                         session.setAttribute(Constantes.ESPECIALIDADE,especialidade);
@@ -430,7 +430,7 @@ public class ControladorAdministrador extends HttpServlet {
                 switch(request.getParameter(Constantes.ARG)){
                     case Constantes.VISUALIZAR:
                         
-                        List<Exame> exames = new ArrayList<>();
+                        List<Exame> exames;
 
                         exames = exameDAO.getExames();
 
@@ -445,7 +445,7 @@ public class ControladorAdministrador extends HttpServlet {
                     break;
                     
                     case Constantes.EXCLUIR:
-                        List<Integer> compiladoIds = new ArrayList<>();
+                        List<Integer> compiladoIds;
                         
                         compiladoIds = exameDAO.getIdDeleteExame(Integer.parseInt(request.getParameter(Constantes.ID)));
                         
