@@ -1,4 +1,5 @@
 DAOTests\ClienteDAOTest.class
 DAOTests\ConsultaDAOTest.class
 DAOTests\EspecialidadeDAOTest.class
+DAOTests\PlanoDAOTest.class
 DAOTests\ExameDAOTest.class
