@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Cliente;
@@ -28,7 +30,8 @@ public class ClienteDAO {
         try {
             conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
-            System.out.println("Nao foi possivel conectar");
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, "Nao foi possivel conectar");
         }
     } 
     
@@ -50,7 +53,8 @@ public class ClienteDAO {
             } 
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return paciente;
     }
@@ -67,7 +71,8 @@ public class ClienteDAO {
                 resp = true;
             }
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return resp;
     }
@@ -82,7 +87,8 @@ public class ClienteDAO {
                     "','" + novoPaciente.getIdtipoplano() + "')");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
         
@@ -99,7 +105,8 @@ public class ClienteDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return nome;
     }
@@ -122,7 +129,8 @@ public class ClienteDAO {
                 pacientes.add(paciente);
             }
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return pacientes;
     }
@@ -144,7 +152,8 @@ public class ClienteDAO {
                 paciente.setIdtipoplano(resultSet.getInt(Constantes.IDTIPOPLANO));
             }
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return paciente;
     }
@@ -158,7 +167,8 @@ public class ClienteDAO {
                     "' , idtipoplano='" + paciente.getIdtipoplano() + "' WHERE paciente.id='" + idPaciente + "'");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -168,7 +178,8 @@ public class ClienteDAO {
             statement.execute("DELETE FROM paciente WHERE paciente.id=" + idPaciente + "");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -197,7 +208,8 @@ public class ClienteDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         
         idCompilado.add(idExames);

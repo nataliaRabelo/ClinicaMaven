@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import conexao.ConexaoBancoDeDados;
 import java.util.ArrayList;
 import java.util.List;
 import aplicacao.Cliente;
@@ -67,7 +70,8 @@ public class Cadastrar extends HttpServlet {
                 clt.forward(request, response);
             }
         } catch(IOException | NumberFormatException | ServletException e) {
-            System.out.println("Error: " + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, "Error: " + e.getMessage());
         }   
     }
 

@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 @WebServlet(name = "Conexao", urlPatterns = {"/Conexao"})
 public class ConexaoBancoDeDados extends HttpServlet {
@@ -16,7 +18,8 @@ public class ConexaoBancoDeDados extends HttpServlet {
                 Class.forName("com.mysql.jdbc.Driver");
                 conexao = DriverManager.getConnection("jdbc:mysql://localhost:3307/clinica", "root", "");
             } catch(ClassNotFoundException e) {
-                System.out.println("Nao encontrado");
+                Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, "Nao encontrado");
             }
         }
         return conexao;

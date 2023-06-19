@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Plano;
@@ -28,7 +30,8 @@ public class PlanoDAO {
         try {
             conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
-            System.out.println("Nao foi possivel conectar");
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -39,7 +42,8 @@ public class PlanoDAO {
                     + "(descricao) VALUES ( '" + novoPlano.getDescricao() + "')");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR  + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
   
@@ -58,7 +62,8 @@ public class PlanoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return planos;
     }
@@ -77,7 +82,8 @@ public class PlanoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return plano;
     }
@@ -88,7 +94,8 @@ public class PlanoDAO {
             statement.execute("UPDATE tipoplano SET descricao='" + novoPlano.getDescricao() + "' WHERE tipoplano.id=" + idPlano + "");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -98,7 +105,8 @@ public class PlanoDAO {
             statement.execute("DELETE FROM tipoplano WHERE tipoplano.id=" + idPlano + "");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -139,7 +147,8 @@ public class PlanoDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         
         idCompilado.add(idExames);

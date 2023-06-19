@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import conexao.ConexaoBancoDeDados;
 import aplicacao.Consulta;
@@ -29,7 +31,8 @@ public class ConsultaDAO {
         try {
             conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
-            System.out.println("Nao foi possivel conectar");
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, "Nao foi possivel conectar");
         }
     }
     
@@ -43,7 +46,8 @@ public class ConsultaDAO {
                     "','" + novaConsulta.getIdpaciente() + "')");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -67,7 +71,8 @@ public class ConsultaDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return listaConsultas;
     }
@@ -90,7 +95,8 @@ public class ConsultaDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return consulta;
     }
@@ -108,7 +114,8 @@ public class ConsultaDAO {
             }  
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return medicoDescricao;
     }
@@ -129,7 +136,8 @@ public class ConsultaDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return medEspecs;
     }
@@ -143,7 +151,8 @@ public class ConsultaDAO {
                     "' WHERE consulta.id='" + idConsulta + "'");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
     
@@ -153,7 +162,8 @@ public class ConsultaDAO {
             statement.execute("DELETE FROM consulta WHERE consulta.id=" + idConsulta + "");
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLERROR + e.getMessage());
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
 }
