@@ -10,13 +10,13 @@ public class Constantes {
     public static final String CPF = "cpf";
     public static final String NOME = "nome";
     public static final String SENHA = "senha";
-    public static final String AUTORIZADO = "autorizado: ";
-    public static final String IDTIPOPLANO = "idtipoplano: ";
+    public static final String AUTORIZADO = "autorizado";
+    public static final String IDTIPOPLANO = "idtipoplano";
     public static final String TYPE = "type";
-    public static final String PACIENTE = "paciente";
-    public static final String PLANO = "plano";
+    public static final String PACIENTE = "Paciente";
+    public static final String PLANO = "Plano";
     public static final String PLANOS = "planos";
-    public static final String MEDICO = "medico";
+    public static final String MEDICO = "Medico";
     public static final String ESPECIALIDADE = "especialidade";
     public static final String ESPECIALIDADES = "especialidades";
     public static final String IDENTIDADE = "identidade";
@@ -30,13 +30,21 @@ public class Constantes {
     public static final String ID_CONSULTA = "id_consulta";
     public static final String IDMEDICO = "idmedico";
     public static final String IDPACIENTE = "idpaciente";
-    public static final String DESCRICAO = "descrição";
+    public static final String DESCRICAO = "descricao";
     public static final String DATA = "data";
     public static final String REALIZADA = "realizada";
     public static final String VISUALIZAR = "Visualizar";
     public static final String EXCLUIR = "Excluir";
     public static final String EDITAR = "Editar";
     public static final String CADASTRAR = "Cadastrar";
+    public static final String VERCONSULTAS = "VerConsultas";
+    public static final String ADMINISTRADOR = "Administrador";
+    public static final String EXAME = "Exame";
+    public static final String DASHBOARD = "Dashboard";
+    public static final String PACIENTE2 = "Paciente";
+    public static final String MEDICO2 = "Medico";
+    public static final String PLANO2 = "Plano";
+    public static final String NOMEPLANO = "nomePlano";
     
     
     
