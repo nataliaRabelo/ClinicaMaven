@@ -66,7 +66,7 @@ public class PlanoDAOTest {
     public void testUpdatePlano() {
         PlanoDAO dao = new PlanoDAO(conn);
         Plano novo_plano = new Plano();
-        novo_plano.setDescricao("SUS");
+        novo_plano.setDescricao("ABC");
 
         dao.updatePlano(1, novo_plano); // assume que há um plano com id 1 no BD
 

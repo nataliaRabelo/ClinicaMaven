@@ -13,8 +13,8 @@ public class Constantes {
     public static final String AUTORIZADO = "autorizado";
     public static final String IDTIPOPLANO = "idtipoplano";
     public static final String TYPE = "type";
-    public static final String PACIENTE = "Paciente";
-    public static final String PLANO = "Plano";
+    public static final String PACIENTE = "paciente";
+    public static final String PLANO = "plano";
     public static final String PLANOS = "planos";
     public static final String MEDICO = "Medico";
     public static final String ESPECIALIDADE = "especialidade";
