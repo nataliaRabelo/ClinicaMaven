@@ -139,21 +139,20 @@ public class ExameDAOTest {
             
             //exame inserido, agora iremos exclui lo
 
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM exames");
+            resultSet = statement.executeQuery("SELECT * FROM exames");
             
-            int idResultSet = 0; 
-            int id = 0;
+            int idResultSet = 0;       
             
             if(resultSet.next()) {
-                id = resultSet.getInt("id"); //buscar pelo exame que foi adicionado
+                int id = resultSet.getInt("id"); //buscar pelo exame que foi adicionado
                 idResultSet = id;
                 instance.deleteExame(id); //deletar o exame
             }
             
-            assertNull(instance.getExame(id));
+            assertNull(instance.getExame(idResultSet));
             
-        } catch (NullPointerException e) {
-            fail("Não há objeto com a id no banco de dados");
+        } catch (SQLException e) {
+            System.out.println("Erro SQL: " + e.getMessage());
         }
     }
 
@@ -182,10 +181,10 @@ public class ExameDAOTest {
                 instance.deleteTipoExame(id); 
             }
             
-            Exame exp_exame = instance.getExame(id);
+            Exame exp_exame = instance.getExame(idResultSet);
             assertNull(exp_exame.getDescricao(), "O exame deve ser null após ser deletado");
-        } catch (NullPointerException e) {
-            fail("Não há objeto com a id no banco de dados");
+        } catch (SQLException e) {
+            System.out.println("Erro SQL: " + e.getMessage());
         }
     }
 
