@@ -81,7 +81,7 @@ public class AdministradorDAO {
             }
             
         } catch(SQLException e) {
-            System.out.println(Constantes.SQLError + e.getMessage());
+            System.out.println(Constantes.SQLERROR + e.getMessage());
         }
         return administradores;
     }
