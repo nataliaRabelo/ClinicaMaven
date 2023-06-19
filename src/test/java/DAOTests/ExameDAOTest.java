@@ -3,13 +3,15 @@ package DAOTests;
 import static org.junit.jupiter.api.Assertions.*;
 import model.ExameDAO;
 import aplicacao.Exame;
+import aplicacao.Consulta;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 import java.sql.Connection;
-import java.util.List;
 
 import conexao.ConexaoBancoDeDados;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import java.util.ArrayList;
 
@@ -37,7 +39,7 @@ public class ExameDAOTest {
         novo_exame.setId(100);
         novo_exame.setDescricao("Exame de sangue");
         
-        List<Exame> total_exames = new ArrayList<Exame>();
+        ArrayList<Exame> total_exames = new ArrayList<Exame>();
         ExameDAO instance = new ExameDAO(conn);
         
         total_exames = instance.getExames();
@@ -56,7 +58,7 @@ public class ExameDAOTest {
     public void testGet_exames() {
         System.out.println("get_exames");
         ExameDAO instance = new ExameDAO(conn);
-        List<Exame> expResult = new ArrayList<Exame>();
+        ArrayList<Exame> expResult = new ArrayList<Exame>();
         expResult = instance.getExames();
         assertNotNull(expResult);
         
@@ -85,7 +87,7 @@ public class ExameDAOTest {
     public void testGet_examesDaConsulta() {
         System.out.println("get_examesDaConsulta");
         int id_consulta = 1;
-        List<String> lista_exames = new ArrayList<String>();
+        ArrayList<String> lista_exames = new ArrayList<String>();
         ExameDAO instance = new ExameDAO(conn);
         try{
             lista_exames = instance.getExamesDaConsulta(id_consulta, lista_exames);
@@ -125,10 +127,31 @@ public class ExameDAOTest {
     @Test
     public void testDelete_exame() {
         System.out.println("delete_exame");
-        int id_exame = 1;
-        ExameDAO instance = new ExameDAO(conn);
         try{
-            instance.deleteExame(id_exame);
+            
+            ExameDAO instance = new ExameDAO(conn);
+            
+            int idconsulta = 4; //considerando que ha uma consulta com id 4 no banco
+            int idtipoexame = 3; //considerando que ha um tipo de exame com id 3 no banco
+            
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("INSERT INTO exames (id, idtipoexame, idconsulta) VALUES (NULL, '" + idtipoexame + "', '" + idconsulta + "'");
+            
+            //exame inserido, agora iremos exclui lo
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM exames");
+            
+            int idResultSet = 0; 
+            int id = 0;
+            
+            if(resultSet.next()) {
+                id = resultSet.getInt("id"); //buscar pelo exame que foi adicionado
+                idResultSet = id;
+                instance.deleteExame(id); //deletar o exame
+            }
+            
+            assertNull(instance.getExame(id));
+            
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
         }
@@ -140,10 +163,27 @@ public class ExameDAOTest {
     @Test
     public void testDelete_tipoExame() {
         System.out.println("delete_tipoExame");
-        int id_exame = 1;
-        ExameDAO instance = new ExameDAO(conn);
+        
         try{
-            instance.deleteTipoExame(id_exame);
+        
+            ExameDAO instance = new ExameDAO(conn);
+            Exame novo_exame = new Exame();
+            novo_exame.setDescricao("Novo Teste de Exame");
+
+            instance.createExame(novo_exame);
+
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoexame WHERE tipoexame.descricao = '" + novo_exame.getDescricao() + "'");
+            int idResultSet = 0; 
+            
+            if(resultSet.next()) {
+                int id = resultSet.getInt("id");
+                idResultSet = id;
+                instance.deleteTipoExame(id); 
+            }
+            
+            Exame exp_exame = instance.getExame(id);
+            assertNull(exp_exame.getDescricao(), "O exame deve ser null após ser deletado");
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
         }
@@ -155,11 +195,11 @@ public class ExameDAOTest {
     @Test
     public void testGet_idDeleteExame() {
         System.out.println("get_idDeleteExame");
-        int id_exame = 1;
+        int id_exame = 1; //considerando que se deseja buscar o id do exame 1
         ExameDAO instance = new ExameDAO(conn);
         try{
-            List<Integer> result = instance.getIdDeleteExame(id_exame);
-            assertNotNull(result);
+            ArrayList id_delete = instance.getIdDeleteExame(id_exame);
+            assertNotNull(id_delete);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
         }
