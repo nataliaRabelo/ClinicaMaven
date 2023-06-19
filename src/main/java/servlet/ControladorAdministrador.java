@@ -463,7 +463,7 @@ public class ControladorAdministrador extends HttpServlet {
 
                     
                     case Constantes.EDITAR:
-                        Exame exame = new Exame();
+                        Exame exame;
                         
                         exame = exameDAO.getExame(Integer.parseInt(request.getParameter(Constantes.ID)));
                         session.setAttribute("exame",exame);
