@@ -45,6 +45,10 @@ public class Constantes {
     public static final String MEDICO2 = "Medico";
     public static final String PLANO2 = "Plano";
     public static final String NOMEPLANO = "nomePlano";
+    public static final String WHEREESPECIALIDADEID = "WHERE especialidade.id=";
+    public static final String FROMESPECIALIDADE = "FROM especialidade INNER JOIN medico ON especialidade.id=medico.idespecialidade ";
+    public static final String WHERETIPOPLANO = "WHERE tipoplano.id=";
+    public static final String FROMTIPOPLANO = "FROM tipoplano INNER JOIN paciente ON tipoplano.id=paciente.idtipoplano ";
     
     
     

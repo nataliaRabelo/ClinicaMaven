@@ -91,7 +91,7 @@ public class EspecialidadeDAO {
     
        try (Statement statement = conn.createStatement()){
             statement.execute("UPDATE especialidade SET descricao='" + novaEspecialidade.getDescricao() + "' "
-                    + "WHERE especialidade.id=" + idEspecialidade + "");
+                    + Constantes.WHEREESPECIALIDADEID + idEspecialidade + "");
             
         } catch(SQLException e) {
             Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
@@ -120,17 +120,17 @@ public class EspecialidadeDAO {
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
-            "FROM especialidade INNER JOIN medico ON especialidade.id=medico.idespecialidade " +
+            Constantes.FROMESPECIALIDADE +
             "INNER JOIN consulta ON consulta.idmedico=medico.id " +
             "INNER JOIN exames ON exames.idconsulta=consulta.id " +
-            "WHERE especialidade.id=" + idEspecialidade + "");
+            Constantes.WHEREESPECIALIDADEID + idEspecialidade + "");
             
             while(resultSet.next()) {
                 idExames.add(resultSet.getInt("id"));
             }
             
             resultSet = statement.executeQuery("SELECT consulta.id " +
-            "FROM especialidade INNER JOIN medico ON especialidade.id=medico.idespecialidade " +
+            Constantes.FROMESPECIALIDADE +
             "INNER JOIN consulta ON consulta.idmedico=medico.id " +
             "WHERE especialidade.id=" + idEspecialidade + "");
             

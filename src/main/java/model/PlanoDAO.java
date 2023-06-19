@@ -74,7 +74,7 @@ public class PlanoDAO {
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT * FROM tipoplano "
-                    + "WHERE tipoplano.id=" + idPlano + "");
+                    + Constantes.WHERETIPOPLANO + idPlano + "");
             
             if (resultSet.next()) {
                 plano.setId(resultSet.getInt("id"));
@@ -120,27 +120,27 @@ public class PlanoDAO {
         
         try (Statement statement = conn.createStatement()){
             ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
-            "FROM tipoplano INNER JOIN paciente ON tipoplano.id=paciente.idtipoplano " +
+            Constantes.FROMTIPOPLANO +
             "INNER JOIN consulta ON consulta.idpaciente=paciente.id " +
             "INNER JOIN exames ON exames.idconsulta=consulta.id " +
-            "WHERE tipoplano.id=" + idPlano + "");
+            Constantes.WHERETIPOPLANO + idPlano + "");
             
             while(resultSet.next()) {
                 idExames.add(resultSet.getInt("id"));
             }
             
             resultSet = statement.executeQuery("SELECT consulta.id " +
-            "FROM tipoplano INNER JOIN paciente ON tipoplano.id=paciente.idtipoplano " +
+            Constantes.FROMTIPOPLANO +
             "INNER JOIN consulta ON consulta.idpaciente=paciente.id " +
-            "WHERE tipoplano.id=" + idPlano + "");
+            Constantes.WHERETIPOPLANO + idPlano + "");
             
             while(resultSet.next()) {
                 idConsultas.add(resultSet.getInt("id"));
             }
             
             resultSet = statement.executeQuery("SELECT paciente.id " +
-            "FROM tipoplano INNER JOIN paciente ON tipoplano.id=paciente.idtipoplano " +
-            "WHERE tipoplano.id=" + idPlano + "");
+            Constantes.FROMTIPOPLANO +
+            Constantes.WHERETIPOPLANO + idPlano + "");
             
             while(resultSet.next()) {
                 idPacientes.add(resultSet.getInt("id"));
