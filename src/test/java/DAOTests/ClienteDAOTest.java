@@ -158,42 +158,15 @@ public class ClienteDAOTest {
 
     @Test
     public void testGetIdDeletePaciente() {
-        ClienteDAO dao = new ClienteDAO(conn);  
-        int pacienteId = 1; // utilizando o id um, assumindo que o script do banco foi executado
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+        int id = 1; // assumindo que o paciente 1 tem já exames e consultas associadas.
 
-        List<List<Integer>> result = dao.getIdDeletePaciente(pacienteId);
-        
-        List<List<Integer>> idCompilado = new ArrayList<>();
-        List<Integer> idConsultas = new ArrayList<>();
-        List<Integer> idExames = new ArrayList<>();
-        
-        try (Statement statement = conn.createStatement()){
-            ResultSet resultSet = statement.executeQuery("SELECT exames.id " +
-            "FROM paciente INNER JOIN consulta ON paciente.id=consulta.idpaciente " +
-            "INNER JOIN exames ON consulta.id=exames.idconsulta " +
-            "WHERE paciente.id=" + pacienteId + "");
-            
-            while(resultSet.next()) {
-                idExames.add(resultSet.getInt(Constantes.ID));
-            }
-            
-            resultSet = statement.executeQuery("SELECT consulta.id " +
-            "FROM paciente INNER JOIN consulta ON paciente.id=consulta.idpaciente " +
-            "WHERE paciente.id=" + pacienteId + "");
-            
-            while(resultSet.next()) {
-                idConsultas.add(resultSet.getInt(Constantes.ID));
-            }
-            
-        } catch(SQLException e) {
-            fail("Houve problema com o banco");
-        }
-        
-        idCompilado.add(idExames);
-        idCompilado.add(idConsultas);
-        
-        //comparando se os resultados das queries estão iguais ao resultado do método
-        assertEquals(idCompilado.size(), result.size());
+        List<List<Integer>> id_compilado = dao.getIdDeletePaciente(id);
+
+            // Assert
+        assertFalse(id_compilado.get(0).isEmpty(), "A lista de ids de exames não deve estar vazia");
+        assertFalse(id_compilado.get(1).isEmpty(), "A lista de ids de consultas não deve estar vazia");
     }
 
     // ------------------------ TESTES COM MOCK --------------------------

@@ -105,27 +105,13 @@ public class PlanoDAOTest {
 
     @Test
     public void testGetIdDeletePlano() {
-        try {
-            // Arrange
-            PlanoDAO dao = new PlanoDAO(conn); 
+        PlanoDAO dao = new PlanoDAO(conn); 
+        int id = 1; // assumindo que o plano 1 tem já exames e consultas associadas.
 
-            // Criando o Statement para executar a query
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente WHERE plano.id = '" + 1 + "'"); // assumindo que há plano 1 no bd e já chaves primárias
+        List<List<Integer>> id_compilado = dao.getIdDeletePlano(id);
 
-            // Verificando se a consulta retornou algum resultado
-            if(resultSet.next()) {
-                // Act
-                int id = resultSet.getInt("id"); // Supondo que a coluna do id na tabela seja 'id'
-                List<List<Integer>> id_compilado = dao.getIdDeletePlano(id);
-
-                // Assert
-                assertFalse(id_compilado.get(0).isEmpty(), "A lista de ids de exames não deve estar vazia");
-                assertFalse(id_compilado.get(1).isEmpty(), "A lista de ids de consultas não deve estar vazia");
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro SQL: " + e.getMessage());
-        }
+        // Assert
+        assertFalse(id_compilado.get(0).isEmpty(), "A lista de ids de exames não deve estar vazia");
+        assertFalse(id_compilado.get(1).isEmpty(), "A lista de ids de consultas não deve estar vazia");
     }
-
 }
