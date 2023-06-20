@@ -55,7 +55,7 @@ public class ConsultaDAOTest {
 
     @Test
     public void testGet_consultas() {
-        int id_paciente = 1;
+        int id_paciente = 1; // Considerando que nosso paciente 1 sempre nasce com uma consulta quando o banco é alimentado.
         ConsultaDAO instance = new ConsultaDAO(conn);
         List<Consulta> expResult = new ArrayList();
         try{
@@ -68,7 +68,7 @@ public class ConsultaDAOTest {
 
     @Test
     public void testGet_consulta() {
-        int id_consulta = 1;
+        int id_consulta = 1; // Considerando que já há uma consulta 1 com a construção do banco.
         ConsultaDAO instance = new ConsultaDAO(conn);
         Consulta expResult = new Consulta();
         try{
@@ -81,7 +81,7 @@ public class ConsultaDAOTest {
 
     @Test
     public void testGet_medicoEspecialidade() {
-        int id_consulta = 1;
+        int id_consulta = 1; // Considerando que já há uma consulta 1 com a construção do banco e esta sempre tem um médico associado por chave estrangeira.
         List<Object> medico_descricao = new ArrayList<Object>();
         ConsultaDAO instance = new ConsultaDAO(conn);
         List<Object> expResult = null;
@@ -98,7 +98,7 @@ public class ConsultaDAOTest {
         ConsultaDAO instance = new ConsultaDAO(conn);
         List<Object> expResult = new ArrayList<Object>();
         try{
-        expResult = instance.getProcedimentosDisponiveis();
+        expResult = instance.getProcedimentosDisponiveis(); // Considerando que já há especialidades no banco.
         assertNotNull(expResult);
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
@@ -154,7 +154,7 @@ public class ConsultaDAOTest {
 
             // Assert
             Consulta consultaQuery = consultaDAO.getConsulta(idResultSet);
-            assertNull(consulta.getDescricao(), "A consulta deveria ser null após ser deletado");
+            assertNull(consultaQuery.getDescricao(), "A consulta deveria ser null após ser deletado");
         } catch (SQLException e) {
             System.out.println("Erro SQL: " + e.getMessage());
         }

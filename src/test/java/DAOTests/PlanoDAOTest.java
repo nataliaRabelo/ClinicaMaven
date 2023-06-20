@@ -108,13 +108,10 @@ public class PlanoDAOTest {
         try {
             // Arrange
             PlanoDAO dao = new PlanoDAO(conn); 
-            Plano plano = new Plano(); // Criando um paciente para testar a deleção
-            plano.setDescricao("Bradesco");
-            dao.createPlano(plano);
 
             // Criando o Statement para executar a query
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente WHERE plano.descricao = '" + plano.getDescricao() + "'");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM paciente WHERE plano.id = '" + 1 + "'"); // assumindo que há plano 1 no bd e já chaves primárias
 
             // Verificando se a consulta retornou algum resultado
             if(resultSet.next()) {

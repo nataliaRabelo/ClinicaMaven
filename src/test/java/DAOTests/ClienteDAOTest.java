@@ -3,6 +3,7 @@ package DAOTests;
 import aplicacao.Cliente;
 import model.ClienteDAO;
 import utils.Constantes;
+import conexao.ConexaoBancoDeDados;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -14,12 +15,11 @@ import java.sql.Statement;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
+
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-import conexao.ConexaoBancoDeDados;
 
 import org.junit.jupiter.api.BeforeAll;
 
@@ -148,7 +148,6 @@ public class ClienteDAOTest {
                 idResultSet = id;
                 dao.deletePaciente(id); // deletando o usuário que acabei de criar, onde o id é inserido no banco
             }
-
             // Assert
             Cliente paciente = dao.getPaciente(idResultSet);
             assertNull(paciente.getNome(), "O paciente deveria ser null após ser deletado");
@@ -192,8 +191,8 @@ public class ClienteDAOTest {
         
         idCompilado.add(idExames);
         idCompilado.add(idConsultas);
-
-        assertEquals(idCompilado.size(), result.size());
+        
+        //comparando se os resultados das queries estão iguais ao resultado do método
         assertEquals(idCompilado.size(), result.size());
     }
 

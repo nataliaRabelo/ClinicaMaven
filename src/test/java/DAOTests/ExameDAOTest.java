@@ -61,8 +61,7 @@ public class ExameDAOTest {
         ExameDAO instance = new ExameDAO(conn);
         List expResult = new ArrayList<Exame>();
         expResult = instance.getExames();
-        assertNotNull(expResult);
-        
+        assertNotNull(expResult);   
     }
 
     /**
