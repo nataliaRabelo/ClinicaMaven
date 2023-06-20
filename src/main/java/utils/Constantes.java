@@ -18,6 +18,7 @@ public class Constantes {
     public static final String PLANOS = "planos";
     public static final String MEDICO = "Medico";
     public static final String ESPECIALIDADE = "especialidade";
+    public static final String ESPECIALIDADE2 = "Especialidade";
     public static final String ESPECIALIDADES = "especialidades";
     public static final String IDENTIDADE = "identidade";
     public static final String ACTION = "action";

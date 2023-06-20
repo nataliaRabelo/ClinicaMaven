@@ -297,7 +297,7 @@ public class ControladorAdministrador extends HttpServlet {
                 }  
             break;
             
-            case Constantes.PLANO:
+            case Constantes.PLANO2:
                 switch(request.getParameter(Constantes.ARG)){
                     case Constantes.VISUALIZAR:
                         
@@ -362,7 +362,7 @@ public class ControladorAdministrador extends HttpServlet {
                 }  
             break;
             
-            case Constantes.ESPECIALIDADE:
+            case Constantes.ESPECIALIDADE2:
                 switch(request.getParameter(Constantes.ARG)){
                     case Constantes.VISUALIZAR:
                         
