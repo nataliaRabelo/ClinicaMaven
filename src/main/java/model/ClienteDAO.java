@@ -12,6 +12,9 @@ import conexao.ConexaoBancoDeDados;
 import aplicacao.Cliente;
 import utils.Constantes;
 
+/**
+Classe responsável por realizar operações relacionadas aos objetos Cliente no banco de dados.
+*/
 public class ClienteDAO {
     
     private Connection conn;
@@ -34,7 +37,13 @@ public class ClienteDAO {
             logger.log(Level.INFO, "Nao foi possivel conectar");
         }
     } 
-    
+
+/**
+Realiza o login de um cliente no sistema.
+@param cpf O CPF do cliente.
+@param senha A senha do cliente.
+@return O objeto Cliente com os dados do cliente logado.
+*/    
     public Cliente login(String cpf, String senha){
         
         Cliente paciente = new Cliente();
@@ -58,7 +67,12 @@ public class ClienteDAO {
         }
         return paciente;
     }
-    
+ 
+/**
+Verifica se um determinado CPF de paciente já está cadastrado no banco de dados.
+@param cpfPaciente O CPF do paciente a ser verificado.
+@return true se o CPF já estiver cadastrado, false caso contrário.
+*/    
     public boolean jaCadastrado(String cpfPaciente){
     
         boolean resp = false;
@@ -76,7 +90,11 @@ public class ClienteDAO {
         }
         return resp;
     }
-    
+
+/**
+Cria um novo paciente no banco de dados.
+@param novoPaciente O objeto Cliente com os dados do novo paciente.
+*/    
     public void createPaciente(Cliente novoPaciente){
  
         try (Statement statement = conn.createStatement()){
@@ -182,7 +200,11 @@ public class ClienteDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-    
+/**
+* Retorna uma lista contendo as listas de IDs das chaves estrangeiras dos exames e consultas associados a um paciente específico.
+* @param idPaciente o ID do paciente
+* @return uma lista contendo as listas de IDs das chaves estrangeiras dos exames e consultas a serem excluídas
+*/    
     public List<List<Integer>> getIdDeletePaciente(int idPaciente){
     
         List<List<Integer>> idCompilado = new ArrayList<>();

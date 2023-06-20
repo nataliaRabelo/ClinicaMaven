@@ -14,6 +14,11 @@ import java.sql.Statement;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+/**
+A classe AdministradorDAO é responsável por realizar operações de acesso a dados
+relacionadas aos administradores no banco de dados.
+*/
+
 public class AdministradorDAO {
     
     private Connection conn;
@@ -36,7 +41,12 @@ public class AdministradorDAO {
             logger.log(Level.INFO, "Nao foi possivel conectar");
         }
     } 
-
+/**
+ * Realiza o login de um administrador no sistema.
+ * @param cpf    O CPF do administrador.
+ * @param senha  A senha do administrador.
+ * @return O objeto Administrador correspondente ao login realizado.
+ */
     public Administrador login(String cpf, String senha) {
         
         Administrador administrador = new Administrador();
@@ -58,7 +68,11 @@ public class AdministradorDAO {
         }
         return administrador;
     }
-    
+
+/**
+ * Cria um novo administrador no banco de dados.
+ * @param administrador O objeto Administrador a ser criado.
+ */    
     public void createAdministrador(Administrador administrador){
         
         try (Statement statement = conn.createStatement()){
@@ -70,7 +84,10 @@ public class AdministradorDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-    
+/**
+ * Retorna uma lista com todos os administradores cadastrados no banco de dados.
+ * @return Uma lista de objetos Administrador.
+ */    
     public List<Administrador> getAdministradores(){
     
         List<Administrador> administradores = new ArrayList<>();
@@ -115,7 +132,12 @@ public class AdministradorDAO {
         }
         return adm;
     }
-    
+/**
+
+Atualiza os dados de um administrador no banco de dados.
+@param idAdministrador O identificador do administrador a ser atualizado.
+@param administrador O objeto Administrador com os novos dados a serem atualizados.
+*/    
     public void updateAdministrador(int idAdministrador, Administrador administrador){
     
         try (Statement statement = conn.createStatement()){

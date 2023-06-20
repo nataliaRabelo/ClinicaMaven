@@ -13,20 +13,25 @@ import aplicacao.Consulta;
 import utils.Constantes;
 
 
+/**
+ * A classe ConsultaDAO representa um Data Access Object para a entidade Consulta,
+ * fornecendo métodos para acessar e manipular dados no banco de dados relacionados
+ * a consultas médicas.
+ */
 public class ConsultaDAO {
    
     private Connection conn;
     
-    /**
-    * Construtor para testes
-    */
+/**
+* Construtor para testes
+*/
     public ConsultaDAO(Connection conn){
         this.conn = conn;
     }
     
-    /**
-    * Construtor padrão que cria uma nova conexão com o banco.
-    */
+/**
+* Construtor padrão que cria uma nova conexão com o banco.
+*/
     public ConsultaDAO() {
         try {
             conn = ConexaoBancoDeDados.newConnection();
@@ -35,7 +40,12 @@ public class ConsultaDAO {
             logger.log(Level.INFO, "Nao foi possivel conectar");
         }
     }
-    
+
+/**
+* Cria uma nova consulta no banco de dados.
+*
+* @param novaConsulta a consulta a ser criada.
+*/    
     public void createConsulta(Consulta novaConsulta){
         
         try (Statement statement = conn.createStatement()){
@@ -51,6 +61,12 @@ public class ConsultaDAO {
         }
     }
     
+/**
+* Retorna uma lista de consultas associadas a um determinado paciente.
+*
+* @param idPaciente o ID do paciente.
+* @return uma lista de consultas do paciente.
+*/    
     public List<Consulta> getConsultas(int idPaciente){
         
         List<Consulta> listaConsultas = new ArrayList<>();
@@ -77,6 +93,12 @@ public class ConsultaDAO {
         return listaConsultas;
     }
     
+/**
+ * Retorna uma consulta com base no seu ID.
+ *
+ * @param idConsulta o ID da consulta.
+ * @return a consulta com o ID especificado.
+ */    
     public Consulta getConsulta(int idConsulta){
     
         Consulta consulta = new Consulta();
@@ -100,7 +122,15 @@ public class ConsultaDAO {
         }
         return consulta;
     }
-    
+
+/**
+* Retorna uma lista contendo o nome do médico e a descrição da especialidade
+* associados a uma determinada consulta.
+*
+* @param idConsulta o ID da consulta.
+* @param medicoDescricao uma lista para armazenar o nome do médico e a descrição da especialidade.
+* @return a lista contendo o nome do médico e a descrição da especialidade.
+*/    
     public List<Object> getMedicoEspecialidade(int idConsulta, List<Object> medicoDescricao){
         
         try (Statement statement = conn.createStatement()){
@@ -120,6 +150,12 @@ public class ConsultaDAO {
         return medicoDescricao;
     }
     
+ /**
+* Retorna uma lista contendo as descrições e IDs dos médicos que estão associados
+* a especialidades disponíveis.
+*
+* @return uma lista contendo as descrições e IDs dos médicos.
+*/    
     public List<Object> getProcedimentosDisponiveis(){
     
         List<Object> medEspecs = new ArrayList<>();
@@ -141,7 +177,13 @@ public class ConsultaDAO {
         }
         return medEspecs;
     }
-     
+    
+/**
+* Atualiza os dados de uma consulta existente no banco de dados.
+*
+* @param idConsulta o ID da consulta a ser atualizada.
+* @param novaConsulta os novos dados da consulta.
+*/     
     public void updateConsulta(int idConsulta, Consulta novaConsulta){
         
         try (Statement statement = conn.createStatement()){

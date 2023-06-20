@@ -63,10 +63,18 @@ Define o CRM do médico.
         this.crm = crm;
     }
 
+/**
+Obtém o estado do CRM do médico.
+@return O estado do CRM do médico.
+*/
     public String getEstadocrm() {
         return estadocrm;
     }
-
+    
+/**
+Define o estado do CRM do médico.
+@param estadocrm O estado do CRM a ser definido.
+*/
     public void setEstadocrm(String estadocrm) {
         this.estadocrm = estadocrm;
     }

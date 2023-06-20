@@ -8,6 +8,12 @@ import javax.servlet.http.HttpServlet;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+
+/**
+A classe ConexaoBancoDeDados representa uma conexão com o banco de dados.
+É responsável por estabelecer a conexão com o banco de dados MySQL.
+*/
+
 @WebServlet(name = "Conexao", urlPatterns = {"/Conexao"})
 public class ConexaoBancoDeDados extends HttpServlet {
     

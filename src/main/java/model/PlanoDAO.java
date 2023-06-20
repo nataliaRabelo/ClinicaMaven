@@ -12,6 +12,11 @@ import conexao.ConexaoBancoDeDados;
 import aplicacao.Plano;
 import utils.Constantes;
 
+
+/**
+ * Classe responsável por realizar operações de acesso a dados relacionadas ao plano.
+ * Essa classe é responsável por fornecer métodos para acessar e manipular os dados dos planos no banco de dados.
+ */
 public class PlanoDAO {
    
     private Connection conn;
@@ -34,7 +39,12 @@ public class PlanoDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-    
+
+/**
+* Cria um novo plano no banco de dados.
+*
+* @param novoPlano o novo plano a ser criado
+*/    
     public void createPlano(Plano novoPlano){
         
         try (Statement statement = conn.createStatement()){
@@ -46,7 +56,12 @@ public class PlanoDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-  
+ 
+ /**
+* Retorna uma lista de todos os planos existentes no banco de dados.
+*
+* @return a lista de planos
+*/    
     public List<Plano> getPlanos(){
     
         List<Plano> planos = new ArrayList<>();
@@ -67,7 +82,12 @@ public class PlanoDAO {
         }
         return planos;
     }
-    
+/**
+* Retorna um plano com base no seu ID.
+*
+* @param idPlano o ID do plano a ser retornado
+* @return o plano com o ID correspondente, ou um plano vazio se não for encontrado
+     */   
     public Plano getPlano(int idPlano){
     
         Plano plano = new Plano();
@@ -109,7 +129,11 @@ public class PlanoDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-    
+/**
+ * Retorna uma lista contendo os IDs das chaves estrangeitas associados a um tipo de exame específico que podem ser excluídos.
+ * @param idExame o ID do tipo de exame
+ * @return uma lista contendo os IDs dos exames a serem excluídos
+ */    
     public List<List<Integer>> getIdDeletePlano(int idPlano){
         
         List<List<Integer>> idCompilado = new ArrayList<>();

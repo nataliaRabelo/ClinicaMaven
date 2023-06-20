@@ -13,6 +13,10 @@ import aplicacao.Medico;
 import aplicacao.Consulta;
 import utils.Constantes;
 
+
+/**
+ * Classe responsável por realizar operações de acesso a dados relacionadas aos médicos.
+ */
 public class MedicoDAO {
     
     private Connection conn;
@@ -35,7 +39,13 @@ public class MedicoDAO {
             logger.log(Level.INFO, "Nao foi possivel conectar");
         }
     }
-    
+/**
+* Realiza o login do médico com as credenciais fornecidas.
+* 
+* @param cpf    o CPF do médico
+* @param senha  a senha do médico
+* @return o objeto Medico correspondente às credenciais fornecidas, ou null se as credenciais estiverem incorretas
+*/    
     public Medico login(String cpf, String senha){
         
         Medico medico = new Medico();
@@ -61,7 +71,12 @@ public class MedicoDAO {
         }
         return medico;
     }
-   
+/**
+* Cria um novo exame associado a uma consulta.
+* 
+* @param idTipoExame  o ID do tipo de exame
+* @param idConsulta   o ID da consulta
+*/   
     public void createExame(int idTipoExame, int idConsulta){
     
         try (Statement statement = conn.createStatement()){
@@ -73,7 +88,11 @@ public class MedicoDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-    
+/**
+* Cria um novo médico no banco de dados.
+* 
+* @param novoMedico  o objeto Medico a ser criado
+*/    
     public void createMedico(Medico novoMedico){
     
         try (Statement statement = conn.createStatement()){

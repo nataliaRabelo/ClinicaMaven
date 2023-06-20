@@ -12,6 +12,12 @@ import conexao.ConexaoBancoDeDados;
 import aplicacao.Especialidade;
 import utils.Constantes;
 
+
+/**
+ * A classe EspecialidadeDAO representa um Data Access Object para a entidade Especialidade,
+ * fornecendo métodos para acessar e manipular dados no banco de dados relacionados
+ * a especialidades médicas.
+ */
 public class EspecialidadeDAO {
    
     private Connection conn;
@@ -35,6 +41,11 @@ public class EspecialidadeDAO {
         }
     }
     
+/**
+* Cria uma nova especialidade no banco de dados.
+*
+* @param novaEspecialidade a especialidade a ser criada.
+*/    
     public void createEspecialidade(Especialidade novaEspecialidade){
         try (Statement statement = conn.createStatement()){
             statement.execute("INSERT INTO especialidade "
@@ -45,7 +56,12 @@ public class EspecialidadeDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-    
+
+/**
+* Retorna uma lista contendo todas as especialidades do banco de dados.
+*
+* @return uma lista de especialidades.
+*/    
     public List<Especialidade> getEspecialidades(){
     
         List<Especialidade> especialidades = new ArrayList<>();
@@ -66,7 +82,13 @@ public class EspecialidadeDAO {
         }
         return especialidades;
     }
-    
+
+/**
+* Retorna uma especialidade com base no seu ID.
+*
+* @param idEspecialidade o ID da especialidade.
+* @return a especialidade com o ID especificado.
+*/    
     public Especialidade getEspecialidade(int idEspecialidade){
         
         Especialidade espec = new Especialidade();
@@ -86,7 +108,13 @@ public class EspecialidadeDAO {
         }
         return espec;
     }
-    
+ 
+/**
+* Atualiza os dados de uma especialidade existente no banco de dados.
+*
+* @param idEspecialidade o ID da especialidade a ser atualizada.
+* @param novaEspecialidade os novos dados da especialidade.
+*/
     public void updateEspecialidade(int idEspecialidade, Especialidade novaEspecialidade){
     
        try (Statement statement = conn.createStatement()){
@@ -109,7 +137,11 @@ public class EspecialidadeDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-    
+/**
+* Retorna uma lista contendo as listas de IDs das chaves estrangeiras dos exames, consultas e médicos associados a uma especialidade específica que podem ser excluídos.
+* @param idEspecialidade o ID da especialidade
+* @return uma lista contendo as listas de IDs das chaves estrangeiras dos exames, consultas e médicos a serem excluídos
+*/    
     public List<List<Integer>> getIdDeleteEspecialidade(int idEspecialidade){
         
         List<List<Integer>> idCompilado = new ArrayList<>();
