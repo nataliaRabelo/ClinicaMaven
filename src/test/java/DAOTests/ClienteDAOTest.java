@@ -25,11 +25,16 @@ import org.junit.jupiter.api.BeforeAll;
 
 /**
 * @author Natália
+* Classe de teste para a classe ClienteDAO.
 */
 public class ClienteDAOTest {
     
     private static Connection conn;
 
+/**
+* Configuração inicial dos testes.
+* Abre uma conexão com o banco de dados.
+*/
     @BeforeAll
     public static void setUp() {
         try {
@@ -38,7 +43,11 @@ public class ClienteDAOTest {
             System.out.println("Nao foi possivel conectar");
         }
     }
-
+    
+/**
+* Testa o método createPaciente da classe ClienteDAO.
+* Verifica se um novo paciente é cadastrado corretamente no banco de dados.
+*/
     @Test
     public void testCreatePaciente() {
         // Arrange
@@ -57,7 +66,11 @@ public class ClienteDAOTest {
         boolean isCadastrado = dao.jaCadastrado("12345678901");
         assertTrue(isCadastrado, "O paciente deveria estar cadastrado após a chamada a create_paciente");
     }
-    
+
+/**
+ * Testa o método login da classe ClienteDAO.
+ * Verifica se um paciente é retornado corretamente ao fazer login com um CPF e senha válidos.
+ */    
     @Test
     public void testLogin() {
         // Arrange
@@ -70,7 +83,11 @@ public class ClienteDAOTest {
         assertNotNull(paciente);
         assertEquals("Maria", paciente.getNome());
     }
-    
+
+ /**
+* Testa o método getPaciente da classe ClienteDAO.
+* Verifica se um paciente é retornado corretamente com base em seu ID.
+*/    
     @Test
     public void testGetPaciente() {
         // Arrange
@@ -84,6 +101,10 @@ public class ClienteDAOTest {
         assertEquals("Maria", paciente.getNome());
     }
     
+  /**
+* Testa o método updatePaciente da classe ClienteDAO.
+* Verifica se um paciente é atualizado corretamente no banco de dados.
+*/    
     @Test
     public void testUpdatePaciente() {
         // Arrange

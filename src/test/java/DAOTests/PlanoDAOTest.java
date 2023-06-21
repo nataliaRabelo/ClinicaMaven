@@ -28,6 +28,9 @@ public class PlanoDAOTest {
 
     private static Connection conn;
 
+ /**
+* Configuração inicial para os testes, estabelecendo a conexão com o banco de dados.
+*/
     @BeforeAll
     public static void setUp() {
         try {
@@ -37,6 +40,10 @@ public class PlanoDAOTest {
         }
     }
 
+ /**
+* Testa o método createPlano da classe PlanoDAO.
+* Verifica se a inserção de um novo plano aumenta o número de planos na lista.
+*/    
     @Test
     public void testCreatePlano() {
         PlanoDAO dao = new PlanoDAO(conn);
@@ -55,6 +62,10 @@ public class PlanoDAOTest {
         assertEquals(numPlanosAntes + 1, numPlanosDepois);
     }
 
+/**
+* Testa o método getPlano da classe PlanoDAO.
+* Verifica se é possível obter um plano com base em um ID válido.
+*/    
     @Test
     public void testGetPlano() {
         PlanoDAO dao = new PlanoDAO(conn);
@@ -62,6 +73,10 @@ public class PlanoDAOTest {
         Assertions.assertNotNull(plano, "Plano não deveria ser null");
     }
 
+ /**
+* Testa o método updatePlano da classe PlanoDAO.
+* Verifica se é possível atualizar os dados de um plano existente.
+*/    
     @Test
     public void testUpdatePlano() {
         PlanoDAO dao = new PlanoDAO(conn);
@@ -74,6 +89,11 @@ public class PlanoDAOTest {
         assertEquals(novo_plano.getDescricao(), retrieved.getDescricao());
     }
 
+
+/**
+ * Testa o método deletePlano da classe PlanoDAO.
+ * Verifica se é possível deletar um plano existente.
+ */    
     @Test
     public void testDeletePlano() {
         try {

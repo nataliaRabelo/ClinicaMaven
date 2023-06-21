@@ -19,7 +19,11 @@ import org.junit.jupiter.api.BeforeAll;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ConsultaDAOTest {
-
+    
+/**
+ * Configuração inicial para todos os testes.
+ * Estabelece uma conexão com o banco de dados.
+ */
     private static Connection conn;
 
     @BeforeAll
@@ -30,7 +34,11 @@ public class ConsultaDAOTest {
             System.out.println("Nao foi possivel conectar");
         }
     }
-
+    
+/**
+ * Testa o método createConsulta da classe ConsultaDAO.
+ * Verifica se o número de consultas aumentou em 1 após a inserção.
+ */
     @Test
     public void testCreateConsulta() {
         ConsultaDAO consultaDAO = new ConsultaDAO(conn);
@@ -52,7 +60,11 @@ public class ConsultaDAOTest {
         // Verifique se o número de consultas aumentou em 1
         assertEquals(numConsultasAntes + 1, numConsultasDepois);
     }
-
+    
+/**
+ * Testa o método getConsulta da classe ConsultaDAO.
+ * Verifica se a consulta retornada não é nula.
+ */
     @Test
     public void testGet_consultas() {
         int id_paciente = 1; // Considerando que nosso paciente 1 sempre nasce com uma consulta quando o banco é alimentado.
@@ -65,7 +77,11 @@ public class ConsultaDAOTest {
             fail("Não há objeto com a id no banco de dados");
         }
     }
-
+    
+/**
+ * Testa o método getConsultas da classe ConsultaDAO.
+ * Verifica se a lista de consultas retornada não é nula.
+ */
     @Test
     public void testGet_consulta() {
         int id_consulta = 1; // Considerando que já há uma consulta 1 com a construção do banco.
@@ -78,7 +94,11 @@ public class ConsultaDAOTest {
             fail("Não há objeto com a id no banco de dados");
         }
     }
-
+    
+/**
+ * Testa o método getConsulta da classe ConsultaDAO.
+ * Verifica se a consulta retornada não é nula.
+ */
     @Test
     public void testGet_medicoEspecialidade() {
         int id_consulta = 1; // Considerando que já há uma consulta 1 com a construção do banco e esta sempre tem um médico associado por chave estrangeira.
@@ -93,6 +113,9 @@ public class ConsultaDAOTest {
         }
     }
 
+/**
+* Testa o método getProcedimentosDisponiveis da classe ConsultaDAO.
+*/
     @Test
     public void testGet_procedimentosDisponiveis() {
         ConsultaDAO instance = new ConsultaDAO(conn);
@@ -105,6 +128,9 @@ public class ConsultaDAOTest {
         }
     }
 
+/**
+* Testa o método updateConsulta da classe ConsultaDAO.
+*/
     @Test
     public void testUpdateConsulta() {
         ConsultaDAO consultaDAO = new ConsultaDAO(conn);
@@ -129,7 +155,9 @@ public class ConsultaDAOTest {
         assertEquals(novaConsulta.getIdpaciente(), consultaAtualizada.getIdpaciente());
     }
 
-
+ /**
+* Testa o método deleteConsulta da classe ConsultaDAO.
+*/
     @Test
     public void testDeleteConsulta() {
         try {
