@@ -14,9 +14,21 @@ import model.ClienteDAO;
 import model.MedicoDAO;
 import model.AdministradorDAO;
 
+/**
+ * Servlet responsável pela autenticação de usuários.
+ */
 @WebServlet(name= "Autenticar", urlPatterns = {"/Autenticar"})
 public class Autenticar extends HttpServlet {
     
+     /**
+     * Processa as requisições GET para o servlet.
+     * Verifica se o parâmetro "arg" é igual a "Logout" e realiza o logout do usuário.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException Se ocorrer um erro durante o processamento da servlet.
+     * @throws IOException Se ocorrer um erro de I/O durante o processamento da servlet.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,6 +43,16 @@ public class Autenticar extends HttpServlet {
         }
     }
     
+     /**
+     * Processa as requisições POST para o servlet.
+     * Realiza a autenticação do usuário com base no tipo (cliente, médico ou administrador),
+     * CPF e senha fornecidos.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException Exxceção lançada por um erro durante o processamento da servlet.
+     * @throws IOException Exceção lançada por um erro de I/O durante o processamento da servlet.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

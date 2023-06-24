@@ -41,12 +41,12 @@ public class AdministradorDAO {
             logger.log(Level.INFO, "Nao foi possivel conectar");
         }
     } 
-/**
- * Realiza o login de um administrador no sistema.
- * @param cpf    O CPF do administrador.
- * @param senha  A senha do administrador.
- * @return O objeto Administrador correspondente ao login realizado.
- */
+    /**
+     * Realiza o login de um administrador no sistema.
+     * @param cpf    O CPF do administrador.
+     * @param senha  A senha do administrador.
+     * @return O objeto Administrador correspondente ao login realizado.
+     */
     public Administrador login(String cpf, String senha) {
         
         Administrador administrador = new Administrador();
@@ -69,10 +69,10 @@ public class AdministradorDAO {
         return administrador;
     }
 
-/**
- * Cria um novo administrador no banco de dados.
- * @param administrador O objeto Administrador a ser criado.
- */    
+    /**
+     * Cria um novo administrador no banco de dados.
+     * @param administrador O objeto Administrador a ser criado.
+     */    
     public void createAdministrador(Administrador administrador){
         
         try (Statement statement = conn.createStatement()){
@@ -84,10 +84,10 @@ public class AdministradorDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-/**
- * Retorna uma lista com todos os administradores cadastrados no banco de dados.
- * @return Uma lista de objetos Administrador.
- */    
+    /**
+     * Retorna uma lista com todos os administradores cadastrados no banco de dados.
+     * @return Uma lista de objetos Administrador.
+     */    
     public List<Administrador> getAdministradores(){
     
         List<Administrador> administradores = new ArrayList<>();
@@ -111,6 +111,11 @@ public class AdministradorDAO {
         return administradores;
     }
     
+    /**
+     * Retorna um objeto Administrador com base no ID do administrador fornecido.
+     * @param idAdministrador O ID do administrador a ser recuperado.
+     * @return Um objeto Administrador com as informações do administrador correspondente ao ID, ou um objeto vazio se nenhum administrador for encontrado.
+     */
     public Administrador getAdministrador(int idAdministrador){
     
         Administrador adm = new Administrador();
@@ -132,12 +137,11 @@ public class AdministradorDAO {
         }
         return adm;
     }
-/**
-
-Atualiza os dados de um administrador no banco de dados.
-@param idAdministrador O identificador do administrador a ser atualizado.
-@param administrador O objeto Administrador com os novos dados a serem atualizados.
-*/    
+    /**
+    Atualiza os dados de um administrador no banco de dados.
+    @param idAdministrador O identificador do administrador a ser atualizado.
+    @param administrador O objeto Administrador com os novos dados a serem atualizados.
+    */    
     public void updateAdministrador(int idAdministrador, Administrador administrador){
     
         try (Statement statement = conn.createStatement()){
@@ -149,7 +153,10 @@ Atualiza os dados de um administrador no banco de dados.
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-    
+    /**
+    * Exclui um administrador com base no ID do administrador fornecido.
+    * @param idAdministrador O ID do administrador a ser excluído.
+    */
     public void deleteAdministrador(int idAdministrador){
     
         try(Statement statement = conn.createStatement()){

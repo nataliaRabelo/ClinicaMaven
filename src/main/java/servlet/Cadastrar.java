@@ -17,12 +17,25 @@ import aplicacao.Plano;
 import model.ClienteDAO;
 import model.PlanoDAO;
 
+/**
+ * Servlet responsável pelo cadastro de novos clientes.
+ */
 @WebServlet(name = "Cadastrar", urlPatterns = {"/Cadastrar"})
 public class Cadastrar extends HttpServlet {
     
     ClienteDAO novocltDAO = new ClienteDAO();
     PlanoDAO planoDAO = new PlanoDAO();
 
+     /**
+     * Processa as requisições GET para o servlet.
+     * Verifica se o parâmetro "arg" é igual a "Cadastrar" e encaminha para a página de cadastro,
+     * preenchendo os planos disponíveis.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException exceção lançada ao ocorrer um erro durante o processamento da servlet.
+     * @throws IOException exceção lançada ao ocorrer um erro de I/O durante o processamento da servlet.
+     */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -45,6 +58,15 @@ public class Cadastrar extends HttpServlet {
         }
     }
 
+     /**
+     * Processa as requisições POST para o servlet.
+     * Realiza o cadastro de um novo cliente com base nos dados fornecidos.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException exceção lançada ao ocorrer um erro durante o processamento da servlet.
+     * @throws IOException exceção lançada ao ocorrer um erro de I/O durante o processamento da servlet.
+     */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -73,13 +95,5 @@ public class Cadastrar extends HttpServlet {
             Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
             logger.log(Level.INFO, "Error: " + e.getMessage());
         }   
-    }
-
-    public void setPlanoDAO(PlanoDAO planoDAO) {
-        this.planoDAO = planoDAO;
-    }
-
-    public void setClienteDAO(ClienteDAO clienteDAO) {
-        this.novocltDAO = clienteDAO;
     }
 }

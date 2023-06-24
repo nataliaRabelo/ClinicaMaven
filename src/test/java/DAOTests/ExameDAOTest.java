@@ -16,10 +16,17 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 
+/**
+ * Classe de teste para a classe ExameDAO.
+ */
 public class ExameDAOTest {
 
     private static Connection conn;
 
+     /**
+     * Configuração inicial dos testes.
+     * Abre uma conexão com o banco de dados.
+     */
     @BeforeAll
     public static void setUp() {
         try {
@@ -30,7 +37,8 @@ public class ExameDAOTest {
     }
 
     /**
-     * Test of create_exame method, of class ExameDAO.
+     * Testa o método createExame da classe ExameDAO.
+     * Verifica se um novo exame é cadastrado corretamente no banco de dados.
      */
     @Test
     public void testCreate_exame() {
@@ -53,7 +61,8 @@ public class ExameDAOTest {
     }
 
     /**
-     * Test of get_exames method, of class ExameDAO.
+     * Testa o método getExames da classe ExameDAO.
+     * Verifica se a lista de exames retornada não está vazia.
      */
     @Test
     public void testGet_exames() {
@@ -65,7 +74,8 @@ public class ExameDAOTest {
     }
 
     /**
-     * Test of get_exame method, of class ExameDAO.
+     * Testa o método getExame da classe ExameDAO.
+     * Verifica se um exame é retornado corretamente com base em seu ID.
      */
     @Test
     public void testGet_exame() {
@@ -81,7 +91,8 @@ public class ExameDAOTest {
     }
 
     /**
-     * Test of get_examesDaConsulta method, of class ExameDAO.
+     * Testa o método getExamesDaConsulta da classe ExameDAO.
+     * Verifica se a lista de exames de uma consulta é retornada corretamente.
      */
     @Test
     public void testGet_examesDaConsulta() {
@@ -98,7 +109,8 @@ public class ExameDAOTest {
     }
 
     /**
-     * Test of update_exame method, of class ExameDAO.
+     * Testa o método updateExame da classe ExameDAO.
+     * Verifica se um exame é atualizado corretamente no banco de dados.
      */
     @Test
     public void testUpdate_exame() {
@@ -122,7 +134,8 @@ public class ExameDAOTest {
     }
 
     /**
-     * Test of delete_exame method, of class ExameDAO.
+     * Testa o método deleteExame da classe ExameDAO.
+     * Verifica se um exame é corretamente removido do banco de dados.
      */
     @Test
     public void testDelete_exame() {
@@ -157,7 +170,8 @@ public class ExameDAOTest {
     }
 
     /**
-     * Test of delete_tipoExame method, of class ExameDAO.
+     * Testa o método deleteTipoExame da classe ExameDAO.
+     * Verifica se um tipo de exame é corretamente removido do banco de dados.
      */
     @Test
     public void testDelete_tipoExame() {
@@ -189,7 +203,8 @@ public class ExameDAOTest {
     }
 
     /**
-     * Test of get_idDeleteExame method, of class ExameDAO.
+     * Testa o método getIdDeleteExame da classe ExameDAO.
+     * Verifica se os IDs dos exames e consultas associados a um exame são corretamente obtidos.
      */
     @Test
     public void testGet_idDeleteExame() {

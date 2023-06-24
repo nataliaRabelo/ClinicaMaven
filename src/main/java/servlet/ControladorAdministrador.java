@@ -26,9 +26,21 @@ import model.ExameDAO;
 import utils.Constantes;
 import java.util.List;
 
+/**
+ * Servlet responsável pelo controle das ações do administrador.
+ */
 @WebServlet(name = "ControladorAdministrador", urlPatterns = {"/ControladorAdministrador"})
 public class ControladorAdministrador extends HttpServlet {
 
+     /**
+     * Processa as requisições GET para o servlet.
+     * Realiza ações com base nos parâmetros recebidos para visualizar, editar, cadastrar ou excluir informações.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException exceção lançada ao ocorrer um erro durante o processamento da servlet.
+     * @throws IOException exceção lançada ocorrer um erro de I/O durante o processamento da servlet.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -492,7 +504,17 @@ public class ControladorAdministrador extends HttpServlet {
             break;
         }
     }
-
+    
+    /**
+     * Processa as requisições POST para o servlet.
+     * Realiza ações com base nos parâmetros recebidos para cadastrar ou editar informações de pacientes, médicos,
+     * administradores, planos, especialidades e exames.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException Se ocorrer um erro durante o processamento da servlet.
+     * @throws IOException Se ocorrer um erro de I/O durante o processamento da servlet.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

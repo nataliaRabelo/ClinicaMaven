@@ -16,9 +16,21 @@ import model.MedicoDAO;
 import utils.Constantes;
 import java.util.List;
 
+/**
+ * Servlet responsável pelo controle das ações do cliente.
+ */
 @WebServlet(name = "ControladorCliente", urlPatterns = {"/ControladorCliente"})
 public class ControladorCliente extends HttpServlet {
-
+    
+     /**
+     * Processa as requisições GET para o servlet.
+     * Realiza ações com base nos parâmetros recebidos para visualizar, editar ou excluir consultas do cliente.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException exceção lançada ao ocorrer um erro durante o processamento da servlet.
+     * @throws IOException exceção lançada ao ocorrer um erro de I/O durante o processamento da servlet.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -126,7 +138,16 @@ public class ControladorCliente extends HttpServlet {
             break;    
         }
     }
-
+    
+     /**
+     * Processa as requisições POST para o servlet.
+     * Realiza ações com base nos parâmetros recebidos para marcar ou remarcar consultas do cliente.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException exceção lançada ao ocorrer um erro durante o processamento da servlet.
+     * @throws IOException exceção lançada ao ocorrer um erro de I/O durante o processamento da servlet.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

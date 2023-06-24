@@ -24,17 +24,16 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeAll;
 
 /**
-* @author Natália
 * Classe de teste para a classe ClienteDAO.
 */
 public class ClienteDAOTest {
     
     private static Connection conn;
 
-/**
-* Configuração inicial dos testes.
-* Abre uma conexão com o banco de dados.
-*/
+    /**
+    * Configuração inicial dos testes.
+    * Abre uma conexão com o banco de dados.
+    */
     @BeforeAll
     public static void setUp() {
         try {
@@ -44,10 +43,10 @@ public class ClienteDAOTest {
         }
     }
     
-/**
-* Testa o método createPaciente da classe ClienteDAO.
-* Verifica se um novo paciente é cadastrado corretamente no banco de dados.
-*/
+    /**
+    * Testa o método createPaciente da classe ClienteDAO.
+    * Verifica se um novo paciente é cadastrado corretamente no banco de dados.
+    */
     @Test
     public void testCreatePaciente() {
         // Arrange
@@ -67,10 +66,10 @@ public class ClienteDAOTest {
         assertTrue(isCadastrado, "O paciente deveria estar cadastrado após a chamada a create_paciente");
     }
 
-/**
- * Testa o método login da classe ClienteDAO.
- * Verifica se um paciente é retornado corretamente ao fazer login com um CPF e senha válidos.
- */    
+    /**
+     * Testa o método login da classe ClienteDAO.
+     * Verifica se um paciente é retornado corretamente ao fazer login com um CPF e senha válidos.
+     */    
     @Test
     public void testLogin() {
         // Arrange
@@ -84,10 +83,10 @@ public class ClienteDAOTest {
         assertEquals("Maria", paciente.getNome());
     }
 
- /**
-* Testa o método getPaciente da classe ClienteDAO.
-* Verifica se um paciente é retornado corretamente com base em seu ID.
-*/    
+    /**
+   * Testa o método getPaciente da classe ClienteDAO.
+   * Verifica se um paciente é retornado corretamente com base em seu ID.
+   */    
     @Test
     public void testGetPaciente() {
         // Arrange
@@ -102,9 +101,9 @@ public class ClienteDAOTest {
     }
     
   /**
-* Testa o método updatePaciente da classe ClienteDAO.
-* Verifica se um paciente é atualizado corretamente no banco de dados.
-*/    
+  * Testa o método updatePaciente da classe ClienteDAO.
+  * Verifica se um paciente é atualizado corretamente no banco de dados.
+  */    
     @Test
     public void testUpdatePaciente() {
         // Arrange
@@ -124,6 +123,10 @@ public class ClienteDAOTest {
         dao.updatePaciente(1, paciente);
     }
     
+    /**
+     * Testa o método getNomePaciente() da classe ClienteDAO.
+     * Verifica se o nome retornado corresponde ao nome esperado para um determinado ID de paciente.
+     */
     @Test
     public void testGetNomePaciente() {
         // Arrange
@@ -147,7 +150,11 @@ public class ClienteDAOTest {
         // Assert
         assertFalse(pacientes.isEmpty(), "A lista de pacientes não deve estar vazia");
     }
-
+    
+    /**
+    * Testa o método getPacientes() da classe ClienteDAO.
+    * Verifica se a lista de pacientes retornada não está vazia.
+    */
     @Test
     public void testDeletePaciente() {
         try {
@@ -177,6 +184,10 @@ public class ClienteDAOTest {
         }
     }
 
+     /**
+     * Testa o método getIdDeletePaciente() da classe ClienteDAO.
+     * Verifica se os IDs dos exames e consultas associados a um paciente são corretamente obtidos.
+     */
     @Test
     public void testGetIdDeletePaciente() {
         // Arrange
@@ -192,6 +203,10 @@ public class ClienteDAOTest {
 
     // ------------------------ TESTES COM MOCK --------------------------
 
+    /**
+     * Testa o método login() da classe ClienteDAO utilizando mocks.
+     * Verifica se um paciente é retornado corretamente ao fazer login com um CPF e senha válidos.
+     */
     @Test
     public void testLoginMock() throws Exception {
         // Arrange
@@ -224,7 +239,11 @@ public class ClienteDAOTest {
         verify(resultSet, times(1)).getString("autorizado");
         verify(resultSet, times(1)).getInt("idtipoplano");
     }
-
+    
+     /**
+     * Testa o método jaCadastrado() da classe ClienteDAO utilizando mocks.
+     * Verifica se é corretamente identificado se um paciente já está cadastrado ou não.
+     */
     @Test
     public void testJaCadastradoMock() throws Exception {
         // Arrange
@@ -244,7 +263,11 @@ public class ClienteDAOTest {
         verify(conn, times(1)).createStatement();
         verify(statement, times(1)).executeQuery(anyString());
     }
-
+    
+     /**
+     * Testa o método getNomePaciente() da classe ClienteDAO utilizando mocks.
+     * Verifica se o nome retornado corresponde ao nome esperado para um determinado ID de paciente.
+     */
     @Test
     public void testGetNomePacienteMock() throws Exception {
         // Arrange
@@ -266,6 +289,10 @@ public class ClienteDAOTest {
         verify(statement, times(1)).executeQuery(anyString());
     }
 
+     /**
+     * Testa o método getPacientes() da classe ClienteDAO utilizando mocks.
+     * Verifica se a lista de pacientes retornada não está vazia.
+     */
     @Test
     public void testGetPacientesMock() throws Exception {
         // Arrange
@@ -293,7 +320,11 @@ public class ClienteDAOTest {
         verify(conn, times(1)).createStatement();
         verify(statement, times(1)).executeQuery(anyString());
     }
-
+    
+     /**
+     * Testa o método getPaciente() da classe ClienteDAO utilizando mocks.
+     * Verifica se um paciente é corretamente retornado com base em seu ID.
+     */
     @Test
     public void testGetPacienteMock() throws Exception {
         // Arrange
@@ -321,6 +352,10 @@ public class ClienteDAOTest {
         verify(statement, times(1)).executeQuery(anyString());
     }
 
+     /**
+     * Testa o método updatePaciente() da classe ClienteDAO utilizando mocks.
+     * Verifica se um paciente é corretamente atualizado no banco de dados.
+     */
     @Test
     public void testUpdatePacienteMock() throws Exception {
         // Arrange
@@ -344,6 +379,10 @@ public class ClienteDAOTest {
         verify(statement, times(1)).execute(anyString());
     }
     
+     /**
+     * Testa o método getIdDeletePaciente() da classe ClienteDAO utilizando mocks.
+     * Verifica se os IDs dos exames e consultas associados a um paciente são corretamente obtidos.
+     */
     @Test
     public void testGetIdDeletePacienteMock() throws Exception {
         // Arrange
@@ -373,6 +412,10 @@ public class ClienteDAOTest {
         verify(statement, times(2)).executeQuery(anyString());
     }
 
+     /**
+     * Testa o método deletePaciente() da classe ClienteDAO utilizando mocks.
+     * Verifica se um paciente é corretamente removido do banco de dados.
+     */
     @Test
     public void testDeletePacienteMock() throws Exception {
         // Arrange

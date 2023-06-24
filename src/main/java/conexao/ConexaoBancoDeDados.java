@@ -18,6 +18,12 @@ A classe ConexaoBancoDeDados representa uma conexão com o banco de dados.
 public class ConexaoBancoDeDados extends HttpServlet {
     
     private static Connection conexao = null;
+
+    /**
+    * Cria e retorna uma conexão com o banco de dados.
+    * @return A conexão com o banco de dados.
+    * @throws SQLException exceção lançada ao estabelecer a conexão.
+    */
     public static Connection newConnection() throws SQLException {
         if (conexao == null) {
             try {

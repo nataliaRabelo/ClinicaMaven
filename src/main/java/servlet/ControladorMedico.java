@@ -18,9 +18,21 @@ import utils.Constantes;
 import java.util.List;
 import java.util.Collection;
 
+/**
+ * Servlet responsável pelo controle das ações do médico.
+ */
 @WebServlet(name = "ControladorMedico", urlPatterns = {"/ControladorMedico"})
 public class ControladorMedico extends HttpServlet {
 
+     /**
+     * Processa as requisições GET para o servlet.
+     * Realiza ações com base nos parâmetros recebidos para visualizar consultas, solicitar exames e concluir consultas do médico.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException exceção lançada ao ocorrer um erro durante o processamento da servlet.
+     * @throws IOException exceção lançada ao ocorrer um erro de I/O durante o processamento da servlet.
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -113,6 +125,15 @@ public class ControladorMedico extends HttpServlet {
         }
     }
 
+     /**
+     * Processa as requisições POST para o servlet.
+     * Realiza ações com base nos parâmetros recebidos para concluir uma consulta ou marcar um exame solicitado pelo médico.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException exceção lançada ao ocorrer um erro durante o processamento da servlet.
+     * @throws IOException exceção lançada ao ocorrer um erro de I/O durante o processamento da servlet.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -40,11 +40,11 @@ public class PlanoDAO {
         }
     }
 
-/**
-* Cria um novo plano no banco de dados.
-*
-* @param novoPlano o novo plano a ser criado
-*/    
+    /**
+    * Cria um novo plano no banco de dados.
+    *
+    * @param novoPlano o novo plano a ser criado
+    */    
     public void createPlano(Plano novoPlano){
         
         try (Statement statement = conn.createStatement()){
@@ -57,11 +57,11 @@ public class PlanoDAO {
         }
     }
  
- /**
-* Retorna uma lista de todos os planos existentes no banco de dados.
-*
-* @return a lista de planos
-*/    
+    /**
+   * Retorna uma lista de todos os planos existentes no banco de dados.
+   *
+   * @return a lista de planos
+   */    
     public List<Plano> getPlanos(){
     
         List<Plano> planos = new ArrayList<>();
@@ -82,11 +82,11 @@ public class PlanoDAO {
         }
         return planos;
     }
-/**
-* Retorna um plano com base no seu ID.
-*
-* @param idPlano o ID do plano a ser retornado
-* @return o plano com o ID correspondente, ou um plano vazio se não for encontrado
+    /**
+    * Retorna um plano com base no seu ID.
+    *
+    * @param idPlano o ID do plano a ser retornado
+    * @return o plano com o ID correspondente, ou um plano vazio se não for encontrado
      */   
     public Plano getPlano(int idPlano){
     
@@ -107,7 +107,13 @@ public class PlanoDAO {
         }
         return plano;
     }
-     
+    
+    /**
+    * Atualiza a descrição de um plano com base no ID do plano fornecido.
+    *
+    * @param idPlano O ID do plano a ser atualizado.
+    * @param novoPlano O objeto Plano contendo a nova descrição do plano.
+    */
     public void updatePlano(int idPlano, Plano novoPlano){
     
         try (Statement statement = conn.createStatement()){
@@ -119,6 +125,11 @@ public class PlanoDAO {
         }
     }
     
+    /**
+    * Exclui um plano com base no ID do plano fornecido.
+    *
+    * @param idPlano O ID do plano a ser excluído.
+    */
     public void deletePlano(int idPlano){
         
         try (Statement statement = conn.createStatement()){
@@ -129,11 +140,12 @@ public class PlanoDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-/**
- * Retorna uma lista contendo os IDs das chaves estrangeitas associados a um tipo de exame específico que podem ser excluídos.
- * @param idExame o ID do tipo de exame
- * @return uma lista contendo os IDs dos exames a serem excluídos
- */    
+
+    /**
+     * Retorna uma lista contendo os IDs das chaves estrangeitas associados a um tipo de exame específico que podem ser excluídos.
+     * @param idExame o ID do tipo de exame
+     * @return uma lista contendo os IDs dos exames a serem excluídos
+     */    
     public List<List<Integer>> getIdDeletePlano(int idPlano){
         
         List<List<Integer>> idCompilado = new ArrayList<>();

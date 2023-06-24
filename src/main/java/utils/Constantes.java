@@ -1,5 +1,8 @@
 package utils;
 
+/**
+ * Classe que contém constantes utilizadas no sistema.
+ */
 public class Constantes {
     
    private Constantes(){
@@ -50,7 +53,5 @@ public class Constantes {
     public static final String FROMESPECIALIDADE = "FROM especialidade INNER JOIN medico ON especialidade.id=medico.idespecialidade ";
     public static final String WHERETIPOPLANO = "WHERE tipoplano.id=";
     public static final String FROMTIPOPLANO = "FROM tipoplano INNER JOIN paciente ON tipoplano.id=paciente.idtipoplano ";
-    
-    
     
 }

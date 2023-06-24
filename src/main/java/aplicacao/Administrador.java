@@ -12,66 +12,66 @@ public class Administrador {
     private String cpf;
     private String senha;
     
-/**
-Obtém o identificador do administrador.
-@return O identificador do administrador.
-*/
+    /**
+    Obtém o identificador do administrador.
+    @return O identificador do administrador.
+    */
     public Integer getId() {
         return id;
     }
     
-/**
-Define o identificador do administrador.
-@param id O identificador a ser definido.
-*/
+    /**
+    Define o identificador do administrador.
+    @param id O identificador a ser definido.
+    */
     public void setId(Integer id) {
         this.id = id;
     }
     
-/**
-Obtém o nome do administrador.
-@return O nome do administrador.
-*/
+    /**
+    Obtém o nome do administrador.
+    @return O nome do administrador.
+    */
     public String getNome() {
         return nome;
     }
     
-/**
-Define o nome do administrador.
-@param nome O nome a ser definido.
-*/
+    /**
+    Define o nome do administrador.
+    @param nome O nome a ser definido.
+    */
     public void setNome(String nome) {
         this.nome = nome;
     }
     
-/**
-Obtém o CPF do administrador.
-@return O CPF do administrador.
-*/
+    /**
+    Obtém o CPF do administrador.
+    @return O CPF do administrador.
+    */
     public String getCpf() {
         return cpf;
     }
     
-/**
-Define o CPF do administrador.
-@param cpf O CPF a ser definido.
-*/
+    /**
+    Define o CPF do administrador.
+    @param cpf O CPF a ser definido.
+    */
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
     
-/**
-Obtém a senha do administrador.
-@return A senha do administrador.
-*/
+    /**
+    Obtém a senha do administrador.
+    @return A senha do administrador.
+    */
     public String getSenha() {
         return senha;
     }
     
-/**
-Define a senha do administrador.
-@param senha A senha a ser definida.
-*/
+    /**
+    Define a senha do administrador.
+    @param senha A senha a ser definida.
+    */
     public void setSenha(String senha) {
         this.senha = senha;
     }

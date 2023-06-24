@@ -40,11 +40,11 @@ public class ExameDAO {
         }
     }
  
- /**
-* Cria um novo exame no banco de dados.
-*
-* @param novoExame o exame a ser criado.
-*/
+    /**
+   * Cria um novo exame no banco de dados.
+   *
+   * @param novoExame o exame a ser criado.
+   */
     public void createExame(Exame novoExame){
         
         try (Statement statement = conn.createStatement()){
@@ -57,11 +57,11 @@ public class ExameDAO {
         }
     }
     
- /**
-* Retorna uma lista contendo todos os exames do banco de dados.
-*
-* @return uma lista de exames.
-*/    
+    /**
+   * Retorna uma lista contendo todos os exames do banco de dados.
+   *
+   * @return uma lista de exames.
+   */    
     public List<Exame> getExames(){
     
         List<Exame> exames = new ArrayList<>();
@@ -82,12 +82,12 @@ public class ExameDAO {
         }
         return exames;
     }
-/**
-* Retorna um exame com base no seu ID.
-*
-* @param idExame o ID do exame.
-* @return o exame com o ID especificado.
-*/   
+    /**
+    * Retorna um exame com base no seu ID.
+    *
+    * @param idExame o ID do exame.
+    * @return o exame com o ID especificado.
+    */   
     public Exame getExame(int idExame){
     
         Exame exame = new Exame();
@@ -107,12 +107,12 @@ public class ExameDAO {
         }
         return exame;
     }
-/**
-* Retorna uma lista contendo as descrições dos exames realizados em uma determinada consulta.
-*
-* @param idConsulta o ID da consulta.
-* @param listaExames a lista de descrições de exames existente.
-* @return uma lista atualizada contendo as descrições dos exames realizados na consulta.
+    /**
+    * Retorna uma lista contendo as descrições dos exames realizados em uma determinada consulta.
+    *
+    * @param idConsulta o ID da consulta.
+    * @param listaExames a lista de descrições de exames existente.
+    * @return uma lista atualizada contendo as descrições dos exames realizados na consulta.
      */    
     public List<String> getExamesDaConsulta(int idConsulta, List<String> listaExames){
         
@@ -132,12 +132,12 @@ public class ExameDAO {
         }
         return listaExames;
     }
-/**
-* Atualiza os dados de um exame existente no banco de dados.
-*
-* @param idExame o ID do exame a ser atualizado.
-* @param novoExame os novos dados do exame.
-*/    
+    /**
+    * Atualiza os dados de um exame existente no banco de dados.
+    *
+    * @param idExame o ID do exame a ser atualizado.
+    * @param novoExame os novos dados do exame.
+    */    
     public void updateExame(int idExame, Exame novoExame){
     
         try (Statement statement = conn.createStatement()){
@@ -149,6 +149,11 @@ public class ExameDAO {
         }
     }
     
+    /**
+    * Exclui um exame com base no ID do exame fornecido.
+    *
+    * @param idExame O ID do exame a ser excluído.
+    */
     public void deleteExame(int idExame){
         
         try (Statement statement = conn.createStatement()){
@@ -160,6 +165,11 @@ public class ExameDAO {
         }
     }
     
+    /**
+    * Exclui um tipo de exame com base no ID do exame fornecido.
+    *
+    * @param idExame O ID do tipo de exame a ser excluído.
+    */
     public void deleteTipoExame(int idExame){
         
         try (Statement statement = conn.createStatement()){
@@ -170,12 +180,12 @@ public class ExameDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-/**
- * Retorna uma lista contendo os IDs das chaves estrangeiras associados a um tipo de exame específico.
- *
- * @param idExame o ID do tipo de exame
- * @return uma lista contendo os IDs dos exames a serem excluídos
- */    
+    /**
+     * Retorna uma lista contendo os IDs das chaves estrangeiras associados a um tipo de exame específico.
+     *
+     * @param idExame o ID do tipo de exame
+     * @return uma lista contendo os IDs dos exames a serem excluídos
+     */    
     public List<Integer> getIdDeleteExame(int idExame){
         
         List<Integer> idExames = new ArrayList<>();

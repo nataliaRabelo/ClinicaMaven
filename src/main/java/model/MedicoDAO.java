@@ -39,13 +39,14 @@ public class MedicoDAO {
             logger.log(Level.INFO, "Nao foi possivel conectar");
         }
     }
-/**
-* Realiza o login do médico com as credenciais fornecidas.
-* 
-* @param cpf    o CPF do médico
-* @param senha  a senha do médico
-* @return o objeto Medico correspondente às credenciais fornecidas, ou null se as credenciais estiverem incorretas
-*/    
+
+    /**
+    * Realiza o login do médico com as credenciais fornecidas.
+    * 
+    * @param cpf    o CPF do médico
+    * @param senha  a senha do médico
+    * @return o objeto Medico correspondente às credenciais fornecidas, ou null se as credenciais estiverem incorretas
+    */    
     public Medico login(String cpf, String senha){
         
         Medico medico = new Medico();
@@ -71,12 +72,13 @@ public class MedicoDAO {
         }
         return medico;
     }
-/**
-* Cria um novo exame associado a uma consulta.
-* 
-* @param idTipoExame  o ID do tipo de exame
-* @param idConsulta   o ID da consulta
-*/   
+
+    /**
+    * Cria um novo exame associado a uma consulta.
+    * 
+    * @param idTipoExame  o ID do tipo de exame
+    * @param idConsulta   o ID da consulta
+    */   
     public void createExame(int idTipoExame, int idConsulta){
     
         try (Statement statement = conn.createStatement()){
@@ -88,11 +90,12 @@ public class MedicoDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-/**
-* Cria um novo médico no banco de dados.
-* 
-* @param novoMedico  o objeto Medico a ser criado
-*/    
+
+    /**
+    * Cria um novo médico no banco de dados.
+    * 
+    * @param novoMedico  o objeto Medico a ser criado
+    */    
     public void createMedico(Medico novoMedico){
     
         try (Statement statement = conn.createStatement()){
@@ -107,6 +110,12 @@ public class MedicoDAO {
         }
     }
     
+    /**
+    * Retorna uma lista de objetos Consulta contendo as consultas associadas a um determinado médico com base no ID do médico fornecido.
+    *
+    * @param idMedico O ID do médico para o qual se deseja obter as consultas.
+    * @return Uma lista de objetos Consulta representando as consultas associadas ao médico.
+    */
     public List<Consulta> getConsultas(int idMedico){
     
         List<Consulta> consultasMedico = new ArrayList<>();
@@ -133,6 +142,12 @@ public class MedicoDAO {
         return consultasMedico;
     }
     
+    /**
+     * Retorna um objeto Medico com base no ID do médico fornecido.
+     *
+     * @param idMedico O ID do médico a ser recuperado.
+     * @return Um objeto Medico com as informações do médico correspondente ao ID, ou um objeto vazio se nenhum médico for encontrado.
+     */
     public Medico getMedico(int idMedico){
         
         Medico medico = new Medico();
@@ -159,6 +174,11 @@ public class MedicoDAO {
         return medico;
     }
     
+    /**
+    * Retorna uma lista de objetos contendo os exames disponíveis.
+    *
+    * @return Uma lista de objetos contendo os exames disponíveis. Cada objeto contém o ID e a descrição do exame.
+    */
     public List<Object> getExames(){
         
         List<Object> examesDisponiveis = new ArrayList<>();
@@ -178,6 +198,11 @@ public class MedicoDAO {
         return examesDisponiveis;
     }
     
+    /**
+    * Retorna uma lista de objetos Medico contendo todos os médicos cadastrados.
+    *
+    * @return Uma lista de objetos Medico representando os médicos cadastrados.
+    */
     public List<Medico> getMedicos(){
     
         List<Medico> medicos = new ArrayList<>();
@@ -205,6 +230,12 @@ public class MedicoDAO {
         return medicos;
     }
     
+    /**
+    * Atualiza as informações de um médico com base no ID do médico fornecido.
+    *
+    * @param idMedico O ID do médico a ser atualizado.
+    * @param medico O objeto Medico contendo as novas informações do médico.
+    */
     public void updateMedico(int idMedico, Medico medico){
         
         try (Statement statement = conn.createStatement()){
@@ -219,6 +250,11 @@ public class MedicoDAO {
         }
     }
     
+    /**
+     * Exclui um médico com base no ID do médico fornecido.
+     *
+     * @param idMedico O ID do médico a ser excluído.
+     */
     public void deleteMedico(int idMedico){
         
         try (Statement statement = conn.createStatement()){
@@ -230,6 +266,12 @@ public class MedicoDAO {
         }
     }
     
+    /**
+    * Retorna uma lista de listas de inteiros contendo os IDs de exames e consultas associados a um determinado médico com base no ID do médico fornecido.
+    *
+    * @param idMedico O ID do médico para o qual se deseja obter os IDs de exames e consultas associados.
+    * @return Uma lista de listas de inteiros contendo os IDs de exames e consultas associados ao médico. A primeira lista contém os IDs de exames, a segunda lista contém os IDs de consultas.
+    */
     public List<List<Integer>> getIdDeleteMedico(int idMedico){
     
         List<List<Integer>> idCompilado = new ArrayList<>();
@@ -265,6 +307,13 @@ public class MedicoDAO {
         return idCompilado;
     }
     
+    /**
+    * Retorna uma lista de IDs de consultas que colidem com a disponibilidade de um médico em uma determinada data.
+    *
+    * @param idMedico O ID do médico para o qual se deseja verificar a disponibilidade.
+    * @param data A data para a qual se deseja verificar a disponibilidade.
+    * @return Uma lista de IDs de consultas que colidem com a disponibilidade do médico na data especificada.
+    */
     public List<Integer> medicoAvailable(int idMedico, String data){
         
         List<Integer>colisoes = new ArrayList<>();

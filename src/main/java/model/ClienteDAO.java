@@ -38,12 +38,12 @@ public class ClienteDAO {
         }
     } 
 
-/**
-Realiza o login de um cliente no sistema.
-@param cpf O CPF do cliente.
-@param senha A senha do cliente.
-@return O objeto Cliente com os dados do cliente logado.
-*/    
+    /**
+    Realiza o login de um cliente no sistema.
+    @param cpf O CPF do cliente.
+    @param senha A senha do cliente.
+    @return O objeto Cliente com os dados do cliente logado.
+    */    
     public Cliente login(String cpf, String senha){
         
         Cliente paciente = new Cliente();
@@ -68,11 +68,11 @@ Realiza o login de um cliente no sistema.
         return paciente;
     }
  
-/**
-Verifica se um determinado CPF de paciente já está cadastrado no banco de dados.
-@param cpfPaciente O CPF do paciente a ser verificado.
-@return true se o CPF já estiver cadastrado, false caso contrário.
-*/    
+    /**
+    Verifica se um determinado CPF de paciente já está cadastrado no banco de dados.
+    @param cpfPaciente O CPF do paciente a ser verificado.
+    @return true se o CPF já estiver cadastrado, false caso contrário.
+    */    
     public boolean jaCadastrado(String cpfPaciente){
     
         boolean resp = false;
@@ -91,10 +91,10 @@ Verifica se um determinado CPF de paciente já está cadastrado no banco de dado
         return resp;
     }
 
-/**
-Cria um novo paciente no banco de dados.
-@param novoPaciente O objeto Cliente com os dados do novo paciente.
-*/    
+    /**
+    Cria um novo paciente no banco de dados.
+    @param novoPaciente O objeto Cliente com os dados do novo paciente.
+    */    
     public void createPaciente(Cliente novoPaciente){
  
         try (Statement statement = conn.createStatement()){
@@ -109,7 +109,13 @@ Cria um novo paciente no banco de dados.
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-        
+    
+    /**
+    * Retorna o nome de um paciente com base no ID do paciente fornecido.
+    *
+    * @param idPaciente O ID do paciente.
+    * @return O nome do paciente correspondente ao ID, ou null se nenhum paciente for encontrado.
+    */
     public String getNomePaciente(int idPaciente){
         
         String nome = null;
@@ -128,7 +134,12 @@ Cria um novo paciente no banco de dados.
         }
         return nome;
     }
-    
+
+    /**
+    * Retorna uma lista de objetos Cliente contendo todos os pacientes registrados.
+    *
+    * @return Uma lista de objetos Cliente representando os pacientes registrados.
+    */
     public List<Cliente> getPacientes(){
     
         List<Cliente> pacientes = new ArrayList<>();
@@ -153,6 +164,11 @@ Cria um novo paciente no banco de dados.
         return pacientes;
     }
     
+    /**
+     * Retorna um objeto Cliente contendo as informações de um paciente com base no ID do paciente fornecido.
+     * @param idPaciente O ID do paciente a ser recuperado.
+     * @return Um objeto Cliente com as informações do paciente correspondente ao ID, ou um objeto vazio se nenhum paciente for encontrado.
+     */
     public Cliente getPaciente(int idPaciente){
     
         Cliente paciente = new Cliente();
@@ -175,7 +191,12 @@ Cria um novo paciente no banco de dados.
         }
         return paciente;
     }
-    
+    /**
+    * Atualiza as informações de um paciente com base no ID do paciente fornecido.
+    *
+    * @param idPaciente O ID do paciente a ser atualizado.
+    * @param paciente O objeto Cliente contendo as novas informações do paciente.
+    */
     public void updatePaciente(int idPaciente, Cliente paciente){
         
         try(Statement statement = conn.createStatement()){
@@ -189,7 +210,11 @@ Cria um novo paciente no banco de dados.
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-    
+    /**
+    * Exclui um paciente com base no ID do paciente fornecido.
+    *
+    * @param idPaciente O ID do paciente a ser excluído.
+    */
     public void deletePaciente(int idPaciente){
         
         try (Statement statement = conn.createStatement()){
@@ -200,11 +225,11 @@ Cria um novo paciente no banco de dados.
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
     }
-/**
-* Retorna uma lista contendo as listas de IDs das chaves estrangeiras dos exames e consultas associados a um paciente específico.
-* @param idPaciente o ID do paciente
-* @return uma lista contendo as listas de IDs das chaves estrangeiras dos exames e consultas a serem excluídas
-*/    
+    /**
+    * Retorna uma lista contendo as listas de IDs das chaves estrangeiras dos exames e consultas associados a um paciente específico.
+    * @param idPaciente o ID do paciente
+    * @return uma lista contendo as listas de IDs das chaves estrangeiras dos exames e consultas a serem excluídas
+    */    
     public List<List<Integer>> getIdDeletePaciente(int idPaciente){
     
         List<List<Integer>> idCompilado = new ArrayList<>();

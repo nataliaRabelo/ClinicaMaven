@@ -19,10 +19,17 @@ import org.junit.jupiter.api.Assertions;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Classe de teste para a classe EspecialidadeDAO.
+ */
 public class EspecialidadeDAOTest {
 
     private static Connection conn;
 
+     /**
+     * Configuração inicial dos testes.
+     * Abre uma conexão com o banco de dados.
+     */
     @BeforeAll
     public static void setUp() {
         try {
@@ -32,29 +39,36 @@ public class EspecialidadeDAOTest {
         }
     }
 
-@Test
-public void testCreateEspecialidade() {
-    EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
-    Especialidade novaEspecialidade = new Especialidade();
-    novaEspecialidade.setDescricao("Cardiologia");
+    /**
+     * Testa o método createEspecialidade da classe EspecialidadeDAO.
+     * Verifica se uma nova especialidade é cadastrada corretamente no banco de dados.
+     */
+    @Test
+    public void testCreateEspecialidade() {
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+        Especialidade novaEspecialidade = new Especialidade();
+        novaEspecialidade.setDescricao("Cardiologia");
 
-    especialidadeDAO.createEspecialidade(novaEspecialidade);
+        especialidadeDAO.createEspecialidade(novaEspecialidade);
 
-    // Tenta recuperar a especialidade do banco de dados
-    List<Especialidade> especialidades = especialidadeDAO.getEspecialidades();
+        // Tenta recuperar a especialidade do banco de dados
+        List<Especialidade> especialidades = especialidadeDAO.getEspecialidades();
 
-    boolean found = false;
-    for (Especialidade especialidade : especialidades) {
-        if (especialidade.getDescricao().equals(novaEspecialidade.getDescricao())) {
-            found = true;
-            break;
+        boolean found = false;
+        for (Especialidade especialidade : especialidades) {
+            if (especialidade.getDescricao().equals(novaEspecialidade.getDescricao())) {
+                found = true;
+                break;
+            }
         }
+
+        assertTrue(found);
     }
-    
-    assertTrue(found);
-}
 
-
+     /**
+     * Testa o método getEspecialidades da classe EspecialidadeDAO.
+     * Verifica se a lista de especialidades retornada não está vazia.
+     */
     @Test
     public void testGetEspecialidades() {
         EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
@@ -64,6 +78,10 @@ public void testCreateEspecialidade() {
         Assertions.assertTrue(especialidades.size() > 0, "A lista de especialidades deve ter pelo menos uma especialidade");
     }
 
+     /**
+     * Testa o método getEspecialidade da classe EspecialidadeDAO.
+     * Verifica se uma especialidade é retornada corretamente com base em seu ID.
+     */
     @Test
     public void testGetEspecialidade() {
         EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
@@ -74,7 +92,11 @@ public void testCreateEspecialidade() {
         Assertions.assertNotNull(especialidade, "A especialidade não deve ser nula");
         Assertions.assertEquals(idEspecialidade, especialidade.getId(), "O ID da especialidade deve ser o mesmo do ID de entrada");
     }
-
+    
+    /**
+     * Testa o método updateEspecialidade da classe EspecialidadeDAO.
+     * Verifica se uma especialidade é atualizada corretamente no banco de dados.
+     */
     @Test
     public void testUpdateEspecialidade() {
         EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
@@ -91,7 +113,10 @@ public void testCreateEspecialidade() {
         assertEquals(novaEspecialidade.getDescricao(), especialidadeAtualizada.getDescricao());
     }
 
-
+     /**
+     * Testa o método deleteEspecialidade da classe EspecialidadeDAO.
+     * Verifica se uma especialidade é corretamente removida do banco de dados.
+     */
     @Test
     public void testDeleteEspecialidade() {
         try {
@@ -121,6 +146,10 @@ public void testCreateEspecialidade() {
         }
     }
 
+     /**
+     * Testa o método getIdDeleteEspecialidade da classe EspecialidadeDAO.
+     * Verifica se os IDs dos exames e consultas associados a uma especialidade são corretamente obtidos.
+     */
     @Test
     public void testGetIdDeleteEspecialidade() {
         try {
