@@ -68,5 +68,18 @@ Para executar um método específico de alguma classe dos testes unitários, uti
 ```
 mvn -Dtest=[CLASSE]$[METODO] test
 
+## 3. Testes Unitário do Projeto
+
+O código deste projeto é testado através de uma componente de teste unitário que fazem a cobertura parcial das componentes presentes no sistema. O teste de unidade utiliza a biblioteca do JUnit e todo seu código se encontra em `src/test`. 
+
+Antes de executar os testes, certifique-se que o PhpMyAdmin e serviços do MySQL estão ligado **sem autenticação** e que o banco de dados `clinica` existe.
+
+Os testes unitários são executados automaticamente na construção de qualquer JAR para a distribuição do projeto pelo *script* agregado. Qualquer outro detalhe para execução dos testes unitários pode ser vista na respectiva seção de execução dos testes relacionada anteriormente neste documento. Toda a implementação dos testes devem estar documentadas, seguindo fielmente a estrutura dos demais testes. 
+
+## 4. Inspeção de código
+
+Este projeto utiliza da ferramenta [SonarLint](https://www.sonarsource.com/products/sonarlint/?gads_campaign=SL-Class01-Brand&gads_ad_group=SonarLint&gads_keyword=sonarlint&gclid=Cj0KCQjwy9-kBhCHARIsAHpBjHh9O1p1KY3_286b9Nb4sB5o1GA_7LEy-ACkEiPcFblG-RP4LmKrCe8aAu2QEALw_wcB) para inspeção de código. Esta ferramenta é utilizada para inspecionar o código que está hospedado na branch principal (master). 
+
+
 
 
