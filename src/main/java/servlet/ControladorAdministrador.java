@@ -1,5 +1,22 @@
-package servlet;import utils.Constantes;
+package servlet;
 
+import aplicacao.Cliente;
+import aplicacao.Medico;
+import aplicacao.Administrador;
+import aplicacao.Consulta;
+import aplicacao.Plano;
+import aplicacao.Especialidade;
+import aplicacao.Exame;
+import utils.Constantes;
+import model.ClienteDAO;
+import model.MedicoDAO;
+import model.AdministradorDAO;
+import model.PlanoDAO;
+import model.EspecialidadeDAO;
+import model.ConsultaDAO;
+import model.ExameDAO;
+
+import java.util.List;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,22 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import aplicacao.Cliente;
-import aplicacao.Medico;
-import aplicacao.Administrador;
-import aplicacao.Consulta;
-import aplicacao.Plano;
-import aplicacao.Especialidade;
-import aplicacao.Exame;
-import model.ClienteDAO;
-import model.MedicoDAO;
-import model.AdministradorDAO;
-import model.PlanoDAO;
-import model.EspecialidadeDAO;
-import model.ConsultaDAO;
-import model.ExameDAO;
-import utils.Constantes;
-import java.util.List;
 
 /**
  * Servlet responsável pelo controle das ações do administrador.

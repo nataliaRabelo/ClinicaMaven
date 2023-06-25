@@ -6,7 +6,6 @@ import conexao.ConexaoBancoDeDados;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,7 +14,6 @@ import java.sql.ResultSet;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

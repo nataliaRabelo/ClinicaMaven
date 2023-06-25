@@ -1,20 +1,22 @@
 package DAOTests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import conexao.ConexaoBancoDeDados;
 import model.ExameDAO;
 import aplicacao.Exame;
 import aplicacao.Consulta;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import java.sql.SQLException;
-import java.sql.Connection;
+
+import java.util.ArrayList;
 import java.util.*;
 import java.util.function.Supplier;
-import conexao.ConexaoBancoDeDados;
+import java.sql.SQLException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import java.util.ArrayList;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 /**
  * Classe de teste para a classe ExameDAO.

@@ -7,7 +7,6 @@ import conexao.ConexaoBancoDeDados;
 
 import java.util.List;
 import java.util.ArrayList;
-
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -15,13 +14,10 @@ import java.sql.Statement;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
-
 import org.mockito.Mockito;
-
+import org.junit.jupiter.api.BeforeAll;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-import org.junit.jupiter.api.BeforeAll;
 
 /**
 * Classe de teste para a classe ClienteDAO.

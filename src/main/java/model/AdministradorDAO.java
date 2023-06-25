@@ -6,13 +6,13 @@ import utils.Constantes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import java.util.logging.Logger;
-import java.util.logging.Level;
 
 /**
 A classe AdministradorDAO é responsável por realizar operações de acesso a dados

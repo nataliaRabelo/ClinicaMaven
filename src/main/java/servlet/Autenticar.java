@@ -1,4 +1,12 @@
 package servlet;
+
+import aplicacao.Cliente;
+import aplicacao.Medico;
+import aplicacao.Administrador;
+import model.ClienteDAO;
+import model.MedicoDAO;
+import model.AdministradorDAO;
+
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -7,12 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import aplicacao.Cliente;
-import aplicacao.Medico;
-import aplicacao.Administrador;
-import model.ClienteDAO;
-import model.MedicoDAO;
-import model.AdministradorDAO;
 
 /**
  * Servlet responsável pela autenticação de usuários.

@@ -1,4 +1,13 @@
 package servlet;
+
+import aplicacao.Cliente;
+import aplicacao.Consulta;
+import model.ExameDAO;
+import model.ConsultaDAO;
+import model.MedicoDAO;
+import utils.Constantes;
+
+import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -8,13 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpSession;
-import aplicacao.Cliente;
-import aplicacao.Consulta;
-import model.ExameDAO;
-import model.ConsultaDAO;
-import model.MedicoDAO;
-import utils.Constantes;
-import java.util.List;
 
 /**
  * Servlet responsável pelo controle das ações do cliente.

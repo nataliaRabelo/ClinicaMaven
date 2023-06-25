@@ -1,4 +1,9 @@
 package model;
+
+import conexao.ConexaoBancoDeDados;
+import aplicacao.Exame;
+import utils.Constantes;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,10 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-
-import conexao.ConexaoBancoDeDados;
-import aplicacao.Exame;
-import utils.Constantes;
 
 /**
  * A classe ExameDAO representa um Data Access Object para a entidade Exame,

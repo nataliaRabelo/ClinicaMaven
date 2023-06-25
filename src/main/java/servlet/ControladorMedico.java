@@ -1,4 +1,15 @@
 package servlet;
+
+import aplicacao.Medico;
+import aplicacao.Consulta;
+import utils.Constantes;
+import model.ClienteDAO;
+import model.ConsultaDAO;
+import model.MedicoDAO;
+import model.ExameDAO;
+
+import java.util.List;
+import java.util.Collection;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -8,15 +19,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.ClienteDAO;
-import model.ConsultaDAO;
-import model.MedicoDAO;
-import model.ExameDAO;
-import aplicacao.Medico;
-import aplicacao.Consulta;
-import utils.Constantes;
-import java.util.List;
-import java.util.Collection;
 
 /**
  * Servlet responsável pelo controle das ações do médico.

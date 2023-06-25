@@ -1,4 +1,15 @@
 package servlet;
+
+import aplicacao.Cliente;
+import aplicacao.Plano;
+import conexao.ConexaoBancoDeDados;
+import model.ClienteDAO;
+import model.PlanoDAO;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -7,15 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-import conexao.ConexaoBancoDeDados;
-import java.util.ArrayList;
-import java.util.List;
-import aplicacao.Cliente;
-import aplicacao.Plano;
-import model.ClienteDAO;
-import model.PlanoDAO;
 
 /**
  * Servlet responsável pelo cadastro de novos clientes.

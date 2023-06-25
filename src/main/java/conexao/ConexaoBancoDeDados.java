@@ -1,12 +1,13 @@
 package conexao;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 
 
 /**
