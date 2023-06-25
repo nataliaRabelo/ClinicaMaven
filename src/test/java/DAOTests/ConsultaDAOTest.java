@@ -15,6 +15,12 @@ import java.sql.ResultSet;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 
 /**
 * Classe de teste para a classe ConsultaDAO.
@@ -67,7 +73,7 @@ public class ConsultaDAOTest {
      * Verifica se a consulta retornada não é nula.
      */
     @Test
-    public void testGet_consultas() {
+    public void testGetConsultas() {
         int id_paciente = 1; // Considerando que nosso paciente 1 sempre nasce com uma consulta quando o banco é alimentado.
         ConsultaDAO instance = new ConsultaDAO(conn);
         List<Consulta> expResult = new ArrayList();
@@ -84,7 +90,7 @@ public class ConsultaDAOTest {
      * Verifica se a lista de consultas retornada não é nula.
      */
     @Test
-    public void testGet_consulta() {
+    public void testGetConsulta() {
         int id_consulta = 1; // Considerando que já há uma consulta 1 com a construção do banco.
         ConsultaDAO instance = new ConsultaDAO(conn);
         Consulta expResult = new Consulta();
@@ -101,7 +107,7 @@ public class ConsultaDAOTest {
      * Verifica se a consulta retornada não é nula.
      */
     @Test
-    public void testGet_medicoEspecialidade() {
+    public void testGetMedicoEspecialidade() {
         int id_consulta = 1; // Considerando que já há uma consulta 1 com a construção do banco e esta sempre tem um médico associado por chave estrangeira.
         List<Object> medico_descricao = new ArrayList<Object>();
         ConsultaDAO instance = new ConsultaDAO(conn);
@@ -118,7 +124,7 @@ public class ConsultaDAOTest {
     * Testa o método getProcedimentosDisponiveis da classe ConsultaDAO.
     */
     @Test
-    public void testGet_procedimentosDisponiveis() {
+    public void testGetProcedimentosDisponiveis() {
         ConsultaDAO instance = new ConsultaDAO(conn);
         List<Object> expResult = new ArrayList<Object>();
         try{
@@ -189,5 +195,209 @@ public class ConsultaDAOTest {
         }
     }
 
+    // ---- TESTES COM MOCK -------------
+
+    /**
+    * Testa o método createConsulta utilizando Mockito.
+    *
+    * @throws Exception se ocorrer uma exceção durante o teste
+    */
+    @Test
+    public void testCreateConsultaMock() throws Exception {
+        // Arrange
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.execute(anyString())).thenReturn(true);
+        ConsultaDAO dao = new ConsultaDAO(conn);
+
+        Consulta consulta = new Consulta();
+        consulta.setData("2023-06-25");
+        consulta.setDescricao("consulta teste");
+        consulta.setRealizada('S');
+        consulta.setIdmedico(1);
+        consulta.setIdpaciente(1);
+
+        // Act
+        dao.createConsulta(consulta);
+
+        // Assert
+        verify(conn, times(1)).createStatement();
+        verify(statement, times(1)).execute(anyString());
+    }
+
+    /**
+    * Testa o método getConsultas utilizando Mockito.
+    *
+    * @throws Exception se ocorrer uma exceção durante o teste
+    */
+    @Test
+    public void testGetConsultasMock() throws Exception {
+        // Arrange
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ResultSet resultSet = mock(ResultSet.class);
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.executeQuery(anyString())).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true, false);
+        when(resultSet.getInt(anyInt())).thenReturn(1);
+        when(resultSet.getString(anyString())).thenReturn("teste");
+        ConsultaDAO dao = new ConsultaDAO(conn);
+
+        // Act
+        List<Consulta> consultas = dao.getConsultas(1);
+
+        // Assert
+        assertNotNull(consultas);
+        assertEquals(1, consultas.size());
+        assertEquals("teste", consultas.get(0).getDescricao());
+        verify(conn, times(1)).createStatement();
+        verify(statement, times(1)).executeQuery(anyString());
+    }
+
+    /**
+    * Testa o método getConsulta utilizando Mockito.
+    *
+    * @throws Exception se ocorrer uma exceção durante o teste
+    */
+    @Test
+    public void testGetConsultaMock() throws Exception {
+        // Arrange
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ResultSet resultSet = mock(ResultSet.class);
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.executeQuery(anyString())).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt(anyInt())).thenReturn(1);
+        when(resultSet.getString(anyString())).thenReturn("teste");
+        ConsultaDAO dao = new ConsultaDAO(conn);
+
+
+        // Act
+        Consulta consulta = dao.getConsulta(1);
+
+        // Assert
+        assertNotNull(consulta);
+        assertEquals("teste", consulta.getDescricao());
+        verify(conn, times(1)).createStatement();
+        verify(statement, times(1)).executeQuery(anyString());
+    }
+
+    /**
+    * Testa o método updateConsulta utilizando Mockito.
+    *
+    * @throws Exception se ocorrer uma exceção durante o teste
+    */
+    @Test
+    public void testUpdateConsultaMock() throws Exception {
+        // Arrange
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.execute(anyString())).thenReturn(true);
+        ConsultaDAO dao = new ConsultaDAO(conn);
+
+        Consulta consulta = new Consulta();
+        consulta.setData("2023-06-25");
+        consulta.setDescricao("consulta teste atualizada");
+        consulta.setRealizada('S');
+        consulta.setIdmedico(1);
+        consulta.setIdpaciente(1);
+
+        // Act
+        dao.updateConsulta(1, consulta);
+
+        // Assert
+        verify(conn, times(1)).createStatement();
+        verify(statement, times(1)).execute(anyString());
+    }
+
+    /**
+    * Testa o método deleteConsulta utilizando Mockito.
+    *
+    * @throws Exception se ocorrer uma exceção durante o teste
+    */
+    @Test
+    public void testDeleteConsultaMock() throws Exception {
+        // Arrange
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.execute(anyString())).thenReturn(true);
+        ConsultaDAO dao = new ConsultaDAO(conn);
+
+        // Act
+        dao.deleteConsulta(1);
+
+        // Assert
+        verify(conn, times(1)).createStatement();
+        verify(statement, times(1)).execute(anyString());
+    }
+
+    /**
+    * Testa o método getMedicoEspecialidade utilizando Mockito.
+    *
+    * @throws Exception se ocorrer uma exceção durante o teste
+    */
+    @Test
+    public void testGetMedicoEspecialidadeMock() throws Exception {
+        // Arrange
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ResultSet resultSet = mock(ResultSet.class);
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.executeQuery(anyString())).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
+        when(resultSet.getString(anyString())).thenReturn("teste");
+        ConsultaDAO dao = new ConsultaDAO(conn);
+        List<Object> medicoDescricao = new ArrayList<>(); 
+
+        // Act
+        medicoDescricao = dao.getMedicoEspecialidade(1, medicoDescricao);
+
+        // Assert
+        assertNotNull(medicoDescricao);
+        assertEquals(2, medicoDescricao.size());
+        assertEquals("teste", medicoDescricao.get(0));
+        assertEquals("teste", medicoDescricao.get(1));
+        verify(conn, times(1)).createStatement();
+        verify(statement, times(1)).executeQuery(anyString());
+    }
+
+    /**
+    * Testa o método getProcedimentosDisponiveis utilizando Mockito.
+    *
+    * @throws Exception se ocorrer uma exceção durante o teste
+    */
+    @Test
+    public void testGetProcedimentosDisponiveisMock() throws Exception {
+        // Arrange
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ResultSet resultSet = mock(ResultSet.class);
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.executeQuery(anyString())).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true, true, false); // Return true twice to simulate two rows in the result set
+        when(resultSet.getString("descricao")).thenReturn("teste");
+        when(resultSet.getString("nome")).thenReturn("teste");
+        when(resultSet.getInt("id")).thenReturn(1);
+        ConsultaDAO dao = new ConsultaDAO(conn);
+
+        // Act
+        List<Object> procedimentos = dao.getProcedimentosDisponiveis();
+
+        // Assert
+        assertNotNull(procedimentos);
+        assertEquals(6, procedimentos.size()); // The list should have 6 elements, two rows of three items each
+        assertEquals("teste", procedimentos.get(0));
+        assertEquals("teste", procedimentos.get(1));
+        assertEquals(1, procedimentos.get(2));
+        assertEquals("teste", procedimentos.get(3));
+        assertEquals("teste", procedimentos.get(4));
+        assertEquals(1, procedimentos.get(5));
+        verify(conn, times(1)).createStatement();
+        verify(statement, times(1)).executeQuery(anyString());
+    }
 }
 
