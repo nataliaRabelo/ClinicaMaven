@@ -6,15 +6,18 @@ import conexao.ConexaoBancoDeDados;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Classe de teste para a classe EspecialidadeDAO.
@@ -174,6 +177,159 @@ public class EspecialidadeDAOTest {
         } catch (SQLException e) {
             System.out.println("Erro SQL: " + e.getMessage());
         }
+    }
+    
+    // --------------- TESTES COM MOCK ---------
+        /**
+     * Testa o método createEspecialidade de EspecialidadeDAO.
+     * @throws SQLException para qualquer exceção SQL lançada.
+     */
+    @Test
+    public void testCreateEspecialidadeMock() throws SQLException {
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        when(conn.createStatement()).thenReturn(statement);
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+
+        Especialidade novaEspecialidade = new Especialidade();
+        novaEspecialidade.setDescricao("Especialidade Teste");
+
+        when(statement.execute(anyString())).thenReturn(true);
+
+        especialidadeDAO.createEspecialidade(novaEspecialidade);
+        
+        verify(statement, times(1)).execute(anyString());
+    }
+
+    /**
+     * Testa o método getEspecialidades de EspecialidadeDAO.
+     * @throws SQLException para qualquer exceção SQL lançada.
+     */
+    @Test
+    public void testGetEspecialidadesMock() throws SQLException {
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ResultSet resultSet = mock(ResultSet.class);
+        when(conn.createStatement()).thenReturn(statement);
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+
+        when(statement.executeQuery(anyString())).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true, false);
+        when(resultSet.getInt("id")).thenReturn(1);
+        when(resultSet.getString("descricao")).thenReturn("Especialidade Teste");
+
+        List<Especialidade> especialidades = especialidadeDAO.getEspecialidades();
+
+        assertNotNull(especialidades);
+        assertEquals(1, especialidades.size());
+        assertEquals(1, especialidades.get(0).getId());
+        assertEquals("Especialidade Teste", especialidades.get(0).getDescricao());
+    }
+    
+        /**
+     * Testa o método getEspecialidade de EspecialidadeDAO.
+     * @throws SQLException para qualquer exceção SQL lançada.
+     */
+    @Test
+    public void testGetEspecialidadeMock() throws SQLException {
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ResultSet resultSet = mock(ResultSet.class);
+        when(conn.createStatement()).thenReturn(statement);
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+
+        when(statement.executeQuery(anyString())).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt("id")).thenReturn(1);
+        when(resultSet.getString("descricao")).thenReturn("Especialidade Teste");
+
+        Especialidade especialidade = especialidadeDAO.getEspecialidade(1);
+
+        assertNotNull(especialidade);
+        assertEquals(1, especialidade.getId());
+        assertEquals("Especialidade Teste", especialidade.getDescricao());
+    }
+
+    /**
+     * Testa o método updateEspecialidade de EspecialidadeDAO.
+     * @throws SQLException para qualquer exceção SQL lançada.
+     */
+    @Test
+    public void testUpdateEspecialidadeMock() throws SQLException {
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        when(conn.createStatement()).thenReturn(statement);
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+
+        Especialidade novaEspecialidade = new Especialidade();
+        novaEspecialidade.setDescricao("Especialidade Atualizada");
+
+        when(statement.execute(anyString())).thenReturn(true);
+
+        especialidadeDAO.updateEspecialidade(1, novaEspecialidade);
+        
+        verify(statement, times(1)).execute(anyString());
+    }
+
+    /**
+     * Testa o método deleteEspecialidade de EspecialidadeDAO.
+     * @throws SQLException para qualquer exceção SQL lançada.
+     */
+    @Test
+    public void testDeleteEspecialidadeMock() throws SQLException {
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        when(conn.createStatement()).thenReturn(statement);
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+
+        when(statement.execute(anyString())).thenReturn(true);
+
+        especialidadeDAO.deleteEspecialidade(1);
+        
+        verify(statement, times(1)).execute(anyString());
+    }
+
+    /**
+     * Testa o método getIdDeleteEspecialidade de EspecialidadeDAO.
+     * @throws SQLException para qualquer exceção SQL lançada.
+     */
+    @Test
+    public void getIdDeleteEspecialidadeTest() throws SQLException {
+        // Mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ResultSet resultSetExames = mock(ResultSet.class);
+        ResultSet resultSetConsultas = mock(ResultSet.class);
+        ResultSet resultSetMedicos = mock(ResultSet.class);
+
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+
+        when(conn.createStatement()).thenReturn(statement);
+
+        when(statement.executeQuery(contains("exames.id"))).thenReturn(resultSetExames);
+        when(statement.executeQuery(contains("consulta.id"))).thenReturn(resultSetConsultas);
+        when(statement.executeQuery(contains("medico.id"))).thenReturn(resultSetMedicos);
+
+        when(resultSetExames.next()).thenReturn(true, true, true, false);
+        when(resultSetConsultas.next()).thenReturn(true, true, true, false);
+        when(resultSetMedicos.next()).thenReturn(true, true, true, false);
+
+        when(resultSetExames.getInt("id")).thenReturn(1, 2, 3);
+        when(resultSetConsultas.getInt("id")).thenReturn(4, 5, 6);
+        when(resultSetMedicos.getInt("id")).thenReturn(7, 8, 9);
+
+        // Expected results
+        List<Integer> idExames = Arrays.asList(1, 2, 3);
+        List<Integer> idConsultas = Arrays.asList(4, 5, 6);
+        List<Integer> idMedicos = Arrays.asList(7, 8, 9);
+
+        // Execute test
+        List<List<Integer>> result = especialidadeDAO.getIdDeleteEspecialidade(1);
+
+        // Assertions
+        assertEquals(idExames, result.get(0));
+        assertEquals(idConsultas, result.get(1));
+        assertEquals(idMedicos, result.get(2));
     }
 }
 
