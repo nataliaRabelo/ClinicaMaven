@@ -20,9 +20,9 @@ O Clinica Web trata-se de um sistema desenvolvido em disciplina de Desenvolvimen
 
 ## 2. Instruções de construção, execução e uso da API
 
-Antes de executar certifique-se de que o PhpMyAdmin está funcionando corretamente com o banco de dados montado, para criar o banco execute o script `clinica.sql` localizado na raíz deste repositório.
+Antes de executar, certifique-se de que o PhpMyAdmin está funcionando corretamente com o banco de dados montado, para criar o banco execute o script `clinica.sql` localizado na raíz deste repositório.
 
-Antes de construir o JAR para distribuição certifique-se de que o PhpMyAdmin esteja **sem autenticação** e com o banco de dados `clinica` criado corretamente, pois os testes unitários são executados automaticamente quando compila-se o JAR para distribuição. Caso contrário, você deve desativar o processo de testes automáticos durante compilação do JAR.
+Antes de construir o JAR para distribuição, certifique-se de que o PhpMyAdmin esteja **sem autenticação** e com o banco de dados `clinica` criado corretamente, pois os testes unitários são executados automaticamente quando compila-se o JAR para distribuição. Caso contrário, você deve desativar o processo de testes automáticos durante compilação do JAR.
 
 ### 2.1. Compilando o JAR para distribuição
 
