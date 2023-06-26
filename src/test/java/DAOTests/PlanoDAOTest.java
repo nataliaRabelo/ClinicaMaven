@@ -3,9 +3,11 @@ package DAOTests;
 import aplicacao.Plano;
 import model.PlanoDAO;
 import conexao.ConexaoBancoDeDados;
+import utils.Constantes;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -135,5 +137,183 @@ public class PlanoDAOTest {
         // Assert
         assertFalse(id_compilado.get(0).isEmpty(), "A lista de ids de exames não deve estar vazia");
         assertFalse(id_compilado.get(1).isEmpty(), "A lista de ids de consultas não deve estar vazia");
+    }
+
+    // ---------- TESTES COM MOCK
+
+        /**
+     * Teste do método createPlano utilizando mock.
+     */
+    @Test
+    public void testCreatePlanoMock() throws SQLException {
+        // Configuração do mock
+        Connection conn = Mockito.mock(Connection.class);
+        Statement statement = Mockito.mock(Statement.class);
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+
+        when(conn.createStatement()).thenReturn(statement);
+
+        // Dado um novo plano
+        Plano novoPlano = new Plano();
+        novoPlano.setDescricao("Plano de teste");
+
+        // Quando o método createPlano é chamado
+        planoDAO.createPlano(novoPlano);
+
+        // Verifica se o SQL de inserção foi executado corretamente
+        verify(statement).execute("INSERT INTO tipoplano (descricao) VALUES ( 'Plano de teste')");
+    }
+
+    /**
+     * Teste do método getPlanos utilizando mock.
+     */
+    @Test
+    public void testGetPlanosMock() throws SQLException {
+        // Configuração do mock
+        Connection conn = Mockito.mock(Connection.class);
+        Statement statement = Mockito.mock(Statement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.executeQuery("SELECT * FROM tipoplano")).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true, true, false);
+        when(resultSet.getInt("id")).thenReturn(1, 2);
+        when(resultSet.getString("descricao")).thenReturn("Plano 1", "Plano 2");
+
+        // Quando o método getPlanos é chamado
+        List<Plano> planos = planoDAO.getPlanos();
+
+        // Verifica se o resultado contém os planos esperados
+        assertEquals(2, planos.size());
+        assertEquals(1, planos.get(0).getId());
+        assertEquals("Plano 1", planos.get(0).getDescricao());
+        assertEquals(2, planos.get(1).getId());
+        assertEquals("Plano 2", planos.get(1).getDescricao());
+    }
+
+    /**
+     * Teste do método getPlano utilizando mock.
+     */
+    @Test
+    public void testGetPlanoMock() throws SQLException {
+        // Configuração do mock
+        Connection conn = Mockito.mock(Connection.class);
+        Statement statement = Mockito.mock(Statement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.executeQuery("SELECT * FROM tipoplano " + Constantes.WHERETIPOPLANO + "1")).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt("id")).thenReturn(1);
+        when(resultSet.getString("descricao")).thenReturn("Plano de teste");
+
+        // Quando o método getPlano é chamado
+        Plano plano = planoDAO.getPlano(1);
+
+        // Verifica se o resultado é o plano esperado
+        assertEquals(1, plano.getId());
+        assertEquals("Plano de teste", plano.getDescricao());
+    }
+
+    /**
+     * Teste do método updatePlano utilizando mock.
+     */
+    @Test
+    public void testUpdatePlanoMock() throws SQLException {
+        // Configuração do mock
+        Connection conn = Mockito.mock(Connection.class);
+        Statement statement = Mockito.mock(Statement.class);
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+
+        when(conn.createStatement()).thenReturn(statement);
+
+        // Dado um ID de plano e um novo plano
+        int idPlano = 1;
+        Plano novoPlano = new Plano();
+        novoPlano.setDescricao("Plano atualizado");
+
+        // Quando o método updatePlano é chamado
+        planoDAO.updatePlano(idPlano, novoPlano);
+
+        // Verifica se o SQL de atualização foi executado corretamente
+        verify(statement).execute("UPDATE tipoplano SET descricao='Plano atualizado' WHERE tipoplano.id=1");
+    }
+
+    /**
+     * Teste do método deletePlano utilizando mock.
+     */
+    @Test
+    public void testDeletePlanoMock() throws SQLException {
+        // Configuração do mock
+        Connection conn = Mockito.mock(Connection.class);
+        Statement statement = Mockito.mock(Statement.class);
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+
+        when(conn.createStatement()).thenReturn(statement);
+
+        // Dado um ID de plano
+        int idPlano = 1;
+
+        // Quando o método deletePlano é chamado
+        planoDAO.deletePlano(idPlano);
+
+        // Verifica se o SQL de exclusão foi executado corretamente
+        verify(statement).execute("DELETE FROM tipoplano WHERE tipoplano.id=1");
+    }
+
+    /**
+     * Teste do método getIdDeletePlano utilizando mock.
+     */
+    @Test
+    public void testGetIdDeletePlanoMock() throws SQLException {
+        // Criar mocks dos objetos necessários
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ResultSet resultSet1 = mock(ResultSet.class);
+        ResultSet resultSet2 = mock(ResultSet.class);
+        ResultSet resultSet3 = mock(ResultSet.class);
+
+        // Configurar o comportamento do mock Connection
+        when(conn.createStatement()).thenReturn(statement);
+
+        // Configurar o comportamento do mock Statement
+        when(statement.executeQuery(Mockito.anyString()))
+                .thenReturn(resultSet1)
+                .thenReturn(resultSet2)
+                .thenReturn(resultSet3);
+
+        // Configurar o comportamento do mock ResultSet
+        when(resultSet1.next()).thenReturn(true, false);
+        when(resultSet1.getInt("id")).thenReturn(1);
+        when(resultSet2.next()).thenReturn(true, false);
+        when(resultSet2.getInt("id")).thenReturn(2);
+        when(resultSet3.next()).thenReturn(true, false);
+        when(resultSet3.getInt("id")).thenReturn(3);
+
+        // Criar instância do objeto em teste
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+
+        // Chamar o método a ser testado
+        List<List<Integer>> resultado = planoDAO.getIdDeletePlano(1);
+
+        // Verificar se o método retornou o resultado esperado
+        List<List<Integer>> resultadoEsperado = Arrays.asList(
+                Arrays.asList(1),
+                Arrays.asList(2),
+                Arrays.asList(3)
+        );
+        assertEquals(resultadoEsperado, resultado);
+
+        // Verificar se os métodos do mock foram chamados corretamente
+        verify(conn, times(1)).createStatement();
+        verify(statement, times(3)).executeQuery(Mockito.anyString());
+        verify(resultSet1, times(2)).next();
+        verify(resultSet1, times(1)).getInt("id");
+        verify(resultSet2, times(2)).next();
+        verify(resultSet2, times(1)).getInt("id");
+        verify(resultSet3, times(2)).next();
+        verify(resultSet3, times(1)).getInt("id");
     }
 }
