@@ -67,6 +67,7 @@ Para executar um método específico de alguma classe dos testes unitários, uti
 
 ```
 mvn -Dtest=[CLASSE]$[METODO] test
+```
 
 ## 3. Testes Unitário do Projeto
 
