@@ -319,7 +319,6 @@ public class MedicoDAO {
         List<Integer>colisoes = new ArrayList<>();
         
         try (Statement statement = conn.createStatement()){
-//            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) as total " +
             ResultSet resultSet = statement.executeQuery("SELECT consulta.id " +        
             "FROM consulta WHERE data LIKE '%" + data + "%' AND consulta.idmedico=" + idMedico + "");
             
