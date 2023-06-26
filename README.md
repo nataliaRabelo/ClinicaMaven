@@ -1,6 +1,6 @@
 # Projeto Clinica Web <!-- omit in toc -->
 
-O Clinica Web trata-se de um sistema que será desenvolvido em disciplina de Desenvolvimento Web - UFF para gerenciamento de uma clínica. 
+O Clinica Web trata-se de um sistema desenvolvido em disciplina de Desenvolvimento Web - UFF para gerenciamento de uma clínica que está sendo testado para fins de um requisito parcial de avaliação na disciplina Qualidade e Teste. 
 
 * Objetivo do projeto:
   Fomentar o aprendizado de novas arquiteturas, tecnologias e métodos de desenvolvimento de produtos digitais através da experimentação.
