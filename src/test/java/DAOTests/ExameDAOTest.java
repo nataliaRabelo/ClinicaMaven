@@ -16,6 +16,8 @@ import java.sql.Statement;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import org.mockito.Mockito;
 
 
 /**
@@ -219,6 +221,156 @@ public class ExameDAOTest {
         } catch (NullPointerException e) {
             fail("Não há objeto com a id no banco de dados");
         }
+    }
+
+    // --------------- TESTES COM MOCK --------------
+    
+     /**
+     * Testa o método createExame da classe ExameDAO.
+     * Verifica se o método executa corretamente a instrução SQL esperada.
+     */
+    @Test
+    public void testCreateExameMock() throws SQLException {
+        // Mock objects
+        Connection conn = Mockito.mock(Connection.class);
+        Statement statement = Mockito.mock(Statement.class);
+        Exame exame = new Exame();
+        exame.setDescricao("Exame de sangue");
+
+        // Define the mock behavior
+        when(conn.createStatement()).thenReturn(statement);
+
+        // Call the method to test
+        ExameDAO exameDao = new ExameDAO(conn);
+        exameDao.createExame(exame);
+
+        // Verify the results
+        verify(statement, times(1)).execute("INSERT INTO tipoexame (descricao) VALUES ( 'Exame de sangue')");
+    }
+
+     /**
+     * Testa o método getExames da classe ExameDAO.
+     * Verifica se o método retorna a lista de exames correta a partir dos dados do resultSet.
+     */
+    @Test
+    public void testGetExamesMock() throws SQLException {
+        // Mock objects
+        Connection conn = Mockito.mock(Connection.class);
+        Statement statement = Mockito.mock(Statement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+
+        // Define the mock behavior
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.executeQuery("SELECT * FROM tipoexame")).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true, false);
+        when(resultSet.getInt("id")).thenReturn(1);
+        when(resultSet.getString("descricao")).thenReturn("Exame de sangue");
+
+        // Call the method to test
+        ExameDAO exameDao = new ExameDAO(conn);
+        List<Exame> exames = exameDao.getExames();
+
+        // Verify the results
+        assertEquals(1, exames.size());
+        assertEquals(1, exames.get(0).getId());
+        assertEquals("Exame de sangue", exames.get(0).getDescricao());
+    }
+    
+     /**
+     * Testa o método getExame da classe ExameDAO.
+     * Verifica se o método retorna o exame correto a partir dos dados do resultSet.
+     */
+    @Test
+    public void testGetExameMock() throws SQLException {
+        // Mock objects
+        Connection conn = Mockito.mock(Connection.class);
+        Statement statement = Mockito.mock(Statement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+
+        // Define the mock behavior
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.executeQuery("SELECT * FROM tipoexame WHERE tipoexame.id=1")).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt("id")).thenReturn(1);
+        when(resultSet.getString("descricao")).thenReturn("Exame de sangue");
+
+        // Call the method to test
+        ExameDAO exameDao = new ExameDAO(conn);
+        Exame exame = exameDao.getExame(1);
+
+        // Verify the results
+        assertEquals(1, exame.getId());
+        assertEquals("Exame de sangue", exame.getDescricao());
+    }
+
+     /**
+     * Testa o método updateExame da classe ExameDAO.
+     * Verifica se o método executa corretamente a instrução SQL esperada.
+     */
+    @Test
+    public void testUpdateExameMock() throws SQLException {
+        // Mock objects
+        Connection conn = Mockito.mock(Connection.class);
+        Statement statement = Mockito.mock(Statement.class);
+        Exame exame = new Exame();
+        exame.setDescricao("Exame de sangue atualizado");
+
+        // Define the mock behavior
+        when(conn.createStatement()).thenReturn(statement);
+
+        // Call the method to test
+        ExameDAO exameDao = new ExameDAO(conn);
+        exameDao.updateExame(1, exame);
+
+        // Verify the results
+        verify(statement, times(1)).execute("UPDATE tipoexame SET descricao='Exame de sangue atualizado' WHERE tipoexame.id=1");
+    }
+    
+     /**
+     * Testa o método deleteExame da classe ExameDAO.
+     * Verifica se o método executa corretamente a instrução SQL esperada.
+     */
+    @Test
+    public void testDeleteExameMock() throws SQLException {
+        // Mock objects
+        Connection conn = Mockito.mock(Connection.class);
+        Statement statement = Mockito.mock(Statement.class);
+
+        // Define the mock behavior
+        when(conn.createStatement()).thenReturn(statement);
+
+        // Call the method to test
+        ExameDAO exameDao = new ExameDAO(conn);
+        exameDao.deleteExame(1);
+
+        // Verify the results
+        verify(statement, times(1)).execute("DELETE FROM exames WHERE exames.id=1");
+    }
+
+       /**
+     * Testa o método getIdDeleteExame da classe ExameDAO.
+     * Verifica se o método retorna a lista de IDs de exame correta a partir dos dados do resultSet.
+     */
+    @Test
+    public void testGetIdDeleteExameMock() throws SQLException {
+        // Mock objects
+        Connection conn = Mockito.mock(Connection.class);
+        Statement statement = Mockito.mock(Statement.class);
+        ResultSet resultSet = Mockito.mock(ResultSet.class);
+
+        // Define the mock behavior
+        when(conn.createStatement()).thenReturn(statement);
+        when(statement.executeQuery("SELECT exames.id FROM exames WHERE exames.idtipoexame=1")).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true, false);
+        when(resultSet.getInt("id")).thenReturn(1);
+
+        // Call the method to test
+        ExameDAO exameDao = new ExameDAO(conn);
+        List<Integer> idExames = exameDao.getIdDeleteExame(1);
+
+        // Verify the results
+        assertEquals(1, idExames.size());
+        assertEquals(1, idExames.get(0));
     }
 }
 
