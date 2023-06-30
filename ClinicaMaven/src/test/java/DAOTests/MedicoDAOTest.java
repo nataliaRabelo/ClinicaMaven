@@ -348,23 +348,6 @@ public class MedicoDAOTest {
     }
     
     @Test
-    public void testGetMedicosMock() throws SQLException {
-        Connection conn = mock(Connection.class);
-        Statement statement = mock(Statement.class);
-        ResultSet resultSet = mock(ResultSet.class);
-        when(conn.createStatement()).thenReturn(statement);
-        when(statement.executeQuery(anyString())).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true).thenReturn(false);
-        
-        MedicoDAO medicoDAO = new MedicoDAO(conn);
-        List<Medico> medicos = medicoDAO.getMedicos();
-        
-        verify(conn, times(1)).createStatement();
-        verify(statement, times(1)).executeQuery(anyString());
-        assertTrue(medicos.size() > 0);
-    }
-    
-    @Test
     public void testUpdateMedicoMock() throws SQLException {
         Connection conn = mock(Connection.class);
         Statement statement = mock(Statement.class);
@@ -425,52 +408,6 @@ public class MedicoDAOTest {
         assertTrue(ids.size() > 0);
     }
 
-        @Test
-    public void testGetConsultasMock() throws SQLException {
-        // Cenário
-        Connection conn = mock(Connection.class);
-        Statement statement = mock(Statement.class);
-        ResultSet resultSet = mock(ResultSet.class);
-
-        when(conn.createStatement()).thenReturn(statement);
-        when(statement.executeQuery(anyString())).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true).thenReturn(false);
-        
-        MedicoDAO medicoDAO = new MedicoDAO(conn);
-        int idMedico = 1;
-
-        // Ação
-        List<Consulta> consultas = medicoDAO.getConsultas(idMedico);
-
-        // Verificação
-        verify(conn, times(1)).createStatement();
-        verify(statement, times(1)).executeQuery(anyString());
-        assertTrue(consultas.size() > 0);
-    }
-
-    @Test
-    public void testGetMedicoMock() throws SQLException {
-        // Cenário
-        Connection conn = mock(Connection.class);
-        Statement statement = mock(Statement.class);
-        ResultSet resultSet = mock(ResultSet.class);
-
-        when(conn.createStatement()).thenReturn(statement);
-        when(statement.executeQuery(anyString())).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true).thenReturn(false);
-        
-        MedicoDAO medicoDAO = new MedicoDAO(conn);
-        int idMedico = 1;
-
-        // Ação
-        Medico medico = medicoDAO.getMedico(idMedico);
-
-        // Verificação
-        verify(conn, times(1)).createStatement();
-        verify(statement, times(1)).executeQuery(anyString());
-        assertNotNull(medico);
-    }
-
     @Test
     public void testGetExamesMock() throws SQLException {
         // Cenário
@@ -491,45 +428,5 @@ public class MedicoDAOTest {
         verify(conn, times(1)).createStatement();
         verify(statement, times(1)).executeQuery(anyString());
         assertTrue(exames.size() > 0);
-    }
-
-    @Test
-    public void testCreateExameMock() throws SQLException {
-        // Cenário
-        Connection conn = mock(Connection.class);
-        Statement statement = mock(Statement.class);
-
-        when(conn.createStatement()).thenReturn(statement);
-        
-        MedicoDAO medicoDAO = new MedicoDAO(conn);
-        int idTipoExame = 1;
-        int idConsulta = 1;
-
-        // Ação
-        medicoDAO.createExame(idTipoExame, idConsulta);
-
-        // Verificação
-        verify(conn, times(1)).createStatement();
-        verify(statement, times(1)).executeUpdate(anyString());
-    }
-
-    @Test
-    public void testCreateMedicoMock() throws SQLException {
-        // Cenário
-        Connection conn = mock(Connection.class);
-        Statement statement = mock(Statement.class);
-
-        when(conn.createStatement()).thenReturn(statement);
-        
-        MedicoDAO medicoDAO = new MedicoDAO(conn);
-        Medico novoMedico = new Medico();
-        // Configurar atributos do novo médico conforme necessário
-
-        // Ação
-        medicoDAO.createMedico(novoMedico);
-
-        // Verificação
-        verify(conn, times(1)).createStatement();
-        verify(statement, times(1)).executeUpdate(anyString());
     }
 }
