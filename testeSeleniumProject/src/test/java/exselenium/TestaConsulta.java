@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 
 public class TestaConsulta {
 	
@@ -15,13 +15,12 @@ public class TestaConsulta {
 	
 	@BeforeClass
 	public static void configuraDriver() {
-		System.setProperty("webdriver.chrome.driver", "D:\\Libs\\chromedriver\\84\\chromedriver.exe");
+            System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") + "/src/resources/msedgedriver.exe");
 	}
 	
     @Before
     public void createDriver() {  
-    
-		driver = new ChromeDriver();
+		driver = new EdgeDriver();
         driver.get("https://www.google.com.br");
     }	
 
