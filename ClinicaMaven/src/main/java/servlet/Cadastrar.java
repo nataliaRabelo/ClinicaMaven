@@ -25,8 +25,10 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "Cadastrar", urlPatterns = {"/Cadastrar"})
 public class Cadastrar extends HttpServlet {
     
-    ClienteDAO novocltDAO = new ClienteDAO();
-    PlanoDAO planoDAO = new PlanoDAO();
+    ClienteDAO novocltDAO;
+    
+    PlanoDAO planoDAO;
+    
 
      /**
      * Processa as requisições GET para o servlet.
@@ -42,6 +44,8 @@ public class Cadastrar extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
+        planoDAO.createConnection();
         if(request.getParameter("arg").equals("Cadastrar")){
             
             List<Plano> planos;
@@ -72,7 +76,7 @@ public class Cadastrar extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        novocltDAO.createConnection();
         try{
             
             Cliente novoPaciente = new Cliente();

@@ -28,16 +28,22 @@ public class ClienteDAO {
     }
     
     /**
-    * Construtor padrão que cria uma nova conexão com o banco.
+    * Construtor padrão.
     */
     public ClienteDAO() {
+    }
+    
+    /**
+    * Método que cria uma nova conexão com o banco.
+    */
+    public void createConnection() {
         try {
             conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
             logger.log(Level.INFO, "Nao foi possivel conectar");
         }
-    } 
+    }
 
     /**
     Realiza o login de um cliente no sistema.

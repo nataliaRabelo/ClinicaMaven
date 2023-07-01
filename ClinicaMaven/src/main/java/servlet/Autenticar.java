@@ -74,6 +74,7 @@ public class Autenticar extends HttpServlet {
         switch (tipo) {
             case "Cliente":
                 ClienteDAO cltDAO = new ClienteDAO();
+                cltDAO.createConnection();
                 Cliente cliente = cltDAO.login(cpf, senha);
 
                 if (cliente.getId() != null && cliente.getAutorizado() == 'S') {

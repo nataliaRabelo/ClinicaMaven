@@ -29,14 +29,21 @@ public class PlanoDAO {
     }
 
     /**
-    * Construtor padrão que cria uma nova conexão com o banco.
+    * Construtor padrão.
     */
     public PlanoDAO() {
+
+    }
+    
+    /**
+    * Método que cria uma nova conexão com o banco.
+    */
+    public void createConnection() {
         try {
             conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
             Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
-            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
+            logger.log(Level.INFO, "Nao foi possivel conectar");
         }
     }
 

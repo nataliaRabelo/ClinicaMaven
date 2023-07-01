@@ -30,9 +30,15 @@ public class ExameDAO {
     }
     
     /**
-    * Construtor padrão que cria uma nova conexão com o banco.
+    * Construtor padrão.
     */
     public ExameDAO() {
+    }
+    
+    /**
+    * Método que cria uma nova conexão com o banco.
+    */
+    public void createConnection() {
         try {
             conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {

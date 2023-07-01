@@ -21,6 +21,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
+import org.mockito.invocation.InvocationOnMock;
+
 
 /**
  * Classe de teste para a classe EspecialidadeDAO.

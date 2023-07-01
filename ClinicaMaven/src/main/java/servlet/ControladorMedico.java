@@ -49,6 +49,7 @@ public class ControladorMedico extends HttpServlet {
             case "Visualizar":
                 
                 ExameDAO exameDAO = new ExameDAO();
+                exameDAO.createConnection();
                 
                 List<Consulta> listaConsultas;                
                 listaConsultas = medicoDAO.getConsultas(medico.getId());
@@ -72,6 +73,7 @@ public class ControladorMedico extends HttpServlet {
                     
                     List<String> nomePacientes = new ArrayList<>();                    
                     ClienteDAO clienteDAO = new ClienteDAO();
+                    clienteDAO.createConnection();
                     
                     for(int i=0;i<listaConsultas.size();i++){
                         String nomePaciente = clienteDAO.getNomePaciente(listaConsultas.get(i).getIdpaciente());
@@ -143,6 +145,7 @@ public class ControladorMedico extends HttpServlet {
         if(request.getParameter("acao").equals("Enviar")){
                 Consulta consulta;
                 ConsultaDAO consultaDAO = new ConsultaDAO();
+                consultaDAO.createConnection();
                 
                 consulta = consultaDAO.getConsulta(Integer.parseInt(request.getParameter("id_consulta")));
           

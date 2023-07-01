@@ -30,9 +30,16 @@ public class ConsultaDAO {
     }
     
     /**
-    * Construtor padrão que cria uma nova conexão com o banco.
+    * Construtor padrão 
     */
     public ConsultaDAO() {
+
+    }
+    
+    /**
+    * Método que cria uma nova conexão com o banco.
+    */
+    public void createConnection() {
         try {
             conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {

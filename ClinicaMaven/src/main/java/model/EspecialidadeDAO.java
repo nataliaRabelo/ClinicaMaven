@@ -30,9 +30,16 @@ public class EspecialidadeDAO {
     }
     
     /**
-    * Construtor padrão que cria uma nova conexão com o banco.
+    * Construtor padrão.
     */
     public EspecialidadeDAO() {
+        
+    }
+    
+    /**
+    * Método que cria uma nova conexão com o banco.
+    */
+    public void createConnection() {
         try {
             conn = ConexaoBancoDeDados.newConnection();
         } catch(SQLException e) {
@@ -194,5 +201,9 @@ public class EspecialidadeDAO {
         idCompilado.add(idMedicos);
         
         return idCompilado;
+    }
+
+    public Connection getConnection(){
+        return this.conn;
     }
 }

@@ -41,6 +41,7 @@ public class ControladorCliente extends HttpServlet {
         Cliente cliente = (Cliente)session.getAttribute(Constantes.CLIENTE);
         
         ConsultaDAO consultaDAO = new ConsultaDAO();
+        consultaDAO.createConnection();
         
         switch(request.getParameter("arg")){
         
@@ -79,6 +80,7 @@ public class ControladorCliente extends HttpServlet {
                 
                 List<Consulta> listaConsultas;
                 ExameDAO exameDAO = new ExameDAO();
+                exameDAO.createConnection();
                 
                 listaConsultas = consultaDAO.getConsultas(cliente.getId());
                 
@@ -160,6 +162,7 @@ public class ControladorCliente extends HttpServlet {
         MedicoDAO medicoDAO = new MedicoDAO();
         Consulta consulta = new Consulta();
         ConsultaDAO consultaDAO = new ConsultaDAO();
+        consultaDAO.createConnection();
         
         consulta.setData(request.getParameter("data") + " " + request.getParameter("hora"));
         consulta.setDescricao("Sem descricao");

@@ -50,12 +50,17 @@ public class ControladorAdministrador extends HttpServlet {
         Administrador administradorSessao = (Administrador)session.getAttribute("adm");
         
         ClienteDAO clienteDAO = new ClienteDAO();
+        clienteDAO.createConnection();
         MedicoDAO medicoDAO = new MedicoDAO();
         AdministradorDAO administradorDAO = new AdministradorDAO();
         ConsultaDAO consultaDAO = new ConsultaDAO();
+        consultaDAO.createConnection();
         ExameDAO exameDAO = new ExameDAO();
+        exameDAO.createConnection();
         PlanoDAO planoDAO = new PlanoDAO();
+        planoDAO.createConnection();
         EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();
+        especialidadeDAO.createConnection();
         
         switch(request.getParameter(Constantes.TYPE)){
             case "Paciente": 
@@ -525,6 +530,7 @@ public class ControladorAdministrador extends HttpServlet {
             
             case Constantes.PACIENTE2:
                 ClienteDAO novoCltDAO = new ClienteDAO();
+                novoCltDAO.createConnection();
                 Cliente paciente = new Cliente();
                 
                 paciente.setNome(request.getParameter(Constantes.NOME));
@@ -609,6 +615,7 @@ public class ControladorAdministrador extends HttpServlet {
             case Constantes.PLANO2:
                 Plano novoPlano = new Plano();
                 PlanoDAO novoPlanoDAO = new PlanoDAO();
+                novoPlanoDAO.createConnection();
                 
                 if(request.getParameter(Constantes.ACTION).equals(Constantes.CADASTRAR)){
                         novoPlano.setDescricao(request.getParameter(Constantes.NOMEPLANO));
@@ -632,6 +639,7 @@ public class ControladorAdministrador extends HttpServlet {
             
             case Constantes.ESPECIALIDADE:
                 EspecialidadeDAO novaEspDAO = new EspecialidadeDAO();
+                novaEspDAO.createConnection();
                 Especialidade novaEspecialidade = new Especialidade();
                 
                 if(request.getParameter(Constantes.ACTION).equals(Constantes.CADASTRAR)){
@@ -655,6 +663,7 @@ public class ControladorAdministrador extends HttpServlet {
             
             case Constantes.EXAME:
                 ExameDAO novoExmDAO = new ExameDAO();
+                novoExmDAO.createConnection();
                 Exame novoExame = new Exame();
                 
                 if(request.getParameter(Constantes.ACTION).equals(Constantes.CADASTRAR)){
