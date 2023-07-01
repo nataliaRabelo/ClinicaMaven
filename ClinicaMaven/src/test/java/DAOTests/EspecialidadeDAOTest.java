@@ -3,6 +3,7 @@ package DAOTests;
 import model.EspecialidadeDAO;
 import aplicacao.Especialidade;
 import conexao.ConexaoBancoDeDados;
+import utils.Constantes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -330,6 +333,25 @@ public class EspecialidadeDAOTest {
         assertEquals(idExames, result.get(0));
         assertEquals(idConsultas, result.get(1));
         assertEquals(idMedicos, result.get(2));
+    }
+    
+    @Test
+    public void testCreateEspecialidadeSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+        Especialidade especialidade = mock(Especialidade.class);
+
+        // Configurando o comportamento dos mocks
+        when(especialidade.getDescricao()).thenReturn("teste");
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        especialidadeDAO.createEspecialidade(especialidade);
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
     }
 }
 

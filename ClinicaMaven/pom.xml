@@ -115,6 +115,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Plugin Jacoco -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
