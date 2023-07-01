@@ -67,6 +67,7 @@
             <artifactId>webdrivermanager</artifactId>
             <version>5.0.3</version>
         </dependency>
+        
     </dependencies>
     <build>
         <plugins>
@@ -136,16 +137,29 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.pitest</groupId>
-                <artifactId>pitest-maven</artifactId>
-                <version>'LATEST'</version>
-                <configuration>
-                    <targetClasses>
-                        <param>com.your.package.root.want.to.mutate*</param>
-                    </targetClasses>
-                </configuration>
-            </plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.14.1</version>
+        <configuration>
+            
+            <targetClasses>
+            <param>model.*</param>
+        </targetClasses>
+        <targetTests>
+            <param>DAOTest.*</param>
+	</targetTests>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>1.1.1</version>
+          </dependency>
+        </dependencies>
+    
+      </plugin>
         </plugins>
     </build>
+
 
 </project>
