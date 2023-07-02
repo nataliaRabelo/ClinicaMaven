@@ -1,0 +1,840 @@
+{
+	"info": {
+		"_postman_id": "39443a1e-901f-40b4-aad2-9e26ff3edb85",
+		"name": "ClinicaMaven",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24067031",
+		"_collection_link": "https://restless-comet-119646.postman.co/workspace/ClinicaWorkspace~4a523ade-f3f8-4c69-86ed-b97e0a1a43f7/collection/24067031-39443a1e-901f-40b4-aad2-9e26ff3edb85?action=share&creator=24067031&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "AutenticarServlet",
+			"item": [
+				{
+					"name": "Get de logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/Autenticar?arg=Logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"Autenticar"
+							],
+							"query": [
+								{
+									"key": "arg",
+									"value": "Logout"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post da autenticação de administrador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "papel",
+									"value": "Administrador",
+									"type": "text"
+								},
+								{
+									"key": "CPF",
+									"value": "249.252.810-38",
+									"type": "text"
+								},
+								{
+									"key": "senha",
+									"value": "111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/Autenticar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"Autenticar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post da autenticação de paciente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "papel",
+									"value": "Cliente",
+									"type": "text"
+								},
+								{
+									"key": "CPF",
+									"value": "937.397.160-37",
+									"type": "text"
+								},
+								{
+									"key": "senha",
+									"value": "111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/Autenticar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"Autenticar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post da autenticação de médico",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "papel",
+									"value": "Medico",
+									"type": "text"
+								},
+								{
+									"key": "CPF",
+									"value": "381.585.150-53",
+									"type": "text"
+								},
+								{
+									"key": "senha",
+									"value": "111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/Autenticar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"Autenticar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post da autenticação de usuário inexistente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "papel",
+									"value": "Medico",
+									"type": "text"
+								},
+								{
+									"key": "CPF",
+									"value": "0000",
+									"type": "text"
+								},
+								{
+									"key": "senha",
+									"value": "111",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/Autenticar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"Autenticar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CadastrarServlet",
+			"item": [
+				{
+					"name": "Get de visualizar página de cadastro",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/Cadastrar?arg=Cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"Cadastrar"
+							],
+							"query": [
+								{
+									"key": "arg",
+									"value": "Cadastrar"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post de cadastro público de cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nome",
+									"value": "natalia",
+									"type": "text"
+								},
+								{
+									"key": "CPF",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "senha",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "plano",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/Cadastrar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"Cadastrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ClienteServlet",
+			"item": [
+				{
+					"name": "Get visualizar página editar consulta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/ControladorCliente?arg=Editar&id=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"ControladorCliente"
+							],
+							"query": [
+								{
+									"key": "arg",
+									"value": "Editar"
+								},
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get exibir formulário de marcar consulta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/ControladorCliente?arg=Marcar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"ControladorCliente"
+							],
+							"query": [
+								{
+									"key": "arg",
+									"value": "Marcar"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get visualizar consultas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/ControladorCliente?arg=Visualizar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"ControladorCliente"
+							],
+							"query": [
+								{
+									"key": "arg",
+									"value": "Visualizar"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get visualizar página excluir consulta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/ControladorCliente?arg=Excluir&id=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"ControladorCliente"
+							],
+							"query": [
+								{
+									"key": "arg",
+									"value": "Excluir"
+								},
+								{
+									"key": "id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post editar consulta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "data",
+									"value": "02-07-2023",
+									"type": "text"
+								},
+								{
+									"key": "hora",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "id_med",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "id_cliente",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "id_consulta",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "acao",
+									"value": "RemarcarConsulta",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/ControladorCliente?arg=Editar&id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"ControladorCliente"
+							],
+							"query": [
+								{
+									"key": "arg",
+									"value": "Editar"
+								},
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post marcar consulta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "data",
+									"value": "02-07-2023",
+									"type": "text"
+								},
+								{
+									"key": "hora",
+									"value": "00:00:00",
+									"type": "text"
+								},
+								{
+									"key": "id_med",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "acao",
+									"value": "Enviar",
+									"type": "text"
+								},
+								{
+									"key": "id_cliente",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/view/Confirmacao.jsp?type=Marcado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"view",
+								"Confirmacao.jsp"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Marcado"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post excluir consulta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_consulta",
+									"value": "5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/view/Confirmacao.jsp?type=Excluido&=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"view",
+								"Confirmacao.jsp"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Excluido"
+								},
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MedicoServlet",
+			"item": [
+				{
+					"name": "Get visualizar consultas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/ControladorMedico?arg=Visualizar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"ControladorMedico"
+							],
+							"query": [
+								{
+									"key": "arg",
+									"value": "Visualizar"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get visualizar página de solicitar exame",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/ControladorMedico?arg=SolicitarExame&id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"ControladorMedico"
+							],
+							"query": [
+								{
+									"key": "arg",
+									"value": "SolicitarExame"
+								},
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get de visualizar pagina de atender consulta",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/view/Confirmacao.jsp?type=Concluido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"view",
+								"Confirmacao.jsp"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Concluido"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post de solicitar exame",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_exame",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "id_consulta",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "acao",
+									"value": "Marcar Exame",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/view/Confirmacao.jsp?type=Exame",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"view",
+								"Confirmacao.jsp"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Exame"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post de atender consulta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_consulta",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/ClinicaMaven/view/Confirmacao.jsp?type=Concluido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ClinicaMaven",
+								"view",
+								"Confirmacao.jsp"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Concluido"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Renderização da Página Principal",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ClinicaMaven/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ClinicaMaven",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Renderização da Página de Login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ClinicaMaven/view/Login.jsp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ClinicaMaven",
+						"view",
+						"Login.jsp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Renderizando aba home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ClinicaMaven/index.jsp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ClinicaMaven",
+						"index.jsp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Renderizando aba especialidades",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ClinicaMaven/index.jsp#Espec",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ClinicaMaven",
+						"index.jsp"
+					],
+					"hash": "Espec"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Renderizando aba convênios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ClinicaMaven/index.jsp#Conv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ClinicaMaven",
+						"index.jsp"
+					],
+					"hash": "Conv"
+				}
+			},
+			"response": []
+		}
+	]
+}

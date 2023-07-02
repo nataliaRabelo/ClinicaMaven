@@ -158,20 +158,6 @@ public class EspecialidadeDAOTest {
      * Testa o método getIdDeleteEspecialidade da classe EspecialidadeDAO.
      * Verifica se os IDs dos exames e consultas associados a uma especialidade são corretamente obtidos.
      */
-    /*
-    @Test
-    public void testGetIdDeleteEspecialidade() {
-        EspecialidadeDAO dao = new EspecialidadeDAO(conn); 
-        int id = 1; // assumindo que o plano 1 tem já exames e consultas associadas.
-
-        List<List<Integer>> id_compilado = dao.getIdDeleteEspecialidade(id);
-
-        // Assert
-        assertFalse(id_compilado.get(0).isEmpty(), "A lista de ids de exames não deve estar vazia");
-        assertFalse(id_compilado.get(1).isEmpty(), "A lista de ids de consultas não deve estar vazia");
-    }
-    */
-    
     @Test
     public void testGetIdDeleteEspecialidade() {
         try {
@@ -465,6 +451,51 @@ public class EspecialidadeDAOTest {
 
         // Verificando se a SQLException foi lançada
         verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetIdDeleteEspecialidadeMock() throws SQLException {
+        // Preparação
+        int idEspecialidade = 1;
+        Statement mockStatement = mock(Statement.class);
+        ResultSet mockResultSetExames = mock(ResultSet.class);
+        ResultSet mockResultSetConsultas = mock(ResultSet.class);
+        ResultSet mockResultSetMedicos = mock(ResultSet.class);
+        Connection mockConnection = mock(Connection.class);
+
+        // Configurar comportamento dos mocks
+        when(mockConnection.createStatement()).thenReturn(mockStatement);
+        when(mockStatement.executeQuery(contains("exames.id"))).thenReturn(mockResultSetExames);
+        when(mockStatement.executeQuery(contains("consulta.id"))).thenReturn(mockResultSetConsultas);
+        when(mockStatement.executeQuery(contains("medico.id"))).thenReturn(mockResultSetMedicos);
+
+        when(mockResultSetExames.next()).thenReturn(true).thenReturn(true).thenReturn(false); // para simular 2 entradas no ResultSet
+        when(mockResultSetConsultas.next()).thenReturn(true).thenReturn(true).thenReturn(false); // para simular 2 entradas no ResultSet
+        when(mockResultSetMedicos.next()).thenReturn(true).thenReturn(true).thenReturn(false); // para simular 2 entradas no ResultSet
+
+        when(mockResultSetExames.getInt(anyString())).thenReturn(1).thenReturn(2); // dois IDs diferentes são retornados
+        when(mockResultSetConsultas.getInt(anyString())).thenReturn(1).thenReturn(2); // dois IDs diferentes são retornados
+        when(mockResultSetMedicos.getInt(anyString())).thenReturn(1).thenReturn(2); // dois IDs diferentes são retornados
+
+        when(mockConnection.createStatement()).thenReturn(mockStatement);
+        when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSetExames, mockResultSetConsultas, mockResultSetMedicos); // configura qual ResultSet será retornado para cada consulta
+        when(mockResultSetExames.next()).thenReturn(true, true, false); // para simular 2 entradas no ResultSet de exames
+        when(mockResultSetConsultas.next()).thenReturn(true, true, false); // para simular 2 entradas no ResultSet de consultas
+        when(mockResultSetMedicos.next()).thenReturn(true, true, false); // para simular 2 entradas no ResultSet de médicos
+        when(mockResultSetExames.getInt(anyString())).thenReturn(1, 2); // dois IDs diferentes são retornados para exames
+        when(mockResultSetConsultas.getInt(anyString())).thenReturn(3, 4); // dois IDs diferentes são retornados para consultas
+        when(mockResultSetMedicos.getInt(anyString())).thenReturn(5, 6); // dois IDs diferentes são retornados para médicos
+
+        EspecialidadeDAO dao = new EspecialidadeDAO(mockConnection);
+
+        // Execução
+        List<List<Integer>> resultado = dao.getIdDeleteEspecialidade(idEspecialidade);
+
+        // Verificação
+        assertEquals(3, resultado.size(), "A lista compilada deve conter três listas");
+        assertEquals(2, resultado.get(0).size(), "A lista de IDs de exames deve conter dois elementos");
+        assertEquals(2, resultado.get(1).size(), "A lista de IDs de consultas deve conter dois elementos");
+        assertEquals(2, resultado.get(2).size(), "A lista de IDs de médicos deve conter dois elementos");
     }
 }
 
