@@ -25,9 +25,9 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "Cadastrar", urlPatterns = {"/Cadastrar"})
 public class Cadastrar extends HttpServlet {
     
-    ClienteDAO novocltDAO;
+    ClienteDAO novocltDAO = new ClienteDAO();
     
-    PlanoDAO planoDAO;
+    PlanoDAO planoDAO = new PlanoDAO();
     
 
      /**
