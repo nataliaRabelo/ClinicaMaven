@@ -358,5 +358,80 @@ public class EspecialidadeDAOTest {
         // Verificando se a SQLException foi lançada
         verify(conn).createStatement();
     }
+    
+    @Test
+    public void testGetEspecialidadesSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+
+        // Configurando o comportamento dos mocks
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        especialidadeDAO.getEspecialidades();
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetEspecialidadeSQLException() throws SQLException{
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+        Especialidade especialidade = mock(Especialidade.class);
+
+        // Configurando o comportamento dos mocks
+        when(especialidade.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        especialidadeDAO.getEspecialidade(especialidade.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testUpdateEspecialidadeSQLException() throws SQLException{
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+        Especialidade especialidade = mock(Especialidade.class);
+
+        // Configurando o comportamento dos mocks
+        when(especialidade.getDescricao()).thenReturn("teste");
+        when(especialidade.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        especialidadeDAO.updateEspecialidade(especialidade.getId(),especialidade);
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testDeleteEspecialidadeSQLException() throws SQLException{
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+        Especialidade especialidade = mock(Especialidade.class);
+
+        // Configurando o comportamento dos mocks
+        when(especialidade.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        especialidadeDAO.deleteEspecialidade(especialidade.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
 }
 
