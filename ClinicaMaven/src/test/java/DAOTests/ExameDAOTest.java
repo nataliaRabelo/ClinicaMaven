@@ -39,6 +39,12 @@ public class ExameDAOTest {
             System.out.println("Nao foi possivel conectar");
         }
     }
+    
+    @Test
+    public void testExameDAO(){
+        ExameDAO exame = new ExameDAO();
+        assertNotNull(exame);
+    }
 
     /**
      * Testa o método createExame da classe ExameDAO.

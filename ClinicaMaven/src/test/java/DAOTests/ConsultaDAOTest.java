@@ -42,6 +42,12 @@ public class ConsultaDAOTest {
         }
     }
     
+    @Test
+    public void testConsultaDAO(){
+        ConsultaDAO consulta = new ConsultaDAO();
+        assertNotNull(consulta);
+    }
+    
     /**
      * Testa o método createConsulta da classe ConsultaDAO.
      * Verifica se o número de consultas aumentou em 1 após a inserção.

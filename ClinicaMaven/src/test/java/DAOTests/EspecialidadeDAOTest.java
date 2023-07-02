@@ -47,6 +47,12 @@ public class EspecialidadeDAOTest {
         }
     }
 
+    @Test
+    public void testEspecialidadeDAO(){
+        EspecialidadeDAO especialidade = new EspecialidadeDAO();
+        assertNotNull(especialidade);
+    }
+    
     /**
      * Testa o método createEspecialidade da classe EspecialidadeDAO.
      * Verifica se uma nova especialidade é cadastrada corretamente no banco de dados.
