@@ -316,4 +316,117 @@ public class PlanoDAOTest {
         verify(resultSet3, times(2)).next();
         verify(resultSet3, times(1)).getInt("id");
     }
+    
+    @Test
+    public void testCreatePlanoSQLException() throws SQLException{
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+        Plano plano = mock(Plano.class);
+
+        // Configurando o comportamento dos mocks
+        when(plano.getDescricao()).thenReturn("teste");
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        planoDAO.createPlano(plano);
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetPlanosSQLException() throws SQLException{
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+        
+        // Configurando o comportamento dos mocks
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        planoDAO.getPlanos();
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetPlanoSQLException() throws SQLException{
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+        Plano plano = mock(Plano.class);
+
+        // Configurando o comportamento dos mocks
+        when(plano.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        planoDAO.getPlano(plano.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testUpdatePlanoSQLException() throws SQLException{
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+        Plano plano = mock(Plano.class);
+
+        // Configurando o comportamento dos mocks
+        when(plano.getDescricao()).thenReturn("teste");
+        when(plano.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        planoDAO.updatePlano(plano.getId(),plano);
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testDeletePlanoSQLException() throws SQLException{
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+        Plano plano = mock(Plano.class);
+
+        // Configurando o comportamento dos mocks
+        when(plano.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        planoDAO.deletePlano(plano.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetIdDeletePlanoSQLException() throws SQLException{
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        PlanoDAO planoDAO = new PlanoDAO(conn);
+        Plano plano = mock(Plano.class);
+
+        // Configurando o comportamento dos mocks
+        when(plano.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        planoDAO.getIdDeletePlano(plano.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
 }

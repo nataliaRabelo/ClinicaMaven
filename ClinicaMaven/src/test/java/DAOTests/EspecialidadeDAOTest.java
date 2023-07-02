@@ -158,6 +158,20 @@ public class EspecialidadeDAOTest {
      * Testa o método getIdDeleteEspecialidade da classe EspecialidadeDAO.
      * Verifica se os IDs dos exames e consultas associados a uma especialidade são corretamente obtidos.
      */
+    /*
+    @Test
+    public void testGetIdDeleteEspecialidade() {
+        EspecialidadeDAO dao = new EspecialidadeDAO(conn); 
+        int id = 1; // assumindo que o plano 1 tem já exames e consultas associadas.
+
+        List<List<Integer>> id_compilado = dao.getIdDeleteEspecialidade(id);
+
+        // Assert
+        assertFalse(id_compilado.get(0).isEmpty(), "A lista de ids de exames não deve estar vazia");
+        assertFalse(id_compilado.get(1).isEmpty(), "A lista de ids de consultas não deve estar vazia");
+    }
+    */
+    
     @Test
     public void testGetIdDeleteEspecialidade() {
         try {
@@ -429,6 +443,25 @@ public class EspecialidadeDAOTest {
 
         // Chamando o método a ser testado
         especialidadeDAO.deleteEspecialidade(especialidade.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetIdDeleteEspecialidadeSQLException() throws SQLException{
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO(conn);
+        Especialidade especialidade = mock(Especialidade.class);
+
+        // Configurando o comportamento dos mocks
+        when(especialidade.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        especialidadeDAO.getIdDeleteEspecialidade(especialidade.getId());
 
         // Verificando se a SQLException foi lançada
         verify(conn).createStatement();

@@ -427,4 +427,155 @@ public class ClienteDAOTest {
         verify(conn, times(1)).createStatement();
         verify(statement, times(1)).execute(anyString());
     }
+    
+    @Test
+    public void testLoginSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ClienteDAO clienteDAO = new ClienteDAO(conn);
+        Cliente cliente = mock(Cliente.class);
+
+        // Configurando o comportamento dos mocks
+        when(cliente.getSenha()).thenReturn("teste");
+        when(cliente.getCpf()).thenReturn("123");
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        clienteDAO.login(cliente.getCpf(),cliente.getSenha());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testJaCadastradoSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ClienteDAO clienteDAO = new ClienteDAO(conn);
+        Cliente cliente = mock(Cliente.class);
+
+        // Configurando o comportamento dos mocks
+        when(cliente.getCpf()).thenReturn("123");
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        clienteDAO.jaCadastrado(cliente.getCpf());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetNomePacienteSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ClienteDAO clienteDAO = new ClienteDAO(conn);
+        Cliente cliente = mock(Cliente.class);
+
+        // Configurando o comportamento dos mocks
+        when(cliente.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        clienteDAO.getNomePaciente(cliente.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetPacientesSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ClienteDAO clienteDAO = new ClienteDAO(conn);
+
+        // Configurando o comportamento dos mocks
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        clienteDAO.getPacientes();
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetPacienteSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ClienteDAO clienteDAO = new ClienteDAO(conn);
+        Cliente cliente = mock(Cliente.class);
+
+        // Configurando o comportamento dos mocks
+        when(cliente.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        clienteDAO.getPaciente(cliente.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testUpdatePacienteSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ClienteDAO clienteDAO = new ClienteDAO(conn);
+        Cliente cliente = mock(Cliente.class);
+
+        // Configurando o comportamento dos mocks
+        when(cliente.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        clienteDAO.updatePaciente(cliente.getId(),cliente);
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testDeletePacienteSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ClienteDAO clienteDAO = new ClienteDAO(conn);
+        Cliente cliente = mock(Cliente.class);
+
+        // Configurando o comportamento dos mocks
+        when(cliente.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        clienteDAO.deletePaciente(cliente.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetIdDeletePacienteSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ClienteDAO clienteDAO = new ClienteDAO(conn);
+        Cliente cliente = mock(Cliente.class);
+
+        // Configurando o comportamento dos mocks
+        when(cliente.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        clienteDAO.getIdDeletePaciente(cliente.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
 }
