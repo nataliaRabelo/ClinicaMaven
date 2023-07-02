@@ -39,6 +39,12 @@ public class PlanoDAOTest {
             System.out.println("Nao foi possivel conectar");
         }
     }
+    
+    @Test
+    public void testPlanoDAO(){
+        PlanoDAO plano = new PlanoDAO();
+        assertNotNull(plano);
+    }
 
     /**
    * Testa o método createPlano da classe PlanoDAO.

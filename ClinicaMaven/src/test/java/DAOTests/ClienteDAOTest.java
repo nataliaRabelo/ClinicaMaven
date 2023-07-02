@@ -39,6 +39,12 @@ public class ClienteDAOTest {
         }
     }
     
+    @Test
+    public void testClienteDAO(){
+        ClienteDAO cliente = new ClienteDAO();
+        assertNotNull(cliente);
+    }
+    
     /**
     * Testa o método createPaciente da classe ClienteDAO.
     * Verifica se um novo paciente é cadastrado corretamente no banco de dados.
