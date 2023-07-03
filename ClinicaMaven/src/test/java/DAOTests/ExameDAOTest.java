@@ -39,6 +39,12 @@ public class ExameDAOTest {
             System.out.println("Nao foi possivel conectar");
         }
     }
+    
+    @Test
+    public void testExameDAO(){
+        ExameDAO exame = new ExameDAO();
+        assertNotNull(exame);
+    }
 
     /**
      * Testa o método createExame da classe ExameDAO.
@@ -373,6 +379,161 @@ public class ExameDAOTest {
         // Verify the results
         assertEquals(1, idExames.size());
         assertEquals(1, idExames.get(0));
+    }
+    
+    @Test
+    public void testCreateExameSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ExameDAO exameDAO = new ExameDAO(conn);
+        Exame exame = mock(Exame.class);
+
+        // Configurando o comportamento dos mocks
+        when(exame.getDescricao()).thenReturn("teste");
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        exameDAO.createExame(exame);
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetExamesSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ExameDAO exameDAO = new ExameDAO(conn);
+        
+        // Configurando o comportamento dos mocks
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        exameDAO.getExames();
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetExameSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ExameDAO exameDAO = new ExameDAO(conn);
+        Exame exame = mock(Exame.class);
+
+        // Configurando o comportamento dos mocks
+        when(exame.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        exameDAO.getExame(exame.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetExamesDaConsultaSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ExameDAO exameDAO = new ExameDAO(conn);
+        Exame exame = mock(Exame.class);
+
+        // Configurando o comportamento dos mocks
+        when(exame.getDescricao()).thenReturn("teste");
+        when(exame.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+        
+        List<String> lista = new ArrayList<>();
+        lista.add(exame.getDescricao());
+
+        // Chamando o método a ser testado
+        exameDAO.getExamesDaConsulta(exame.getId(),lista);
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testUpdateExameSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ExameDAO exameDAO = new ExameDAO(conn);
+        Exame exame = mock(Exame.class);
+
+        // Configurando o comportamento dos mocks
+        when(exame.getDescricao()).thenReturn("teste");
+        when(exame.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        exameDAO.updateExame(exame.getId(),exame);
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testDeleteExameSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ExameDAO exameDAO = new ExameDAO(conn);
+        Exame exame = mock(Exame.class);
+
+        // Configurando o comportamento dos mocks
+        when(exame.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        exameDAO.deleteExame(exame.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testDeleteTipoExameSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ExameDAO exameDAO = new ExameDAO(conn);
+        Exame exame = mock(Exame.class);
+
+        // Configurando o comportamento dos mocks
+        when(exame.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        exameDAO.deleteTipoExame(exame.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetIdDeleteExameSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ExameDAO exameDAO = new ExameDAO(conn);
+        Exame exame = mock(Exame.class);
+
+        // Configurando o comportamento dos mocks
+        when(exame.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        exameDAO.getIdDeleteExame(exame.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
     }
 }
 

@@ -42,6 +42,12 @@ public class ConsultaDAOTest {
         }
     }
     
+    @Test
+    public void testConsultaDAO(){
+        ConsultaDAO consulta = new ConsultaDAO();
+        assertNotNull(consulta);
+    }
+    
     /**
      * Testa o método createConsulta da classe ConsultaDAO.
      * Verifica se o número de consultas aumentou em 1 após a inserção.
@@ -399,5 +405,121 @@ public class ConsultaDAOTest {
         verify(conn, times(1)).createStatement();
         verify(statement, times(1)).executeQuery(anyString());
     }
+    
+    @Test
+    public void testGetConsultasSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ConsultaDAO consultaDAO = new ConsultaDAO(conn);
+        Consulta consulta = mock(Consulta.class);
+
+        // Configurando o comportamento dos mocks
+        when(consulta.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        consultaDAO.getConsultas(consulta.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetConsultaSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ConsultaDAO consultaDAO = new ConsultaDAO(conn);
+        Consulta consulta = mock(Consulta.class);
+
+        // Configurando o comportamento dos mocks
+        when(consulta.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        consultaDAO.getConsulta(consulta.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetMedicoEspecialidadeSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ConsultaDAO consultaDAO = new ConsultaDAO(conn);
+        Consulta consulta = mock(Consulta.class);
+        List<Object> lista = new ArrayList<>();
+        lista.add(consulta);
+        
+        // Configurando o comportamento dos mocks
+        when(consulta.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        consultaDAO.getMedicoEspecialidade(consulta.getId(),lista);
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testGetProcedimentosDisponiveisSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ConsultaDAO consultaDAO = new ConsultaDAO(conn);
+        List<Object> lista = new ArrayList();
+        
+        // Configurando o comportamento dos mocks
+        when(conn.createStatement()).thenThrow(SQLException.class);
+        
+        // Chamando o método a ser testado
+        lista = consultaDAO.getProcedimentosDisponiveis();
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testUpdateConsultaSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ConsultaDAO consultaDAO = new ConsultaDAO(conn);
+        Consulta consulta = mock(Consulta.class);
+
+        // Configurando o comportamento dos mocks
+        when(consulta.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        consultaDAO.updateConsulta(consulta.getId(),consulta);
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
+    @Test
+    public void testDeleteConsultaSQLException() throws SQLException {
+        // Criando e configurando os mocks
+        Connection conn = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ConsultaDAO consultaDAO = new ConsultaDAO(conn);
+        Consulta consulta = mock(Consulta.class);
+
+        // Configurando o comportamento dos mocks
+        when(consulta.getId()).thenReturn(1);
+        when(conn.createStatement()).thenThrow(SQLException.class);
+
+        // Chamando o método a ser testado
+        consultaDAO.deleteConsulta(consulta.getId());
+
+        // Verificando se a SQLException foi lançada
+        verify(conn).createStatement();
+    }
+    
 }
 
