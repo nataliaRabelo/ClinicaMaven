@@ -147,7 +147,7 @@
             <param>model.*</param>
         </targetClasses>
         <targetTests>
-            <param>DAOTest.*</param>
+            <param>model.*</param>
 	</targetTests>
         </configuration>
         <dependencies>

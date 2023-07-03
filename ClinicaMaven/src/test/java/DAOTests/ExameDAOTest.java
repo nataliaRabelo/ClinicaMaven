@@ -126,10 +126,12 @@ public class ExameDAOTest {
         ExameDAO instance = new ExameDAO(conn);
         
         try{
-            exp_exame = instance.getExame(id_exame);
+            
             instance.updateExame(id_exame, novo_exame);
             
             novo_exame = instance.getExame(id_exame);
+            exp_exame = instance.getExame(id_exame);
+            
             
             assertEquals(exp_exame.getDescricao(),novo_exame.getDescricao());
         } catch (NullPointerException e) {
