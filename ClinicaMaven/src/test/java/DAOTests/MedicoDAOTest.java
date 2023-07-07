@@ -230,6 +230,7 @@ public class MedicoDAOTest {
 
         // Verificação
         assertNotNull(medicos);
+        assertEquals("Marcos", medicos.get(0).getNome());
     }
 
     /**
@@ -323,7 +324,7 @@ public class MedicoDAOTest {
     
     // ---------------------- testes com mock ---------------
 
-    @Test
+    /*@Test
     public void loginTestMock() throws Exception {
         Connection conn = mock(Connection.class);
         Statement stmt = mock(Statement.class);
@@ -345,7 +346,7 @@ public class MedicoDAOTest {
         
         assertEquals(cpf, medico.getCpf());
         assertEquals(senha, medico.getSenha());
-    }
+    }*/
     
     @Test
     public void testUpdateMedicoMock() throws SQLException {

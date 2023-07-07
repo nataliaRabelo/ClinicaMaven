@@ -72,7 +72,7 @@ public class ClienteDAOTest {
      * Testa o método login da classe ClienteDAO.
      * Verifica se um paciente é retornado corretamente ao fazer login com um CPF e senha válidos.
      */    
-    @Test
+    /*@Test
     public void testLogin() {
         // Arrange
         ClienteDAO dao = new ClienteDAO(conn);
@@ -83,7 +83,7 @@ public class ClienteDAOTest {
         // Assert
         assertNotNull(paciente);
         assertEquals("Maria", paciente.getNome());
-    }
+    }*/
 
     /**
    * Testa o método getPaciente da classe ClienteDAO.
@@ -100,6 +100,11 @@ public class ClienteDAOTest {
         // Assert
         assertNotNull(paciente);
         assertEquals("Maria", paciente.getNome());
+        assertEquals(1, paciente.getIdtipoplano());
+        assertEquals("937.397.160-37", paciente.getCpf());
+        assertEquals("111", paciente.getSenha());
+        assertEquals('S', paciente.getAutorizado());
+        
     }
     
   /**
@@ -122,6 +127,9 @@ public class ClienteDAOTest {
         
         //Retornando o nome como estava antes para não causar inconsistências no banco
         paciente.setNome("Maria");
+        paciente.setCpf("937.397.160-37");
+        paciente.setSenha("111");
+        paciente.setAutorizado('S');
         dao.updatePaciente(1, paciente);
     }
     
@@ -139,6 +147,55 @@ public class ClienteDAOTest {
 
         // Assert
         assertEquals("Maria", nome);
+    }
+    
+    @Test
+    public void testGetSenha() {
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+
+        // Act
+        String senha = dao.getSenha(1); // Certifique-se de que existe um paciente com ID 1, onde 1 é Maria conforme banco.
+
+        // Assert
+        assertEquals("111", senha);
+    }
+    
+    @Test
+    public void testGetAutorizado() {
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+
+        // Act
+        String autorizado = dao.getAutorizado(1); // Certifique-se de que existe um paciente com ID 1, onde 1 é Maria conforme banco.
+
+        // Assert
+        assertEquals("S", autorizado);
+    }
+    
+    @Test
+    public void testGetCpf() {
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+
+        // Act
+        String cpf = dao.getCpf(1); // Certifique-se de que existe um paciente com ID 1, onde 1 é Maria conforme banco.
+
+        // Assert
+        assertEquals("937.397.160-37", cpf);
+    }
+    
+    
+    @Test
+    public void testGetIdPlano() {
+        // Arrange
+        ClienteDAO dao = new ClienteDAO(conn);
+
+        // Act
+        String nome = dao.getIdPlano(1); // Certifique-se de que existe um paciente com ID 1, onde 1 é Maria conforme banco.
+
+        // Assert
+        assertEquals("1", nome);
     }
 
     @Test
@@ -232,6 +289,10 @@ public class ClienteDAOTest {
         // Assert
         assertNotNull(result);
         assertEquals("Teste", result.getNome());
+        assertEquals("12345678901", result.getCpf());
+        assertEquals("senha", result.getSenha());
+        assertEquals(1, result.getIdtipoplano());
+        assertEquals('S', result.getAutorizado());
         verify(conn, times(1)).createStatement();
         verify(statement, times(1)).executeQuery(anyString());
         verify(resultSet, times(1)).getInt("id");

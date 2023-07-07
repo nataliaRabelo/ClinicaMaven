@@ -248,6 +248,8 @@ public class ConsultaDAOTest {
         when(resultSet.next()).thenReturn(true, false);
         when(resultSet.getInt(anyInt())).thenReturn(1);
         when(resultSet.getString(anyString())).thenReturn("teste");
+        when(resultSet.getInt(anyString())).thenReturn(1);
+        when(resultSet.getInt(anyString())).thenReturn(1);
         ConsultaDAO dao = new ConsultaDAO(conn);
 
         // Act
@@ -257,6 +259,8 @@ public class ConsultaDAOTest {
         assertNotNull(consultas);
         assertEquals(1, consultas.size());
         assertEquals("teste", consultas.get(0).getDescricao());
+        assertEquals(1, consultas.get(0).getIdmedico());
+        assertEquals(1, consultas.get(0).getIdpaciente());
         verify(conn, times(1)).createStatement();
         verify(statement, times(1)).executeQuery(anyString());
     }

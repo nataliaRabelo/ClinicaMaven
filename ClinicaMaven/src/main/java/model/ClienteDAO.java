@@ -117,6 +117,25 @@ public class ClienteDAO {
         }
     }
     
+    public String getIdPlano(int idPaciente){
+        
+        String nome = null;
+        
+        try (Statement statement = conn.createStatement()){
+            ResultSet resultSet = statement.executeQuery("SELECT idtipoplano FROM paciente " +
+                "WHERE paciente.id='" + idPaciente + "'");
+            
+            if (resultSet.next()) {
+                nome = resultSet.getString(Constantes.IDTIPOPLANO);
+            }
+            
+        } catch(SQLException e) {
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
+        }
+        return nome;
+    }
+    
     /**
     * Retorna o nome de um paciente com base no ID do paciente fornecido.
     *
@@ -140,6 +159,63 @@ public class ClienteDAO {
             logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
         }
         return nome;
+    }
+    
+    public String getAutorizado(int idPaciente){
+        
+        String autorizado = null;
+        
+        try (Statement statement = conn.createStatement()){
+            ResultSet resultSet = statement.executeQuery("SELECT autorizado FROM paciente " +
+                "WHERE paciente.id='" + idPaciente + "'");
+            
+            if (resultSet.next()) {
+                autorizado = resultSet.getString(Constantes.AUTORIZADO);
+            }
+            
+        } catch(SQLException e) {
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
+        }
+        return autorizado;
+    }
+    
+    public String getCpf(int idPaciente){
+        
+        String cpf = null;
+        
+        try (Statement statement = conn.createStatement()){
+            ResultSet resultSet = statement.executeQuery("SELECT cpf FROM paciente " +
+                "WHERE paciente.id='" + idPaciente + "'");
+            
+            if (resultSet.next()) {
+                cpf = resultSet.getString(Constantes.CPF);
+            }
+            
+        } catch(SQLException e) {
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
+        }
+        return cpf;
+    }
+    
+    public String getSenha(int idPaciente){
+        
+        String senha = null;
+        
+        try (Statement statement = conn.createStatement()){
+            ResultSet resultSet = statement.executeQuery("SELECT senha FROM paciente " +
+                "WHERE paciente.id='" + idPaciente + "'");
+            
+            if (resultSet.next()) {
+                senha = resultSet.getString(Constantes.SENHA);
+            }
+            
+        } catch(SQLException e) {
+            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());
+            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());
+        }
+        return senha;
     }
 
     /**

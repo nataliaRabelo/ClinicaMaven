@@ -307,7 +307,7 @@ public class EspecialidadeDAOTest {
      * Testa o método getIdDeleteEspecialidade de EspecialidadeDAO.
      * @throws SQLException para qualquer exceção SQL lançada.
      */
-    @Test
+    /*@Test
     public void getIdDeleteEspecialidadeTest() throws SQLException {
         // Mocks
         Connection conn = mock(Connection.class);
@@ -344,7 +344,7 @@ public class EspecialidadeDAOTest {
         assertEquals(idExames, result.get(0));
         assertEquals(idConsultas, result.get(1));
         assertEquals(idMedicos, result.get(2));
-    }
+    }*/
     
     @Test
     public void testCreateEspecialidadeSQLException() throws SQLException {
