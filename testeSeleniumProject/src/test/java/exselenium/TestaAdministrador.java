@@ -14,12 +14,12 @@ import org.openqa.selenium.support.ui.Select;
 
 public class TestaAdministrador {
 	
-	protected WebDriver driver;
+    protected WebDriver driver;
 	
-	@BeforeClass
-	public static void configuraDriver() {
-            System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") + "/src/resources/msedgedriver.exe");
-	}
+    @BeforeClass
+    public static void configuraDriver() {
+        System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") + "/src/resources/msedgedriver.exe");
+    }
 	
     @Before
     public void createDriver() {  
@@ -34,9 +34,8 @@ public class TestaAdministrador {
         
         WebElement tipoDeAcessoButton = driver.findElement(By.cssSelector("#papel"));
         Select select = new Select(tipoDeAcessoButton);
-        select.selectByIndex(1); // Índice 1 representa a segunda opção (índice começa em 0)
+        select.selectByIndex(1); 
 
-        
         // Fill in first name and last name
         WebElement cpfInput = driver.findElement(By.name("CPF"));
         cpfInput.sendKeys("249.252.810-38");
@@ -61,8 +60,7 @@ public class TestaAdministrador {
         
         WebElement estadoDoCrmButton = driver.findElement(By.name("estadocrm"));
         Select select1 = new Select(estadoDoCrmButton);
-        select1.selectByIndex(3); // Índice 1 representa a segunda opção (índice começa em 0)
-//        
+        select1.selectByIndex(3);       
         WebElement novoCpfInput = driver.findElement(By.name("CPF"));
         novoCpfInput.sendKeys("100.100.810-38");
         
@@ -71,7 +69,7 @@ public class TestaAdministrador {
         
         WebElement especialidadeButton = driver.findElement(By.name("especialidade"));
         Select select2 = new Select(especialidadeButton);
-        select2.selectByIndex(1); // Índice 1 representa a segunda opção (índice começa em 0)
+        select2.selectByIndex(1); 
         
         WebElement cadastrarButton = driver.findElement(By.xpath("/html/body/div/form/input[5]"));
         cadastrarButton.click();
@@ -82,4 +80,5 @@ public class TestaAdministrador {
     public void quitDriver() {
        driver.quit();
     }
+
 }
