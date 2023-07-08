@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EspecialidadeDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">EspecialidadeDAO.java</span></div><h1>EspecialidadeDAO.java</h1><pre class="source lang-java linenums">package model;
+
+import conexao.ConexaoBancoDeDados;
+import aplicacao.Especialidade;
+import utils.Constantes;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
+/**
+ * A classe EspecialidadeDAO representa um Data Access Object para a entidade Especialidade,
+ * fornecendo métodos para acessar e manipular dados no banco de dados relacionados
+ * a especialidades médicas.
+ */
+public class EspecialidadeDAO {
+   
+    private Connection conn;
+   
+    /**
+    * Construtor para testes
+    */
+<span class="fc" id="L28">    public EspecialidadeDAO(Connection conn){</span>
+<span class="fc" id="L29">        this.conn = conn;</span>
+<span class="fc" id="L30">    }</span>
+    
+    /**
+    * Construtor padrão.
+    */
+<span class="fc" id="L35">    public EspecialidadeDAO() {</span>
+        
+<span class="fc" id="L37">    }</span>
+    
+    /**
+    * Método que cria uma nova conexão com o banco.
+    */
+    public void createConnection(ConexaoBancoDeDados conexao) {
+        try {
+<span class="nc" id="L44">            conexao = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L45">            conn = conexao.newConnection();</span>
+<span class="nc" id="L46">        } catch(SQLException e) {</span>
+<span class="nc" id="L47">            throw new RuntimeException(e);</span>
+<span class="nc" id="L48">        }</span>
+<span class="nc" id="L49">    }</span>
+    
+    /**
+    * Cria uma nova especialidade no banco de dados.
+    *
+    * @param novaEspecialidade a especialidade a ser criada.
+    */    
+    public void createEspecialidade(Especialidade novaEspecialidade){
+<span class="fc" id="L57">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L58">            statement.execute(&quot;INSERT INTO especialidade &quot;</span>
+<span class="fc" id="L59">                    + &quot;(descricao) VALUES ( '&quot; + novaEspecialidade.getDescricao() + &quot;')&quot;);</span>
+            
+<span class="fc" id="L61">        } catch(SQLException e) {</span>
+<span class="fc" id="L62">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L63">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L64">        }</span>
+<span class="fc" id="L65">    }</span>
+
+    /**
+    * Retorna uma lista contendo todas as especialidades do banco de dados.
+    *
+    * @return uma lista de especialidades.
+    */    
+    public List&lt;Especialidade&gt; getEspecialidades(){
+    
+<span class="fc" id="L74">        List&lt;Especialidade&gt; especialidades = new ArrayList&lt;&gt;();</span>
+       
+<span class="fc" id="L76">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L77">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM especialidade&quot;);</span>
+            
+<span class="fc bfc" id="L79" title="All 2 branches covered.">            while(resultSet.next()){</span>
+<span class="fc" id="L80">                Especialidade espec = new Especialidade();</span>
+<span class="fc" id="L81">                espec.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L82">                espec.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
+<span class="fc" id="L83">                especialidades.add(espec);</span>
+<span class="fc" id="L84">            }</span>
+            
+<span class="fc" id="L86">        } catch(SQLException e) {</span>
+<span class="fc" id="L87">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L88">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L89">        }</span>
+<span class="fc" id="L90">        return especialidades;</span>
+    }
+
+    /**
+    * Retorna uma especialidade com base no seu ID.
+    *
+    * @param idEspecialidade o ID da especialidade.
+    * @return a especialidade com o ID especificado.
+    */    
+    public Especialidade getEspecialidade(int idEspecialidade){
+        
+<span class="fc" id="L101">        Especialidade espec = new Especialidade();</span>
+        
+<span class="fc" id="L103">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L104">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM especialidade &quot;</span>
+                    + &quot;WHERE especialidade.id = '&quot; + idEspecialidade + &quot;'&quot;);
+            
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">            if (resultSet.next()) {</span>
+<span class="fc" id="L108">                espec.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L109">                espec.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
+            }
+            
+<span class="fc" id="L112">        } catch(SQLException e) {</span>
+<span class="fc" id="L113">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L114">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L115">        }</span>
+<span class="fc" id="L116">        return espec;</span>
+    }
+ 
+    /**
+    * Atualiza os dados de uma especialidade existente no banco de dados.
+    *
+    * @param idEspecialidade o ID da especialidade a ser atualizada.
+    * @param novaEspecialidade os novos dados da especialidade.
+    */
+    public void updateEspecialidade(int idEspecialidade, Especialidade novaEspecialidade){
+    
+<span class="fc" id="L127">       try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L128">            statement.execute(&quot;UPDATE especialidade SET descricao='&quot; + novaEspecialidade.getDescricao() + &quot;' &quot;</span>
+                    + Constantes.WHEREESPECIALIDADEID + idEspecialidade + &quot;&quot;);
+            
+<span class="fc" id="L131">        } catch(SQLException e) {</span>
+<span class="fc" id="L132">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L133">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L134">        }</span>
+<span class="fc" id="L135">    }</span>
+
+    /**
+    * Exclui uma especialidade com base no ID da especialidade fornecido.
+    *
+    * @param idEspecialidade O ID da especialidade a ser excluída.
+    */
+    public void deleteEspecialidade(int idEspecialidade){
+    
+<span class="fc" id="L144">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L145">            statement.execute(&quot;DELETE FROM especialidade WHERE especialidade.id=&quot; + idEspecialidade + &quot;&quot;);</span>
+            
+<span class="fc" id="L147">        } catch(SQLException e) {</span>
+<span class="fc" id="L148">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L149">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L150">        }</span>
+<span class="fc" id="L151">    }</span>
+
+    /**
+    * Retorna uma lista contendo as listas de IDs das chaves estrangeiras dos exames, consultas e médicos associados a uma especialidade específica que podem ser excluídos.
+    * @param idEspecialidade o ID da especialidade
+    * @return uma lista contendo as listas de IDs das chaves estrangeiras dos exames, consultas e médicos a serem excluídos
+    */    
+    public List&lt;List&lt;Integer&gt;&gt; getIdDeleteEspecialidade(int idEspecialidade){
+        
+<span class="fc" id="L160">        List&lt;List&lt;Integer&gt;&gt; idCompilado = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L162">        List&lt;Integer&gt; idMedicos = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L163">        List&lt;Integer&gt; idConsultas = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L164">        List&lt;Integer&gt; idExames = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L166">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L167">            ResultSet resultSet = statement.executeQuery(&quot;SELECT exames.id &quot; +</span>
+            Constantes.FROMESPECIALIDADE +
+            &quot;INNER JOIN consulta ON consulta.idmedico=medico.id &quot; +
+            &quot;INNER JOIN exames ON exames.idconsulta=consulta.id &quot; +
+            Constantes.WHEREESPECIALIDADEID + idEspecialidade + &quot;&quot;);
+            
+<span class="fc bfc" id="L173" title="All 2 branches covered.">            while(resultSet.next()) {</span>
+<span class="fc" id="L174">                idExames.add(resultSet.getInt(&quot;id&quot;));</span>
+            }
+            
+<span class="fc" id="L177">            resultSet = statement.executeQuery(&quot;SELECT consulta.id &quot; +</span>
+            Constantes.FROMESPECIALIDADE +
+            &quot;INNER JOIN consulta ON consulta.idmedico=medico.id &quot; +
+            &quot;WHERE especialidade.id=&quot; + idEspecialidade + &quot;&quot;);
+            
+<span class="fc bfc" id="L182" title="All 2 branches covered.">            while(resultSet.next()) {</span>
+<span class="fc" id="L183">                idConsultas.add(resultSet.getInt(&quot;id&quot;));</span>
+            }
+            
+<span class="fc" id="L186">            resultSet = statement.executeQuery(&quot;SELECT medico.id &quot; +</span>
+            &quot;FROM especialidade INNER JOIN medico ON especialidade.id=medico.idespecialidade &quot; +
+            &quot;WHERE especialidade.id=&quot; + idEspecialidade + &quot;&quot;);
+            
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            while(resultSet.next()) {</span>
+<span class="fc" id="L191">                idMedicos.add(resultSet.getInt(&quot;id&quot;));</span>
+            }
+            
+<span class="fc" id="L194">        } catch(SQLException e) {</span>
+<span class="fc" id="L195">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L196">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L197">        }</span>
+        
+<span class="fc" id="L199">        idCompilado.add(idExames);</span>
+<span class="fc" id="L200">        idCompilado.add(idConsultas);</span>
+<span class="fc" id="L201">        idCompilado.add(idMedicos);</span>
+        
+<span class="fc" id="L203">        return idCompilado;</span>
+    }
+
+    public Connection getConnection(){
+<span class="nc" id="L207">        return this.conn;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

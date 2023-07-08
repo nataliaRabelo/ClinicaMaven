@@ -35,7 +35,7 @@
                 
                 <p class="paragrafo">
                     Olá, navegante! Seja bem-vindo(a) à Clínica WeB!<br>
-                    Você tem tossido muito ultimamente ? Fadiga incistente durante
+                    Você tem tossido muito ultimamente ? Fadiga insistente durante
                     o dia ? Você ouve vozes toda vez que vai dormir mesmo morando
                     sozinho ? Não se preocupe! A Clínica WeB conta com o melhor
                     time de médicos do mercado para te ajudar. Marque já a sua

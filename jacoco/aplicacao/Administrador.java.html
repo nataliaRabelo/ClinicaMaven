@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Administrador.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">aplicacao</a> &gt; <span class="el_source">Administrador.java</span></div><h1>Administrador.java</h1><pre class="source lang-java linenums">package aplicacao;
+
+
+/**
+A classe Administrador representa um administrador do sistema.
+Um administrador possui um identificador, nome, CPF e senha.
+*/
+<span class="nc" id="L8">public class Administrador {</span>
+    
+    private Integer id;
+    private String nome;
+    private String cpf;
+    private String senha;
+    
+    /**
+    Obtém o identificador do administrador.
+    @return O identificador do administrador.
+    */
+    public Integer getId() {
+<span class="nc" id="L20">        return id;</span>
+    }
+    
+    /**
+    Define o identificador do administrador.
+    @param id O identificador a ser definido.
+    */
+    public void setId(Integer id) {
+<span class="nc" id="L28">        this.id = id;</span>
+<span class="nc" id="L29">    }</span>
+    
+    /**
+    Obtém o nome do administrador.
+    @return O nome do administrador.
+    */
+    public String getNome() {
+<span class="nc" id="L36">        return nome;</span>
+    }
+    
+    /**
+    Define o nome do administrador.
+    @param nome O nome a ser definido.
+    */
+    public void setNome(String nome) {
+<span class="nc" id="L44">        this.nome = nome;</span>
+<span class="nc" id="L45">    }</span>
+    
+    /**
+    Obtém o CPF do administrador.
+    @return O CPF do administrador.
+    */
+    public String getCpf() {
+<span class="nc" id="L52">        return cpf;</span>
+    }
+    
+    /**
+    Define o CPF do administrador.
+    @param cpf O CPF a ser definido.
+    */
+    public void setCpf(String cpf) {
+<span class="nc" id="L60">        this.cpf = cpf;</span>
+<span class="nc" id="L61">    }</span>
+    
+    /**
+    Obtém a senha do administrador.
+    @return A senha do administrador.
+    */
+    public String getSenha() {
+<span class="nc" id="L68">        return senha;</span>
+    }
+    
+    /**
+    Define a senha do administrador.
+    @param senha A senha a ser definida.
+    */
+    public void setSenha(String senha) {
+<span class="nc" id="L76">        this.senha = senha;</span>
+<span class="nc" id="L77">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

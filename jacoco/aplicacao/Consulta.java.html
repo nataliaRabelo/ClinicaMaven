@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Consulta.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">aplicacao</a> &gt; <span class="el_source">Consulta.java</span></div><h1>Consulta.java</h1><pre class="source lang-java linenums">package aplicacao;
+
+/**
+A classe Consulta representa uma consulta médica do sistema de aplicação.
+Cada consulta possui um identificador, data, descrição, indicação de realização, identificador do médico e identificador do paciente.
+*/
+<span class="fc" id="L7">public class Consulta {</span>
+
+    private Integer id;
+    private String data;
+    private String descricao;
+    private char realizada;
+    private Integer idmedico;
+    private Integer idpaciente;
+    
+/**
+Obtém o identificador da consulta.
+@return O identificador da consulta.
+*/
+    public Integer getId() {
+<span class="nc" id="L21">        return id;</span>
+    }
+    
+/**
+Define o identificador da consulta.
+@param id O identificador a ser definido.
+*/
+    public void setId(Integer id) {
+<span class="fc" id="L29">        this.id = id;</span>
+<span class="fc" id="L30">    }</span>
+    
+/**
+Obtém a data da consulta.
+@return A data da consulta.
+*/
+    public String getData() {
+<span class="fc" id="L37">        return data;</span>
+    }
+    
+/**
+Define a data da consulta.
+@param data A data a ser definida.
+*/
+    public void setData(String data) {
+<span class="fc" id="L45">        this.data = data;</span>
+<span class="fc" id="L46">    }</span>
+    
+/**
+Obtém a descrição da consulta.
+@return A descrição da consulta.
+*/
+    public String getDescricao() {
+<span class="fc" id="L53">        return descricao;</span>
+    }
+    
+/**
+Define a descrição da consulta.
+@param descricao A descrição a ser definida.
+*/
+    public void setDescricao(String descricao) {
+<span class="fc" id="L61">        this.descricao = descricao;</span>
+<span class="fc" id="L62">    }</span>
+    
+/**
+Verifica se a consulta foi realizada.
+@return true se a consulta foi realizada, false caso contrário.
+*/
+    public char getRealizada() {
+<span class="fc" id="L69">        return realizada;</span>
+    }
+    
+/**
+Define se a consulta foi realizada.
+@param realizada O indicador de realização a ser definido.
+*/
+    public void setRealizada(char realizada) {
+<span class="fc" id="L77">        this.realizada = realizada;</span>
+<span class="fc" id="L78">    }</span>
+    
+/**
+Obtém o identificador do médico responsável pela consulta.
+@return O identificador do médico.
+*/
+    public Integer getIdmedico() {
+<span class="fc" id="L85">        return idmedico;</span>
+    }
+    
+/**
+Define o identificador do médico responsável pela consulta.
+@param idmedico O identificador do médico a ser definido.
+*/
+    public void setIdmedico(Integer idmedico) {
+<span class="fc" id="L93">        this.idmedico = idmedico;</span>
+<span class="fc" id="L94">    }</span>
+    
+/**
+Obtém o identificador do paciente que realizou a consulta.
+@return O identificador do paciente.
+*/
+    public Integer getIdpaciente() {
+<span class="fc" id="L101">        return idpaciente;</span>
+    }
+    
+/**
+Define o identificador do paciente que realizou a consulta.
+@param idpaciente O identificador do paciente a ser definido.
+*/
+    public void setIdpaciente(Integer idpaciente) {
+<span class="fc" id="L109">        this.idpaciente = idpaciente;</span>
+<span class="fc" id="L110">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

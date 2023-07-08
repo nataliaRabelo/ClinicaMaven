@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlanoDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">PlanoDAO.java</span></div><h1>PlanoDAO.java</h1><pre class="source lang-java linenums">package model;
+
+import conexao.ConexaoBancoDeDados;
+import aplicacao.Plano;
+import utils.Constantes;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+/**
+ * Classe responsável por realizar operações de acesso a dados relacionadas ao plano.
+ * Essa classe é responsável por fornecer métodos para acessar e manipular os dados dos planos no banco de dados.
+ */
+public class PlanoDAO {
+   
+    private Connection conn;
+
+    /**
+    * Construtor para testes
+    */
+<span class="fc" id="L27">    public PlanoDAO(Connection conn) {</span>
+<span class="fc" id="L28">        this.conn = conn; </span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+    * Construtor padrão.
+    */
+<span class="fc" id="L34">    public PlanoDAO() {</span>
+
+<span class="fc" id="L36">    }</span>
+    
+    /**
+    * Método que cria uma nova conexão com o banco.
+    */
+    public void createConnection() {
+        try {
+<span class="nc" id="L43">            ConexaoBancoDeDados conexao = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L44">            conn = conexao.newConnection();</span>
+<span class="nc" id="L45">        } catch(SQLException e) {</span>
+<span class="nc" id="L46">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L47">            logger.log(Level.INFO, &quot;Nao foi possivel conectar&quot;);</span>
+<span class="nc" id="L48">        }</span>
+<span class="nc" id="L49">    }</span>
+
+    /**
+    * Cria um novo plano no banco de dados.
+    *
+    * @param novoPlano o novo plano a ser criado
+    */    
+    public void createPlano(Plano novoPlano){
+        
+<span class="fc" id="L58">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L59">            statement.execute(&quot;INSERT INTO tipoplano &quot;</span>
+<span class="fc" id="L60">                    + &quot;(descricao) VALUES ( '&quot; + novoPlano.getDescricao() + &quot;')&quot;);</span>
+            
+<span class="fc" id="L62">        } catch(SQLException e) {</span>
+<span class="fc" id="L63">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L64">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L65">        }</span>
+<span class="fc" id="L66">    }</span>
+ 
+    /**
+   * Retorna uma lista de todos os planos existentes no banco de dados.
+   *
+   * @return a lista de planos
+   */    
+    public List&lt;Plano&gt; getPlanos(){
+    
+<span class="fc" id="L75">        List&lt;Plano&gt; planos = new ArrayList&lt;&gt;();</span>
+       
+<span class="fc" id="L77">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L78">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM tipoplano&quot;);</span>
+            
+<span class="fc bfc" id="L80" title="All 2 branches covered.">            while(resultSet.next()){</span>
+<span class="fc" id="L81">                Plano plano = new Plano();</span>
+<span class="fc" id="L82">                plano.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L83">                plano.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
+<span class="fc" id="L84">                planos.add(plano);</span>
+<span class="fc" id="L85">            }</span>
+            
+<span class="fc" id="L87">        } catch(SQLException e) {</span>
+<span class="fc" id="L88">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L89">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L90">        }</span>
+<span class="fc" id="L91">        return planos;</span>
+    }
+    /**
+    * Retorna um plano com base no seu ID.
+    *
+    * @param idPlano o ID do plano a ser retornado
+    * @return o plano com o ID correspondente, ou um plano vazio se não for encontrado
+     */   
+    public Plano getPlano(int idPlano){
+    
+<span class="fc" id="L101">        Plano plano = new Plano();</span>
+        
+<span class="fc" id="L103">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L104">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM tipoplano &quot;</span>
+                    + Constantes.WHERETIPOPLANO + idPlano + &quot;&quot;);
+            
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">            if (resultSet.next()) {</span>
+<span class="fc" id="L108">                plano.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L109">                plano.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
+            }
+            
+<span class="fc" id="L112">        } catch(SQLException e) {</span>
+<span class="fc" id="L113">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L114">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L115">        }</span>
+<span class="fc" id="L116">        return plano;</span>
+    }
+    
+    /**
+    * Atualiza a descrição de um plano com base no ID do plano fornecido.
+    *
+    * @param idPlano O ID do plano a ser atualizado.
+    * @param novoPlano O objeto Plano contendo a nova descrição do plano.
+    */
+    public void updatePlano(int idPlano, Plano novoPlano){
+    
+<span class="fc" id="L127">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L128">            statement.execute(&quot;UPDATE tipoplano SET descricao='&quot; + novoPlano.getDescricao() + &quot;' WHERE tipoplano.id=&quot; + idPlano + &quot;&quot;);</span>
+            
+<span class="fc" id="L130">        } catch(SQLException e) {</span>
+<span class="fc" id="L131">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L132">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L133">        }</span>
+<span class="fc" id="L134">    }</span>
+    
+    /**
+    * Exclui um plano com base no ID do plano fornecido.
+    *
+    * @param idPlano O ID do plano a ser excluído.
+    */
+    public void deletePlano(int idPlano){
+        
+<span class="fc" id="L143">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L144">            statement.execute(&quot;DELETE FROM tipoplano WHERE tipoplano.id=&quot; + idPlano + &quot;&quot;);</span>
+            
+<span class="fc" id="L146">        } catch(SQLException e) {</span>
+<span class="fc" id="L147">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L148">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L149">        }</span>
+<span class="fc" id="L150">    }</span>
+
+    /**
+     * Retorna uma lista contendo os IDs das chaves estrangeitas associados a um tipo de exame específico que podem ser excluídos.
+     * @param idExame o ID do tipo de exame
+     * @return uma lista contendo os IDs dos exames a serem excluídos
+     */    
+    public List&lt;List&lt;Integer&gt;&gt; getIdDeletePlano(int idPlano){
+        
+<span class="fc" id="L159">        List&lt;List&lt;Integer&gt;&gt; idCompilado = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L161">        List&lt;Integer&gt; idPacientes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L162">        List&lt;Integer&gt; idConsultas = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L163">        List&lt;Integer&gt; idExames = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L165">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L166">            ResultSet resultSet = statement.executeQuery(&quot;SELECT exames.id &quot; +</span>
+            Constantes.FROMTIPOPLANO +
+            &quot;INNER JOIN consulta ON consulta.idpaciente=paciente.id &quot; +
+            &quot;INNER JOIN exames ON exames.idconsulta=consulta.id &quot; +
+            Constantes.WHERETIPOPLANO + idPlano + &quot;&quot;);
+            
+<span class="fc bfc" id="L172" title="All 2 branches covered.">            while(resultSet.next()) {</span>
+<span class="fc" id="L173">                idExames.add(resultSet.getInt(&quot;id&quot;));</span>
+            }
+            
+<span class="fc" id="L176">            resultSet = statement.executeQuery(&quot;SELECT consulta.id &quot; +</span>
+            Constantes.FROMTIPOPLANO +
+            &quot;INNER JOIN consulta ON consulta.idpaciente=paciente.id &quot; +
+            Constantes.WHERETIPOPLANO + idPlano + &quot;&quot;);
+            
+<span class="fc bfc" id="L181" title="All 2 branches covered.">            while(resultSet.next()) {</span>
+<span class="fc" id="L182">                idConsultas.add(resultSet.getInt(&quot;id&quot;));</span>
+            }
+            
+<span class="fc" id="L185">            resultSet = statement.executeQuery(&quot;SELECT paciente.id &quot; +</span>
+            Constantes.FROMTIPOPLANO +
+            Constantes.WHERETIPOPLANO + idPlano + &quot;&quot;);
+            
+<span class="fc bfc" id="L189" title="All 2 branches covered.">            while(resultSet.next()) {</span>
+<span class="fc" id="L190">                idPacientes.add(resultSet.getInt(&quot;id&quot;));</span>
+            }
+            
+<span class="fc" id="L193">        } catch(SQLException e) {</span>
+<span class="fc" id="L194">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L195">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L196">        }</span>
+        
+<span class="fc" id="L198">        idCompilado.add(idExames);</span>
+<span class="fc" id="L199">        idCompilado.add(idConsultas);</span>
+<span class="fc" id="L200">        idCompilado.add(idPacientes);</span>
+        
+<span class="fc" id="L202">        return idCompilado;</span>
+    }
+}    
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

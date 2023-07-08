@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MedicoDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">MedicoDAO.java</span></div><h1>MedicoDAO.java</h1><pre class="source lang-java linenums">package model;
+
+import aplicacao.Medico;
+import aplicacao.Consulta;
+import utils.Constantes;
+import conexao.ConexaoBancoDeDados;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+/**
+ * Classe responsável por realizar operações de acesso a dados relacionadas aos médicos.
+ */
+public class MedicoDAO {
+    
+    private Connection conn;
+
+    /**
+    * Construtor para testes
+    */
+<span class="fc" id="L27">    public MedicoDAO(Connection conn){</span>
+<span class="fc" id="L28">        this.conn = conn;</span>
+<span class="fc" id="L29">    }</span>
+    
+    /**
+    * Construtor padrão que cria uma nova conexão com o banco.
+    */
+<span class="nc" id="L34">    public MedicoDAO() {</span>
+        try {
+<span class="nc" id="L36">            ConexaoBancoDeDados conexao = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L37">            conn = conexao.newConnection();</span>
+<span class="nc" id="L38">        } catch(SQLException e) {</span>
+<span class="nc" id="L39">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L40">            logger.log(Level.INFO, &quot;Nao foi possivel conectar&quot;);</span>
+<span class="nc" id="L41">        }</span>
+<span class="nc" id="L42">    }</span>
+
+    /**
+    * Realiza o login do médico com as credenciais fornecidas.
+    * 
+    * @param cpf    o CPF do médico
+    * @param senha  a senha do médico
+    * @return o objeto Medico correspondente às credenciais fornecidas, ou null se as credenciais estiverem incorretas
+    */    
+    public Medico login(String cpf, String senha){
+        
+<span class="fc" id="L53">        Medico medico = new Medico();</span>
+        
+<span class="fc" id="L55">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L56">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM medico&quot; + </span>
+                &quot; WHERE cpf = '&quot; + cpf + &quot;' AND senha = '&quot; + senha + &quot;'&quot;);
+            
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            if (resultSet.next()) {</span>
+<span class="fc" id="L60">                medico.setId(resultSet.getInt(Constantes.ID));</span>
+<span class="fc" id="L61">                medico.setNome(resultSet.getString(Constantes.NOME));</span>
+<span class="fc" id="L62">                medico.setCrm(resultSet.getInt(Constantes.CRM));</span>
+<span class="fc" id="L63">                medico.setEstadocrm(resultSet.getString(Constantes.ESTADOCRM));</span>
+<span class="fc" id="L64">                medico.setCpf(resultSet.getString(Constantes.CPF));</span>
+<span class="fc" id="L65">                medico.setSenha(resultSet.getString(Constantes.SENHA));</span>
+<span class="fc" id="L66">                medico.setAutorizado(resultSet.getString(Constantes.AUTORIZADO).charAt(0));</span>
+<span class="nc" id="L67">                medico.setIdespecialidade(resultSet.getInt(Constantes.ESPECIALIDADE));</span>
+            } 
+            
+<span class="fc" id="L70">        } catch(SQLException e) {</span>
+<span class="fc" id="L71">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L72">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L73">        }</span>
+<span class="fc" id="L74">        return medico;</span>
+    }
+
+    /**
+    * Cria um novo exame associado a uma consulta.
+    * 
+    * @param idTipoExame  o ID do tipo de exame
+    * @param idConsulta   o ID da consulta
+    */   
+    public void createExame(int idTipoExame, int idConsulta){
+    
+<span class="fc" id="L85">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L86">            statement.execute(&quot;INSERT INTO exames (idtipoexame,idconsulta) VALUES ('&quot; +</span>
+                    idTipoExame + &quot;','&quot; + idConsulta + &quot;')&quot;);
+            
+<span class="nc" id="L89">        } catch(SQLException e) {</span>
+<span class="nc" id="L90">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L91">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L92">        }</span>
+<span class="fc" id="L93">    }</span>
+
+    /**
+    * Cria um novo médico no banco de dados.
+    * 
+    * @param novoMedico  o objeto Medico a ser criado
+    */    
+    public void createMedico(Medico novoMedico){
+    
+<span class="fc" id="L102">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L103">            statement.execute(&quot;INSERT INTO medico &quot;</span>
+                    + &quot;(nome,crm,estadocrm,cpf,senha,autorizado,idespecialidade) &quot;
+<span class="fc" id="L105">                    + &quot;VALUES ( '&quot; + novoMedico.getNome() + &quot;','&quot; + novoMedico.getCrm()  + &quot;','&quot; + novoMedico.getEstadocrm()  + &quot;','&quot; + </span>
+<span class="fc" id="L106">                    novoMedico.getCpf()  + &quot;','&quot; + novoMedico.getSenha()  + &quot;','&quot; + novoMedico.getAutorizado()  + &quot;','&quot; + novoMedico.getIdespecialidade() + &quot;')&quot;);</span>
+            
+<span class="fc" id="L108">        } catch(SQLException e) {</span>
+<span class="fc" id="L109">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L110">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L111">        }</span>
+<span class="fc" id="L112">    }</span>
+    
+    /**
+    * Retorna uma lista de objetos Consulta contendo as consultas associadas a um determinado médico com base no ID do médico fornecido.
+    *
+    * @param idMedico O ID do médico para o qual se deseja obter as consultas.
+    * @return Uma lista de objetos Consulta representando as consultas associadas ao médico.
+    */
+    public List&lt;Consulta&gt; getConsultas(int idMedico){
+    
+<span class="fc" id="L122">        List&lt;Consulta&gt; consultasMedico = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L124">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L125">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM consulta&quot; + </span>
+                &quot; WHERE idmedico = '&quot; + idMedico + &quot;'&quot;);
+            
+<span class="fc bfc" id="L128" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L129">                Consulta consulta = new Consulta();</span>
+<span class="fc" id="L130">                consulta.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L131">                consulta.setData(resultSet.getString(&quot;data&quot;));</span>
+<span class="fc" id="L132">                consulta.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
+<span class="fc" id="L133">                consulta.setRealizada(resultSet.getString(&quot;realizada&quot;).charAt(0));</span>
+<span class="fc" id="L134">                consulta.setIdmedico(resultSet.getInt(&quot;idmedico&quot;));</span>
+<span class="fc" id="L135">                consulta.setIdpaciente(resultSet.getInt(&quot;idpaciente&quot;));</span>
+<span class="fc" id="L136">                consultasMedico.add(consulta);</span>
+<span class="fc" id="L137">            }</span>
+            
+<span class="nc" id="L139">        } catch(SQLException e) {</span>
+<span class="nc" id="L140">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L141">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L142">        }</span>
+<span class="fc" id="L143">        return consultasMedico;</span>
+    }
+    
+    /**
+     * Retorna um objeto Medico com base no ID do médico fornecido.
+     *
+     * @param idMedico O ID do médico a ser recuperado.
+     * @return Um objeto Medico com as informações do médico correspondente ao ID, ou um objeto vazio se nenhum médico for encontrado.
+     */
+    public Medico getMedico(int idMedico){
+        
+<span class="fc" id="L154">        Medico medico = new Medico();</span>
+        
+<span class="fc" id="L156">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L157">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM medico &quot;</span>
+                    + &quot;WHERE medico.id = '&quot; + idMedico + &quot;'&quot;);
+            
+<span class="fc bfc" id="L160" title="All 2 branches covered.">            if (resultSet.next()) {</span>
+<span class="fc" id="L161">                medico.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L162">                medico.setNome(resultSet.getString(&quot;nome&quot;));</span>
+<span class="fc" id="L163">                medico.setCrm(resultSet.getInt(&quot;crm&quot;));</span>
+<span class="fc" id="L164">                medico.setEstadocrm(resultSet.getString(&quot;estadocrm&quot;));</span>
+<span class="fc" id="L165">                medico.setCpf(resultSet.getString(&quot;cpf&quot;));</span>
+<span class="fc" id="L166">                medico.setSenha(resultSet.getString(&quot;senha&quot;));</span>
+<span class="fc" id="L167">                medico.setAutorizado(resultSet.getString(&quot;autorizado&quot;).charAt(0));</span>
+<span class="fc" id="L168">                medico.setIdespecialidade(resultSet.getInt(&quot;idespecialidade&quot;));</span>
+            }
+            
+<span class="nc" id="L171">        } catch(SQLException e) {</span>
+<span class="nc" id="L172">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L173">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L174">        }</span>
+<span class="fc" id="L175">        return medico;</span>
+    }
+    
+    /**
+    * Retorna uma lista de objetos contendo os exames disponíveis.
+    *
+    * @return Uma lista de objetos contendo os exames disponíveis. Cada objeto contém o ID e a descrição do exame.
+    */
+    public List&lt;Object&gt; getExames(){
+        
+<span class="fc" id="L185">        List&lt;Object&gt; examesDisponiveis = new ArrayList&lt;&gt;();</span>
+    
+<span class="fc" id="L187">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L188">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM tipoexame&quot;);</span>
+            
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            while(resultSet.next()){</span>
+<span class="fc" id="L191">                examesDisponiveis.add(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L192">                examesDisponiveis.add(resultSet.getString(&quot;descricao&quot;));</span>
+            }
+            
+<span class="nc" id="L195">        } catch(SQLException e) {</span>
+<span class="nc" id="L196">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L197">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L198">        }</span>
+<span class="fc" id="L199">        return examesDisponiveis;</span>
+    }
+    
+    /**
+    * Retorna uma lista de objetos Medico contendo todos os médicos cadastrados.
+    *
+    * @return Uma lista de objetos Medico representando os médicos cadastrados.
+    */
+    public List&lt;Medico&gt; getMedicos(){
+    
+<span class="fc" id="L209">        List&lt;Medico&gt; medicos = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L211">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L212">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM medico&quot;);</span>
+            
+<span class="fc bfc" id="L214" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L215">                Medico medico = new Medico();</span>
+<span class="fc" id="L216">                medico.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L217">                medico.setNome(resultSet.getString(&quot;nome&quot;));</span>
+<span class="fc" id="L218">                medico.setCrm(resultSet.getInt(&quot;crm&quot;));</span>
+<span class="fc" id="L219">                medico.setEstadocrm(resultSet.getString(&quot;estadocrm&quot;));</span>
+<span class="fc" id="L220">                medico.setCpf(resultSet.getString(&quot;cpf&quot;));</span>
+<span class="fc" id="L221">                medico.setSenha(resultSet.getString(&quot;senha&quot;));</span>
+<span class="fc" id="L222">                medico.setAutorizado(resultSet.getString(&quot;autorizado&quot;).charAt(0));</span>
+<span class="fc" id="L223">                medico.setIdespecialidade(resultSet.getInt(&quot;idespecialidade&quot;));</span>
+<span class="fc" id="L224">                medicos.add(medico);</span>
+<span class="fc" id="L225">            }</span>
+            
+<span class="nc" id="L227">        } catch(SQLException e) {</span>
+<span class="nc" id="L228">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L229">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L230">        }</span>
+<span class="fc" id="L231">        return medicos;</span>
+    }
+    
+    /**
+    * Atualiza as informações de um médico com base no ID do médico fornecido.
+    *
+    * @param idMedico O ID do médico a ser atualizado.
+    * @param medico O objeto Medico contendo as novas informações do médico.
+    */
+    public void updateMedico(int idMedico, Medico medico){
+        
+<span class="fc" id="L242">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L243">            statement.execute(&quot;UPDATE medico SET nome='&quot; + medico.getNome() + &quot;', crm='&quot; +</span>
+<span class="fc" id="L244">                    medico.getCrm() + &quot;', estadocrm='&quot; + medico.getEstadocrm() + &quot;', cpf='&quot; + medico.getCpf() +</span>
+<span class="fc" id="L245">                    &quot;', senha='&quot; + medico.getSenha() + &quot;', autorizado='&quot; + medico.getAutorizado() +</span>
+<span class="fc" id="L246">                    &quot;', idespecialidade='&quot; + medico.getIdespecialidade() + &quot;' WHERE medico.id='&quot; + idMedico + &quot;'&quot;);</span>
+            
+<span class="nc" id="L248">        } catch(SQLException e) {</span>
+<span class="nc" id="L249">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L250">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L251">        }</span>
+<span class="fc" id="L252">    }</span>
+    
+    /**
+     * Exclui um médico com base no ID do médico fornecido.
+     *
+     * @param idMedico O ID do médico a ser excluído.
+     */
+    public void deleteMedico(int idMedico){
+        
+<span class="fc" id="L261">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L262">            statement.execute(&quot;DELETE FROM medico WHERE medico.id=&quot; + idMedico + &quot;&quot;);</span>
+            
+<span class="nc" id="L264">        } catch(SQLException e) {</span>
+<span class="nc" id="L265">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L266">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L267">        }</span>
+<span class="fc" id="L268">    }</span>
+    
+    /**
+    * Retorna uma lista de listas de inteiros contendo os IDs de exames e consultas associados a um determinado médico com base no ID do médico fornecido.
+    *
+    * @param idMedico O ID do médico para o qual se deseja obter os IDs de exames e consultas associados.
+    * @return Uma lista de listas de inteiros contendo os IDs de exames e consultas associados ao médico. A primeira lista contém os IDs de exames, a segunda lista contém os IDs de consultas.
+    */
+    public List&lt;List&lt;Integer&gt;&gt; getIdDeleteMedico(int idMedico){
+    
+<span class="fc" id="L278">        List&lt;List&lt;Integer&gt;&gt; idCompilado = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L279">        List&lt;Integer&gt; idConsultas = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L280">        List&lt;Integer&gt; idExames = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L282">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L283">            ResultSet resultSet = statement.executeQuery(&quot;SELECT exames.id &quot; +</span>
+            &quot;FROM medico INNER JOIN consulta ON medico.id=consulta.idmedico &quot; +
+            &quot;INNER JOIN exames ON consulta.id=exames.idconsulta &quot; +
+            &quot;WHERE medico.id=&quot; + idMedico + &quot;&quot;);
+            
+<span class="fc bfc" id="L288" title="All 2 branches covered.">            while(resultSet.next()) {</span>
+<span class="fc" id="L289">                idExames.add(resultSet.getInt(&quot;id&quot;));</span>
+            }
+            
+<span class="fc" id="L292">            resultSet = statement.executeQuery(&quot;SELECT consulta.id &quot; +</span>
+            &quot;FROM medico INNER JOIN consulta ON medico.id=consulta.idmedico &quot; +
+            &quot;WHERE medico.id=&quot; + idMedico + &quot;&quot;);
+            
+<span class="fc bfc" id="L296" title="All 2 branches covered.">            while(resultSet.next()) {</span>
+<span class="fc" id="L297">                idConsultas.add(resultSet.getInt(&quot;id&quot;));</span>
+            }
+            
+<span class="nc" id="L300">        } catch(SQLException e) {</span>
+<span class="nc" id="L301">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L302">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L303">        }</span>
+        
+<span class="fc" id="L305">        idCompilado.add(idExames);</span>
+<span class="fc" id="L306">        idCompilado.add(idConsultas);</span>
+        
+<span class="fc" id="L308">        return idCompilado;</span>
+    }
+    
+    /**
+    * Retorna uma lista de IDs de consultas que colidem com a disponibilidade de um médico em uma determinada data.
+    *
+    * @param idMedico O ID do médico para o qual se deseja verificar a disponibilidade.
+    * @param data A data para a qual se deseja verificar a disponibilidade.
+    * @return Uma lista de IDs de consultas que colidem com a disponibilidade do médico na data especificada.
+    */
+    public List&lt;Integer&gt; medicoAvailable(int idMedico, String data){
+        
+<span class="fc" id="L320">        List&lt;Integer&gt;colisoes = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L322">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L323">            ResultSet resultSet = statement.executeQuery(&quot;SELECT consulta.id &quot; +        </span>
+            &quot;FROM consulta WHERE data LIKE '%&quot; + data + &quot;%' AND consulta.idmedico=&quot; + idMedico + &quot;&quot;);
+            
+<span class="fc bfc" id="L326" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L327">                colisoes.add(resultSet.getInt(&quot;id&quot;));</span>
+            }
+            
+<span class="nc" id="L330">        } catch(SQLException e) {</span>
+<span class="nc" id="L331">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L332">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L333">        }</span>
+<span class="fc" id="L334">        return colisoes;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

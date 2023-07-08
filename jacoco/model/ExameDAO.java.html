@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExameDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">ExameDAO.java</span></div><h1>ExameDAO.java</h1><pre class="source lang-java linenums">package model;
+
+import conexao.ConexaoBancoDeDados;
+import aplicacao.Exame;
+import utils.Constantes;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
+/**
+ * A classe ExameDAO representa um Data Access Object para a entidade Exame,
+ * fornecendo métodos para acessar e manipular dados no banco de dados relacionados
+ * a exames médicos.
+ */
+public class ExameDAO {
+   
+    private Connection conn;
+    
+    /**
+    * Construtor para testes
+    */
+<span class="fc" id="L28">    public ExameDAO(Connection conn){</span>
+<span class="fc" id="L29">        this.conn = conn;</span>
+<span class="fc" id="L30">    }</span>
+    
+    /**
+    * Construtor padrão.
+    */
+<span class="fc" id="L35">    public ExameDAO() {</span>
+<span class="fc" id="L36">    }</span>
+    
+    /**
+    * Método que cria uma nova conexão com o banco.
+    */
+    public void createConnection() {
+        try {
+<span class="nc" id="L43">            ConexaoBancoDeDados conexao = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L44">            conn = conexao.newConnection();</span>
+<span class="nc" id="L45">        } catch(SQLException e) {</span>
+<span class="nc" id="L46">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L47">            logger.log(Level.INFO, &quot;Nao foi possivel conectar&quot;);</span>
+<span class="nc" id="L48">        }</span>
+<span class="nc" id="L49">    }</span>
+ 
+    /**
+   * Cria um novo exame no banco de dados.
+   *
+   * @param novoExame o exame a ser criado.
+   */
+    public void createExame(Exame novoExame){
+        
+<span class="fc" id="L58">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L59">            statement.execute(&quot;INSERT INTO tipoexame &quot;</span>
+<span class="fc" id="L60">                    + &quot;(descricao) VALUES ( '&quot; + novoExame.getDescricao() + &quot;')&quot;);</span>
+            
+<span class="fc" id="L62">        } catch(SQLException e) {</span>
+<span class="fc" id="L63">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L64">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L65">        }</span>
+<span class="fc" id="L66">    }</span>
+    
+    /**
+   * Retorna uma lista contendo todos os exames do banco de dados.
+   *
+   * @return uma lista de exames.
+   */    
+    public List&lt;Exame&gt; getExames(){
+    
+<span class="fc" id="L75">        List&lt;Exame&gt; exames = new ArrayList&lt;&gt;();</span>
+       
+<span class="fc" id="L77">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L78">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM tipoexame&quot;);</span>
+            
+<span class="fc bfc" id="L80" title="All 2 branches covered.">            while(resultSet.next()){</span>
+<span class="fc" id="L81">                Exame exame = new Exame();</span>
+<span class="fc" id="L82">                exame.setId(resultSet.getInt(Constantes.ID));</span>
+<span class="fc" id="L83">                exame.setDescricao(resultSet.getString(Constantes.DESCRICAO));</span>
+<span class="fc" id="L84">                exames.add(exame);</span>
+<span class="fc" id="L85">            }</span>
+            
+<span class="fc" id="L87">        } catch(SQLException e) {</span>
+<span class="fc" id="L88">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L89">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L90">        }</span>
+<span class="fc" id="L91">        return exames;</span>
+    }
+    /**
+    * Retorna um exame com base no seu ID.
+    *
+    * @param idExame o ID do exame.
+    * @return o exame com o ID especificado.
+    */   
+    public Exame getExame(int idExame){
+    
+<span class="fc" id="L101">        Exame exame = new Exame();</span>
+        
+<span class="fc" id="L103">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L104">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM tipoexame &quot;</span>
+                    + &quot;WHERE tipoexame.id=&quot; + idExame + &quot;&quot;);
+            
+<span class="fc bfc" id="L107" title="All 2 branches covered.">            if (resultSet.next()) {</span>
+<span class="fc" id="L108">                exame.setId(resultSet.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L109">                exame.setDescricao(resultSet.getString(&quot;descricao&quot;));</span>
+            }
+            
+<span class="fc" id="L112">        } catch(SQLException e) {</span>
+<span class="fc" id="L113">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L114">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L115">        }</span>
+<span class="fc" id="L116">        return exame;</span>
+    }
+    /**
+    * Retorna uma lista contendo as descrições dos exames realizados em uma determinada consulta.
+    *
+    * @param idConsulta o ID da consulta.
+    * @param listaExames a lista de descrições de exames existente.
+    * @return uma lista atualizada contendo as descrições dos exames realizados na consulta.
+     */    
+    public List&lt;String&gt; getExamesDaConsulta(int idConsulta, List&lt;String&gt; listaExames){
+        
+<span class="fc" id="L127">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L128">            ResultSet resultSet = statement.executeQuery(&quot;SELECT tipoexame.descricao &quot; +</span>
+                &quot;FROM consulta INNER JOIN exames ON consulta.id = exames.idconsulta &quot; +
+                &quot;INNER JOIN tipoexame ON exames.idtipoexame = tipoexame.id &quot; +
+                &quot;WHERE consulta.id='&quot; + idConsulta + &quot;'&quot;);
+            
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L134">                listaExames.add(resultSet.getString(&quot;descricao&quot;));</span>
+            }
+            
+<span class="fc" id="L137">        } catch(SQLException e) {</span>
+<span class="fc" id="L138">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L139">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L140">        }</span>
+<span class="fc" id="L141">        return listaExames;</span>
+    }
+    /**
+    * Atualiza os dados de um exame existente no banco de dados.
+    *
+    * @param idExame o ID do exame a ser atualizado.
+    * @param novoExame os novos dados do exame.
+    */    
+    public void updateExame(int idExame, Exame novoExame){
+    
+<span class="fc" id="L151">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L152">            statement.execute(&quot;UPDATE tipoexame SET descricao='&quot; + novoExame.getDescricao() + &quot;' WHERE tipoexame.id=&quot; + idExame + &quot;&quot;);</span>
+            
+<span class="fc" id="L154">        } catch(SQLException e) {</span>
+<span class="fc" id="L155">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L156">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L157">        }</span>
+<span class="fc" id="L158">    }</span>
+    
+    /**
+    * Exclui um exame com base no ID do exame fornecido.
+    *
+    * @param idExame O ID do exame a ser excluído.
+    */
+    public void deleteExame(int idExame){
+        
+<span class="fc" id="L167">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L168">            statement.execute(&quot;DELETE FROM exames WHERE exames.id=&quot; + idExame + &quot;&quot;);</span>
+            
+<span class="fc" id="L170">        } catch(SQLException e) {</span>
+<span class="fc" id="L171">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L172">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L173">        }</span>
+<span class="fc" id="L174">    }</span>
+    
+    /**
+    * Exclui um tipo de exame com base no ID do exame fornecido.
+    *
+    * @param idExame O ID do tipo de exame a ser excluído.
+    */
+    public void deleteTipoExame(int idExame){
+        
+<span class="fc" id="L183">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L184">            statement.execute(&quot;DELETE FROM tipoexame WHERE tipoexame.id=&quot; + idExame + &quot;&quot;);</span>
+            
+<span class="fc" id="L186">        } catch(SQLException e) {</span>
+<span class="fc" id="L187">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L188">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L189">        }</span>
+<span class="fc" id="L190">    }</span>
+    /**
+     * Retorna uma lista contendo os IDs das chaves estrangeiras associados a um tipo de exame específico.
+     *
+     * @param idExame o ID do tipo de exame
+     * @return uma lista contendo os IDs dos exames a serem excluídos
+     */    
+    public List&lt;Integer&gt; getIdDeleteExame(int idExame){
+        
+<span class="fc" id="L199">        List&lt;Integer&gt; idExames = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L201">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L202">            ResultSet resultSet = statement.executeQuery(&quot;SELECT exames.id &quot; +</span>
+            &quot;FROM exames WHERE exames.idtipoexame=&quot; + idExame + &quot;&quot;);
+            
+<span class="fc bfc" id="L205" title="All 2 branches covered.">            while(resultSet.next()) {</span>
+<span class="fc" id="L206">                idExames.add(resultSet.getInt(&quot;id&quot;));</span>
+            }
+            
+<span class="fc" id="L209">        } catch(SQLException e) {</span>
+<span class="fc" id="L210">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L211">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L212">        }</span>
+<span class="fc" id="L213">        return idExames;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

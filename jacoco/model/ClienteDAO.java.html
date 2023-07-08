@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClienteDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">ClienteDAO.java</span></div><h1>ClienteDAO.java</h1><pre class="source lang-java linenums">package model;
+
+import conexao.ConexaoBancoDeDados;
+import aplicacao.Cliente;
+import utils.Constantes;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+/**
+Classe responsável por realizar operações relacionadas aos objetos Cliente no banco de dados.
+*/
+public class ClienteDAO {
+    
+    private Connection conn;
+    
+    /**
+    * Construtor para testes
+    */
+<span class="fc" id="L26">    public ClienteDAO(Connection conn){</span>
+<span class="fc" id="L27">        this.conn = conn;</span>
+<span class="fc" id="L28">    }</span>
+    
+    /**
+    * Construtor padrão.
+    */
+<span class="fc" id="L33">    public ClienteDAO() {</span>
+<span class="fc" id="L34">    }</span>
+    
+    /**
+    * Método que cria uma nova conexão com o banco.
+    */
+    public void createConnection() {
+        try {
+<span class="nc" id="L41">            ConexaoBancoDeDados conexao = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L42">            conn = conexao.newConnection();</span>
+<span class="nc" id="L43">        } catch(SQLException e) {</span>
+<span class="nc" id="L44">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L45">            logger.log(Level.INFO, &quot;Nao foi possivel conectar&quot;);</span>
+<span class="nc" id="L46">        }</span>
+<span class="nc" id="L47">    }</span>
+
+    /**
+    Realiza o login de um cliente no sistema.
+    @param cpf O CPF do cliente.
+    @param senha A senha do cliente.
+    @return O objeto Cliente com os dados do cliente logado.
+    */    
+    public Cliente login(String cpf, String senha){
+        
+<span class="fc" id="L57">        Cliente paciente = new Cliente();</span>
+        
+<span class="fc" id="L59">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L60">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM paciente&quot; + </span>
+                &quot; WHERE cpf = '&quot; + cpf + &quot;' AND senha = '&quot; + senha + &quot;'&quot;);
+            
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">            if (resultSet.next()) {</span>
+<span class="fc" id="L64">                paciente.setId(resultSet.getInt(Constantes.ID));</span>
+<span class="fc" id="L65">                paciente.setNome(resultSet.getString(Constantes.NOME));</span>
+<span class="fc" id="L66">                paciente.setCpf(resultSet.getString(Constantes.CPF));</span>
+<span class="fc" id="L67">                paciente.setSenha(resultSet.getString(Constantes.SENHA));</span>
+<span class="fc" id="L68">                paciente.setAutorizado(resultSet.getString(Constantes.AUTORIZADO).charAt(0));</span>
+<span class="fc" id="L69">                paciente.setIdtipoplano(resultSet.getInt(Constantes.IDTIPOPLANO));</span>
+            } 
+            
+<span class="fc" id="L72">        } catch(SQLException e) {</span>
+<span class="fc" id="L73">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L74">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L75">        }</span>
+<span class="fc" id="L76">        return paciente;</span>
+    }
+ 
+    /**
+    Verifica se um determinado CPF de paciente já está cadastrado no banco de dados.
+    @param cpfPaciente O CPF do paciente a ser verificado.
+    @return true se o CPF já estiver cadastrado, false caso contrário.
+    */    
+    public boolean jaCadastrado(String cpfPaciente){
+    
+<span class="fc" id="L86">        boolean resp = false;</span>
+        
+<span class="fc" id="L88">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L89">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM paciente &quot;</span>
+                    + &quot;WHERE paciente.cpf=&quot; + cpfPaciente + &quot;&quot;);
+            
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">            if (resultSet.next()) {</span>
+<span class="fc" id="L93">                resp = true;</span>
+            }
+<span class="fc" id="L95">        } catch(SQLException e) {</span>
+<span class="fc" id="L96">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L97">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L98">        }</span>
+<span class="fc" id="L99">        return resp;</span>
+    }
+
+    /**
+    Cria um novo paciente no banco de dados.
+    @param novoPaciente O objeto Cliente com os dados do novo paciente.
+    */    
+    public void createPaciente(Cliente novoPaciente){
+ 
+<span class="fc" id="L108">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L109">            statement.execute(&quot;INSERT INTO paciente&quot;</span>
+                    + &quot; (nome, cpf, senha, autorizado, idtipoplano) VALUES ( '&quot; +
+<span class="fc" id="L111">                    novoPaciente.getNome() + &quot;','&quot; + novoPaciente.getCpf() + &quot;','&quot; +</span>
+<span class="fc" id="L112">                    novoPaciente.getSenha() + &quot;','&quot; + novoPaciente.getAutorizado() +</span>
+<span class="fc" id="L113">                    &quot;','&quot; + novoPaciente.getIdtipoplano() + &quot;')&quot;);</span>
+            
+<span class="fc" id="L115">        } catch(SQLException e) {</span>
+<span class="fc" id="L116">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L117">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L118">        }</span>
+<span class="fc" id="L119">    }</span>
+    
+    /**
+    * Retorna o nome de um paciente com base no ID do paciente fornecido.
+    *
+    * @param idPaciente O ID do paciente.
+    * @return O nome do paciente correspondente ao ID, ou null se nenhum paciente for encontrado.
+    */
+    public String getNomePaciente(int idPaciente){
+        
+<span class="fc" id="L129">        String nome = null;</span>
+        
+<span class="fc" id="L131">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L132">            ResultSet resultSet = statement.executeQuery(&quot;SELECT nome FROM paciente &quot; +</span>
+                &quot;WHERE paciente.id='&quot; + idPaciente + &quot;'&quot;);
+            
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">            if (resultSet.next()) {</span>
+<span class="fc" id="L136">                nome = resultSet.getString(Constantes.NOME);</span>
+            }
+            
+<span class="fc" id="L139">        } catch(SQLException e) {</span>
+<span class="fc" id="L140">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L141">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L142">        }</span>
+<span class="fc" id="L143">        return nome;</span>
+    }
+
+    /**
+    * Retorna uma lista de objetos Cliente contendo todos os pacientes registrados.
+    *
+    * @return Uma lista de objetos Cliente representando os pacientes registrados.
+    */
+    public List&lt;Cliente&gt; getPacientes(){
+    
+<span class="fc" id="L153">        List&lt;Cliente&gt; pacientes = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L155">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L156">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM paciente&quot;);</span>
+            
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L159">                Cliente paciente = new Cliente();</span>
+<span class="fc" id="L160">                paciente.setId(resultSet.getInt(Constantes.ID));</span>
+<span class="fc" id="L161">                paciente.setNome(resultSet.getString(Constantes.NOME));</span>
+<span class="fc" id="L162">                paciente.setCpf(resultSet.getString(Constantes.CPF));</span>
+<span class="fc" id="L163">                paciente.setSenha(resultSet.getString(Constantes.SENHA));</span>
+<span class="fc" id="L164">                paciente.setAutorizado(resultSet.getString(Constantes.AUTORIZADO).charAt(0));</span>
+<span class="fc" id="L165">                paciente.setIdtipoplano(resultSet.getInt(Constantes.IDTIPOPLANO));</span>
+<span class="fc" id="L166">                pacientes.add(paciente);</span>
+<span class="fc" id="L167">            }</span>
+<span class="fc" id="L168">        } catch(SQLException e) {</span>
+<span class="fc" id="L169">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L170">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L171">        }</span>
+<span class="fc" id="L172">        return pacientes;</span>
+    }
+    
+    /**
+     * Retorna um objeto Cliente contendo as informações de um paciente com base no ID do paciente fornecido.
+     * @param idPaciente O ID do paciente a ser recuperado.
+     * @return Um objeto Cliente com as informações do paciente correspondente ao ID, ou um objeto vazio se nenhum paciente for encontrado.
+     */
+    public Cliente getPaciente(int idPaciente){
+    
+<span class="fc" id="L182">        Cliente paciente = new Cliente();</span>
+        
+<span class="fc" id="L184">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L185">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM paciente &quot;</span>
+                    + &quot;WHERE paciente.id = '&quot; + idPaciente + &quot;'&quot;);
+            
+<span class="fc bfc" id="L188" title="All 2 branches covered.">            if (resultSet.next()) {</span>
+<span class="fc" id="L189">                paciente.setId(resultSet.getInt(Constantes.ID));</span>
+<span class="fc" id="L190">                paciente.setNome(resultSet.getString(Constantes.NOME));</span>
+<span class="fc" id="L191">                paciente.setCpf(resultSet.getString(Constantes.CPF));</span>
+<span class="fc" id="L192">                paciente.setSenha(resultSet.getString(Constantes.SENHA));</span>
+<span class="fc" id="L193">                paciente.setAutorizado(resultSet.getString(Constantes.AUTORIZADO).charAt(0));</span>
+<span class="fc" id="L194">                paciente.setIdtipoplano(resultSet.getInt(Constantes.IDTIPOPLANO));</span>
+            }
+<span class="fc" id="L196">        } catch(SQLException e) {</span>
+<span class="fc" id="L197">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L198">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L199">        }</span>
+<span class="fc" id="L200">        return paciente;</span>
+    }
+    /**
+    * Atualiza as informações de um paciente com base no ID do paciente fornecido.
+    *
+    * @param idPaciente O ID do paciente a ser atualizado.
+    * @param paciente O objeto Cliente contendo as novas informações do paciente.
+    */
+    public void updatePaciente(int idPaciente, Cliente paciente){
+        
+<span class="fc" id="L210">        try(Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L211">            statement.execute(&quot;UPDATE paciente SET nome='&quot; + paciente.getNome() + &quot;' , cpf='&quot; +</span>
+<span class="fc" id="L212">                    paciente.getCpf() + &quot;' , senha='&quot; + paciente.getSenha() +</span>
+<span class="fc" id="L213">                    &quot;' , autorizado='&quot; + paciente.getAutorizado() +</span>
+<span class="fc" id="L214">                    &quot;' , idtipoplano='&quot; + paciente.getIdtipoplano() + &quot;' WHERE paciente.id='&quot; + idPaciente + &quot;'&quot;);</span>
+            
+<span class="fc" id="L216">        } catch(SQLException e) {</span>
+<span class="fc" id="L217">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L218">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L219">        }</span>
+<span class="fc" id="L220">    }</span>
+    /**
+    * Exclui um paciente com base no ID do paciente fornecido.
+    *
+    * @param idPaciente O ID do paciente a ser excluído.
+    */
+    public void deletePaciente(int idPaciente){
+        
+<span class="fc" id="L228">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L229">            statement.execute(&quot;DELETE FROM paciente WHERE paciente.id=&quot; + idPaciente + &quot;&quot;);</span>
+            
+<span class="fc" id="L231">        } catch(SQLException e) {</span>
+<span class="fc" id="L232">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L233">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L234">        }</span>
+<span class="fc" id="L235">    }</span>
+    /**
+    * Retorna uma lista contendo as listas de IDs das chaves estrangeiras dos exames e consultas associados a um paciente específico.
+    * @param idPaciente o ID do paciente
+    * @return uma lista contendo as listas de IDs das chaves estrangeiras dos exames e consultas a serem excluídas
+    */    
+    public List&lt;List&lt;Integer&gt;&gt; getIdDeletePaciente(int idPaciente){
+    
+<span class="fc" id="L243">        List&lt;List&lt;Integer&gt;&gt; idCompilado = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L244">        List&lt;Integer&gt; idConsultas = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L245">        List&lt;Integer&gt; idExames = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L247">        try (Statement statement = conn.createStatement()){</span>
+<span class="fc" id="L248">            ResultSet resultSet = statement.executeQuery(&quot;SELECT exames.id &quot; +</span>
+            &quot;FROM paciente INNER JOIN consulta ON paciente.id=consulta.idpaciente &quot; +
+            &quot;INNER JOIN exames ON consulta.id=exames.idconsulta &quot; +
+            &quot;WHERE paciente.id=&quot; + idPaciente + &quot;&quot;);
+            
+<span class="fc bfc" id="L253" title="All 2 branches covered.">            while(resultSet.next()) {</span>
+<span class="fc" id="L254">                idExames.add(resultSet.getInt(Constantes.ID));</span>
+            }
+            
+<span class="fc" id="L257">            resultSet = statement.executeQuery(&quot;SELECT consulta.id &quot; +</span>
+            &quot;FROM paciente INNER JOIN consulta ON paciente.id=consulta.idpaciente &quot; +
+            &quot;WHERE paciente.id=&quot; + idPaciente + &quot;&quot;);
+            
+<span class="fc bfc" id="L261" title="All 2 branches covered.">            while(resultSet.next()) {</span>
+<span class="fc" id="L262">                idConsultas.add(resultSet.getInt(Constantes.ID));</span>
+            }
+            
+<span class="fc" id="L265">        } catch(SQLException e) {</span>
+<span class="fc" id="L266">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="fc" id="L267">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="fc" id="L268">        }</span>
+        
+<span class="fc" id="L270">        idCompilado.add(idExames);</span>
+<span class="fc" id="L271">        idCompilado.add(idConsultas);</span>
+        
+<span class="fc" id="L273">        return idCompilado;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

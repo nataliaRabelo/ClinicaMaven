@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdministradorDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">AdministradorDAO.java</span></div><h1>AdministradorDAO.java</h1><pre class="source lang-java linenums">package model;
+
+import conexao.ConexaoBancoDeDados;
+import aplicacao.Administrador;
+import utils.Constantes;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+/**
+A classe AdministradorDAO é responsável por realizar operações de acesso a dados
+relacionadas aos administradores no banco de dados.
+*/
+
+public class AdministradorDAO {
+    
+    private Connection conn;
+    
+    /**
+    * Construtor para testes
+    */
+<span class="nc" id="L29">    public AdministradorDAO(Connection conn){</span>
+<span class="nc" id="L30">        this.conn = conn;</span>
+<span class="nc" id="L31">    }</span>
+    
+    /**
+    * Construtor padrão que cria uma nova conexão com o banco.
+    */
+<span class="nc" id="L36">    public AdministradorDAO() {</span>
+        try {
+<span class="nc" id="L38">            ConexaoBancoDeDados conexao = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L39">            conn = conexao.newConnection();</span>
+<span class="nc" id="L40">        } catch(SQLException e) {</span>
+<span class="nc" id="L41">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L42">            logger.log(Level.INFO, &quot;Nao foi possivel conectar&quot;);</span>
+<span class="nc" id="L43">        }</span>
+<span class="nc" id="L44">    } </span>
+    /**
+     * Realiza o login de um administrador no sistema.
+     * @param cpf    O CPF do administrador.
+     * @param senha  A senha do administrador.
+     * @return O objeto Administrador correspondente ao login realizado.
+     */
+    public Administrador login(String cpf, String senha) {
+        
+<span class="nc" id="L53">        Administrador administrador = new Administrador();</span>
+        
+<span class="nc" id="L55">        try (Statement statement = conn.createStatement()){</span>
+<span class="nc" id="L56">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM administrador&quot; + </span>
+                &quot; WHERE cpf = '&quot; + cpf + &quot;' AND senha = '&quot; + senha + &quot;'&quot;);
+            
+<span class="nc bnc" id="L59" title="All 2 branches missed.">            if (resultSet.next()) {</span>
+<span class="nc" id="L60">                administrador.setId(resultSet.getInt(Constantes.ID));</span>
+<span class="nc" id="L61">                administrador.setNome(resultSet.getString(Constantes.NOME));</span>
+<span class="nc" id="L62">                administrador.setCpf(resultSet.getString(Constantes.CPF));</span>
+<span class="nc" id="L63">                administrador.setSenha(resultSet.getString(Constantes.SENHA));</span>
+            } 
+            
+<span class="nc" id="L66">        } catch(SQLException e) {</span>
+<span class="nc" id="L67">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L68">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="nc" id="L69">        }</span>
+<span class="nc" id="L70">        return administrador;</span>
+    }
+
+    /**
+     * Cria um novo administrador no banco de dados.
+     * @param administrador O objeto Administrador a ser criado.
+     */    
+    public void createAdministrador(Administrador administrador){
+        
+<span class="nc" id="L79">        try (Statement statement = conn.createStatement()){</span>
+<span class="nc" id="L80">            statement.execute(&quot;INSERT INTO administrador (nome,cpf,senha) VALUES ( '&quot; +</span>
+<span class="nc" id="L81">                    administrador.getNome() + &quot;','&quot; + administrador.getCpf() + &quot;','&quot; + administrador.getSenha() + &quot;')&quot;);</span>
+            
+<span class="nc" id="L83">        } catch(SQLException e) {</span>
+<span class="nc" id="L84">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L85">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="nc" id="L86">        }</span>
+<span class="nc" id="L87">    }</span>
+    /**
+     * Retorna uma lista com todos os administradores cadastrados no banco de dados.
+     * @return Uma lista de objetos Administrador.
+     */    
+    public List&lt;Administrador&gt; getAdministradores(){
+    
+<span class="nc" id="L94">        List&lt;Administrador&gt; administradores = new ArrayList&lt;&gt;();</span>
+        
+<span class="nc" id="L96">        try (Statement statement = conn.createStatement()){</span>
+<span class="nc" id="L97">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM administrador&quot;);</span>
+            
+<span class="nc bnc" id="L99" title="All 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L100">                Administrador adm = new Administrador();</span>
+<span class="nc" id="L101">                adm.setId(resultSet.getInt(Constantes.ID));</span>
+<span class="nc" id="L102">                adm.setNome(resultSet.getString(Constantes.NOME));</span>
+<span class="nc" id="L103">                adm.setCpf(resultSet.getString(Constantes.CPF));</span>
+<span class="nc" id="L104">                adm.setSenha(resultSet.getString(Constantes.SENHA));</span>
+<span class="nc" id="L105">                administradores.add(adm);</span>
+<span class="nc" id="L106">            }</span>
+            
+<span class="nc" id="L108">        } catch(SQLException e) {</span>
+<span class="nc" id="L109">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L110">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="nc" id="L111">        }</span>
+<span class="nc" id="L112">        return administradores;</span>
+    }
+    
+    /**
+     * Retorna um objeto Administrador com base no ID do administrador fornecido.
+     * @param idAdministrador O ID do administrador a ser recuperado.
+     * @return Um objeto Administrador com as informações do administrador correspondente ao ID, ou um objeto vazio se nenhum administrador for encontrado.
+     */
+    public Administrador getAdministrador(int idAdministrador){
+    
+<span class="nc" id="L122">        Administrador adm = new Administrador();</span>
+        
+<span class="nc" id="L124">        try (Statement statement = conn.createStatement()){</span>
+<span class="nc" id="L125">            ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM administrador &quot;</span>
+                    + &quot;WHERE administrador.id = '&quot; + idAdministrador + &quot;'&quot;);
+            
+<span class="nc bnc" id="L128" title="All 2 branches missed.">            if (resultSet.next()) {</span>
+<span class="nc" id="L129">                adm.setId(resultSet.getInt(Constantes.ID));</span>
+<span class="nc" id="L130">                adm.setNome(resultSet.getString(Constantes.NOME));</span>
+<span class="nc" id="L131">                adm.setCpf(resultSet.getString(Constantes.CPF));</span>
+<span class="nc" id="L132">                adm.setSenha(resultSet.getString(Constantes.SENHA));</span>
+            }
+            
+<span class="nc" id="L135">        } catch(SQLException e) {</span>
+<span class="nc" id="L136">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L137">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="nc" id="L138">        }</span>
+<span class="nc" id="L139">        return adm;</span>
+    }
+    /**
+    Atualiza os dados de um administrador no banco de dados.
+    @param idAdministrador O identificador do administrador a ser atualizado.
+    @param administrador O objeto Administrador com os novos dados a serem atualizados.
+    */    
+    public void updateAdministrador(int idAdministrador, Administrador administrador){
+    
+<span class="nc" id="L148">        try (Statement statement = conn.createStatement()){</span>
+<span class="nc" id="L149">            statement.execute(&quot;UPDATE administrador SET nome='&quot; + administrador.getNome() + &quot;',cpf='&quot; + administrador.getCpf() +</span>
+<span class="nc" id="L150">                    &quot;',senha='&quot; + administrador.getSenha() + &quot;'  WHERE administrador.id=&quot; + idAdministrador + &quot;&quot;);</span>
+            
+<span class="nc" id="L152">        } catch(SQLException e) {</span>
+<span class="nc" id="L153">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L154">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="nc" id="L155">        }</span>
+<span class="nc" id="L156">    }</span>
+    /**
+    * Exclui um administrador com base no ID do administrador fornecido.
+    * @param idAdministrador O ID do administrador a ser excluído.
+    */
+    public void deleteAdministrador(int idAdministrador){
+    
+<span class="nc" id="L163">        try(Statement statement = conn.createStatement()){</span>
+<span class="nc" id="L164">            statement.execute(&quot;DELETE FROM administrador WHERE administrador.id=&quot; + idAdministrador + &quot;&quot;);</span>
+            
+<span class="nc" id="L166">        } catch(SQLException e) {</span>
+<span class="nc" id="L167">            Logger logger = Logger.getLogger(ConexaoBancoDeDados.class.getName());</span>
+<span class="nc" id="L168">            logger.log(Level.INFO, Constantes.SQLERROR + e.getMessage());</span>
+<span class="nc" id="L169">        }</span>
+<span class="nc" id="L170">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Medico.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">aplicacao</a> &gt; <span class="el_source">Medico.java</span></div><h1>Medico.java</h1><pre class="source lang-java linenums">package aplicacao;
+
+/**
+A classe Medico representa um médico do sistema de aplicação.
+Cada médico possui um identificador, nome, CPF, especialidade e CRM.
+*/
+<span class="fc" id="L7">public class Medico {</span>
+    
+    private Integer id;
+    private String nome;
+    private Integer crm;
+    private String estadocrm;
+    private String cpf;
+    private String senha;
+    private char autorizado;
+    private Integer idespecialidade;
+/**
+
+Obtém o identificador do médico.
+@return O identificador do médico.
+*/
+    public Integer getId() {
+<span class="fc" id="L23">        return id;</span>
+    }
+/**
+
+Define o identificador do médico.
+@param id O identificador a ser definido.
+*/
+    public void setId(Integer id) {
+<span class="fc" id="L31">        this.id = id;</span>
+<span class="fc" id="L32">    }</span>
+/**
+
+Obtém o nome do médico.
+@return O nome do médico.
+*/
+    public String getNome() {
+<span class="fc" id="L39">        return nome;</span>
+    }
+/**
+
+Define o nome do médico.
+@param nome O nome a ser definido.
+*/
+    public void setNome(String nome) {
+<span class="fc" id="L47">        this.nome = nome;</span>
+<span class="fc" id="L48">    }</span>
+/**
+
+Obtém o CRM do médico.
+@return O CRM do médico.
+*/
+    public Integer getCrm() {
+<span class="fc" id="L55">        return crm;</span>
+    }
+/**
+
+Define o CRM do médico.
+@param crm O CRM a ser definido.
+*/
+    public void setCrm(Integer crm) {
+<span class="fc" id="L63">        this.crm = crm;</span>
+<span class="fc" id="L64">    }</span>
+
+/**
+Obtém o estado do CRM do médico.
+@return O estado do CRM do médico.
+*/
+    public String getEstadocrm() {
+<span class="fc" id="L71">        return estadocrm;</span>
+    }
+    
+/**
+Define o estado do CRM do médico.
+@param estadocrm O estado do CRM a ser definido.
+*/
+    public void setEstadocrm(String estadocrm) {
+<span class="fc" id="L79">        this.estadocrm = estadocrm;</span>
+<span class="fc" id="L80">    }</span>
+/**
+
+Obtém o CPF do médico.
+@return O CPF do médico.
+*/
+    public String getCpf() {
+<span class="fc" id="L87">        return cpf;</span>
+    }
+/**
+
+Define o CPF do médico.
+@param cpf O CPF a ser definido.
+*/
+    public void setCpf(String cpf) {
+<span class="fc" id="L95">        this.cpf = cpf;</span>
+<span class="fc" id="L96">    }</span>
+/**
+
+Obtém a senha do médico.
+@return A senha do médico.
+*/
+    public String getSenha() {
+<span class="fc" id="L103">        return senha;</span>
+    }
+/**
+
+Define a senha do médico.
+@param senha A senha a ser definida.
+*/
+    public void setSenha(String senha) {
+<span class="fc" id="L111">        this.senha = senha;</span>
+<span class="fc" id="L112">    }</span>
+
+/**
+Obtém a autorização do médico.
+@return A autorização do médico.
+*/
+    public char getAutorizado() {
+<span class="fc" id="L119">        return autorizado;</span>
+    }
+    
+/**
+Obtém a autorização do médico.
+@param autorizado A autorização do médico.
+*/
+    public void setAutorizado(char autorizado) {
+<span class="fc" id="L127">        this.autorizado = autorizado;</span>
+<span class="fc" id="L128">    }</span>
+
+    /**
+
+Obtém a especialidade do médico.
+@return A especialidade do médico.
+*/
+    public Integer getIdespecialidade() {
+<span class="fc" id="L136">        return idespecialidade;</span>
+    }
+/**
+Define a especialidade do médico.
+@param idespecialidade A especialidade a ser definida.
+*/
+    public void setIdespecialidade(Integer idespecialidade) {
+<span class="fc" id="L143">        this.idespecialidade = idespecialidade;</span>
+<span class="fc" id="L144">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControladorCliente.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">servlet</a> &gt; <span class="el_source">ControladorCliente.java</span></div><h1>ControladorCliente.java</h1><pre class="source lang-java linenums">package servlet;
+
+import aplicacao.Cliente;
+import aplicacao.Consulta;
+import model.ExameDAO;
+import model.ConsultaDAO;
+import model.MedicoDAO;
+import utils.Constantes;
+import conexao.ConexaoBancoDeDados;
+
+import java.util.List;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet responsável pelo controle das ações do cliente.
+ */
+@WebServlet(name = &quot;ControladorCliente&quot;, urlPatterns = {&quot;/ControladorCliente&quot;})
+<span class="nc" id="L26">public class ControladorCliente extends HttpServlet {</span>
+    
+     /**
+     * Processa as requisições GET para o servlet.
+     * Realiza ações com base nos parâmetros recebidos para visualizar, editar ou excluir consultas do cliente.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException exceção lançada ao ocorrer um erro durante o processamento da servlet.
+     * @throws IOException exceção lançada ao ocorrer um erro de I/O durante o processamento da servlet.
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+<span class="nc" id="L40">        ConexaoBancoDeDados conexao = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L41">        HttpSession session = request.getSession();</span>
+<span class="nc" id="L42">        Cliente cliente = (Cliente)session.getAttribute(Constantes.CLIENTE);</span>
+        
+<span class="nc" id="L44">        ConsultaDAO consultaDAO = new ConsultaDAO();</span>
+<span class="nc" id="L45">        consultaDAO.createConnection();</span>
+        
+<span class="nc bnc" id="L47" title="All 6 branches missed.">        switch(request.getParameter(&quot;arg&quot;)){</span>
+        
+            case &quot;Dashboard&quot;:
+                
+<span class="nc" id="L51">                session.setAttribute(&quot;cliente&quot;, cliente);</span>
+<span class="nc" id="L52">                RequestDispatcher dashboard = request.getRequestDispatcher(&quot;./view/AreaCliente.jsp&quot;);</span>
+<span class="nc" id="L53">                dashboard.forward(request, response); </span>
+            
+<span class="nc" id="L55">            break;</span>
+            
+            case &quot;Editar&quot;:
+               
+                Consulta consultaOriginal;
+                
+<span class="nc" id="L61">                consultaOriginal = consultaDAO.getConsulta(Integer.parseInt(request.getParameter(&quot;id&quot;)));</span>
+               
+<span class="nc" id="L63">                List&lt;Object&gt;listaMedicoEspec = new ArrayList&lt;&gt;();</span>
+                List&lt;Object&gt;listaDisponiveis;
+                
+<span class="nc" id="L66">                consultaDAO.getMedicoEspecialidade(consultaOriginal.getId(),listaMedicoEspec);</span>
+                    
+<span class="nc" id="L68">                listaDisponiveis = consultaDAO.getProcedimentosDisponiveis();</span>
+   
+<span class="nc" id="L70">                session.setAttribute(&quot;lista_disponiveis&quot;, listaDisponiveis);</span>
+<span class="nc" id="L71">                session.setAttribute(&quot;consulta_edit&quot;, consultaOriginal);</span>
+<span class="nc" id="L72">                session.setAttribute(&quot;consulta_edit_infos&quot;, listaMedicoEspec);</span>
+<span class="nc" id="L73">                RequestDispatcher editar = request.getRequestDispatcher(&quot;./view/EditarConsulta.jsp&quot;);</span>
+<span class="nc" id="L74">                editar.forward(request, response);</span>
+                
+<span class="nc" id="L76">            break;</span>
+
+
+            
+            case &quot;Visualizar&quot;:
+                
+                List&lt;Consulta&gt; listaConsultas;
+<span class="nc" id="L83">                ConexaoBancoDeDados conexao2 = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L84">                ExameDAO exameDAO = new ExameDAO();</span>
+<span class="nc" id="L85">                exameDAO.createConnection();</span>
+                
+<span class="nc" id="L87">                listaConsultas = consultaDAO.getConsultas(cliente.getId());</span>
+                
+<span class="nc bnc" id="L89" title="All 2 branches missed.">                if(listaConsultas.size() &gt; 0){</span>
+                    
+<span class="nc" id="L91">                    ArrayList&lt;Object&gt;listaMedEsp = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L92">                    List&lt;List&lt;String&gt;&gt;listaExamesCompilado = new ArrayList&lt;&gt;();</span>
+                    
+<span class="nc bnc" id="L94" title="All 2 branches missed.">                    for(int i=0;i&lt;listaConsultas.size();i++){</span>
+<span class="nc" id="L95">                        consultaDAO.getMedicoEspecialidade(listaConsultas.get(i).getId(),listaMedEsp);</span>
+                        
+<span class="nc" id="L97">                        List&lt;String&gt;listaExames = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L98">                        listaExames = exameDAO.getExamesDaConsulta(listaConsultas.get(i).getId(),listaExames);</span>
+                        
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                        if(listaExames.isEmpty()){</span>
+<span class="nc" id="L101">                            listaExamesCompilado.add(null);</span>
+                        }
+                        else{
+<span class="nc" id="L104">                            listaExamesCompilado.add(listaExames);</span>
+                        }
+                    }
+                    
+<span class="nc" id="L108">                    session.setAttribute(&quot;lista_exames&quot;, listaExamesCompilado);</span>
+<span class="nc" id="L109">                    session.setAttribute(&quot;lista_consultas&quot;, listaConsultas);</span>
+<span class="nc" id="L110">                    session.setAttribute(&quot;lista_med_esp&quot;, listaMedEsp);</span>
+<span class="nc" id="L111">                    RequestDispatcher clt = request.getRequestDispatcher(&quot;./view/VisualizarConsulta.jsp&quot;);</span>
+<span class="nc" id="L112">                    clt.forward(request, response);</span>
+<span class="nc" id="L113">                }</span>
+                else{
+<span class="nc" id="L115">                    RequestDispatcher clt = request.getRequestDispatcher(&quot;./view/Confirmacao.jsp?type=SemConsulta&amp;role=Pac&quot;);</span>
+<span class="nc" id="L116">                    clt.forward(request, response);</span>
+                }
+<span class="nc" id="L118">            break;</span>
+
+        
+            case &quot;Marcar&quot;:
+
+                List&lt;Object&gt; listaProcedimentos;
+                
+<span class="nc" id="L125">                listaProcedimentos = consultaDAO.getProcedimentosDisponiveis();</span>
+   
+<span class="nc bnc" id="L127" title="All 2 branches missed.">                if(!listaProcedimentos.isEmpty()){</span>
+<span class="nc" id="L128">                    session.setAttribute(&quot;lista&quot;, listaProcedimentos);</span>
+<span class="nc" id="L129">                    RequestDispatcher marcar = request.getRequestDispatcher(&quot;./view/MarcarConsulta.jsp&quot;);</span>
+<span class="nc" id="L130">                    marcar.forward(request, response);</span>
+<span class="nc" id="L131">                }else{</span>
+<span class="nc" id="L132">                    RequestDispatcher marcar = request.getRequestDispatcher(&quot;./view/Confirmacao.jsp?type=SemEspMed&quot;);</span>
+<span class="nc" id="L133">                    marcar.forward(request, response);</span>
+                }
+<span class="nc" id="L135">            break;</span>
+
+            
+            case &quot;Excluir&quot;:
+                
+<span class="nc" id="L140">                consultaDAO.deleteConsulta(Integer.parseInt(request.getParameter(&quot;id&quot;)));</span>
+<span class="nc" id="L141">                RequestDispatcher excluir = request.getRequestDispatcher(&quot;./view/Confirmacao.jsp?type=Excluido&quot;);</span>
+<span class="nc" id="L142">                excluir.forward(request, response);</span>
+            
+            break;    
+        }
+<span class="nc" id="L146">    }</span>
+    
+     /**
+     * Processa as requisições POST para o servlet.
+     * Realiza ações com base nos parâmetros recebidos para marcar ou remarcar consultas do cliente.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException exceção lançada ao ocorrer um erro durante o processamento da servlet.
+     * @throws IOException exceção lançada ao ocorrer um erro de I/O durante o processamento da servlet.
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+<span class="nc" id="L161">        HttpSession session = request.getSession();</span>
+<span class="nc" id="L162">        Cliente cliente = (Cliente)session.getAttribute(&quot;cliente&quot;);</span>
+<span class="nc" id="L163">        ConexaoBancoDeDados conexao = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L164">        MedicoDAO medicoDAO = new MedicoDAO();</span>
+<span class="nc" id="L165">        Consulta consulta = new Consulta();</span>
+<span class="nc" id="L166">        ConsultaDAO consultaDAO = new ConsultaDAO();</span>
+<span class="nc" id="L167">        consultaDAO.createConnection();</span>
+        
+<span class="nc" id="L169">        consulta.setData(request.getParameter(&quot;data&quot;) + &quot; &quot; + request.getParameter(&quot;hora&quot;));</span>
+<span class="nc" id="L170">        consulta.setDescricao(&quot;Sem descricao&quot;);</span>
+<span class="nc" id="L171">        consulta.setRealizada('N');</span>
+<span class="nc" id="L172">        consulta.setIdmedico(Integer.valueOf(request.getParameter(&quot;id_med&quot;)));</span>
+<span class="nc" id="L173">        consulta.setIdpaciente(cliente.getId());</span>
+        
+<span class="nc" id="L175">        String[] datahora = consulta.getData().split(&quot; &quot;);</span>
+        
+        List&lt;Integer&gt; colisoes;
+<span class="nc" id="L178">        colisoes = medicoDAO.medicoAvailable(consulta.getIdmedico(),datahora[0]);</span>
+        
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        if(request.getParameter(&quot;acao&quot;).equals(&quot;Enviar&quot;)){</span>
+
+<span class="nc bnc" id="L182" title="All 2 branches missed.">                if(colisoes.size() &lt; 2){</span>
+<span class="nc" id="L183">                    consultaDAO.createConsulta(consulta);</span>
+<span class="nc" id="L184">                    RequestDispatcher voltar = request.getRequestDispatcher(&quot;./view/Confirmacao.jsp?type=Marcado&quot;);</span>
+<span class="nc" id="L185">                    voltar.forward(request, response);</span>
+<span class="nc" id="L186">                }else{</span>
+<span class="nc" id="L187">                    RequestDispatcher lotado = request.getRequestDispatcher(&quot;./view/Confirmacao.jsp?type=Lotado&quot;);</span>
+<span class="nc" id="L188">                    lotado.forward(request, response);</span>
+<span class="nc" id="L189">                }</span>
+        }
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        else if(request.getParameter(&quot;acao&quot;).equals(&quot;Remarcar Consulta&quot;)){   </span>
+<span class="nc" id="L192">                int id = Integer.parseInt(request.getParameter(&quot;id_consulta&quot;));</span>
+                
+<span class="nc bnc" id="L194" title="All 4 branches missed.">                if(colisoes.size() &lt; 2 || colisoes.contains(id)){</span>
+<span class="nc" id="L195">                    consulta.setId(id);</span>
+<span class="nc" id="L196">                    consultaDAO.updateConsulta(consulta.getId(),consulta);</span>
+<span class="nc" id="L197">                    RequestDispatcher voltar = request.getRequestDispatcher(&quot;./view/Confirmacao.jsp?type=Editado&quot;);</span>
+<span class="nc" id="L198">                    voltar.forward(request, response);</span>
+<span class="nc" id="L199">                }else{</span>
+<span class="nc" id="L200">                    RequestDispatcher lotado = request.getRequestDispatcher(&quot;./view/Confirmacao.jsp?type=Lotado&quot;);</span>
+<span class="nc" id="L201">                    lotado.forward(request, response);</span>
+                }
+        }
+<span class="nc" id="L204">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

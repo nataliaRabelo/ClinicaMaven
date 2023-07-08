@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControladorAdministrador.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">servlet</a> &gt; <span class="el_source">ControladorAdministrador.java</span></div><h1>ControladorAdministrador.java</h1><pre class="source lang-java linenums">package servlet;
+
+import aplicacao.Cliente;
+import aplicacao.Medico;
+import aplicacao.Administrador;
+import aplicacao.Consulta;
+import aplicacao.Plano;
+import aplicacao.Especialidade;
+import aplicacao.Exame;
+import utils.Constantes;
+import model.ClienteDAO;
+import model.MedicoDAO;
+import model.AdministradorDAO;
+import model.PlanoDAO;
+import model.EspecialidadeDAO;
+import model.ConsultaDAO;
+import model.ExameDAO;
+import conexao.ConexaoBancoDeDados;
+
+import java.util.List;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+
+/**
+ * Servlet responsável pelo controle das ações do administrador.
+ */
+@WebServlet(name = &quot;ControladorAdministrador&quot;, urlPatterns = {&quot;/ControladorAdministrador&quot;})
+<span class="nc" id="L35">public class ControladorAdministrador extends HttpServlet {</span>
+
+     /**
+     * Processa as requisições GET para o servlet.
+     * Realiza ações com base nos parâmetros recebidos para visualizar, editar, cadastrar ou excluir informações.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException exceção lançada ao ocorrer um erro durante o processamento da servlet.
+     * @throws IOException exceção lançada ocorrer um erro de I/O durante o processamento da servlet.
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+<span class="nc" id="L50">        HttpSession session = request.getSession();</span>
+<span class="nc" id="L51">        Administrador administradorSessao = (Administrador)session.getAttribute(&quot;adm&quot;);</span>
+<span class="nc" id="L52">        ConexaoBancoDeDados conexao = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L53">        ClienteDAO clienteDAO = new ClienteDAO();</span>
+<span class="nc" id="L54">        clienteDAO.createConnection();</span>
+<span class="nc" id="L55">        MedicoDAO medicoDAO = new MedicoDAO();</span>
+<span class="nc" id="L56">        AdministradorDAO administradorDAO = new AdministradorDAO();</span>
+<span class="nc" id="L57">        ConsultaDAO consultaDAO = new ConsultaDAO();</span>
+<span class="nc" id="L58">        consultaDAO.createConnection();</span>
+<span class="nc" id="L59">        ExameDAO exameDAO = new ExameDAO();</span>
+<span class="nc" id="L60">        exameDAO.createConnection();</span>
+<span class="nc" id="L61">        PlanoDAO planoDAO = new PlanoDAO();</span>
+<span class="nc" id="L62">        planoDAO.createConnection();</span>
+<span class="nc" id="L63">        EspecialidadeDAO especialidadeDAO = new EspecialidadeDAO();</span>
+<span class="nc" id="L64">        especialidadeDAO.createConnection(conexao);</span>
+        
+<span class="nc bnc" id="L66" title="All 8 branches missed.">        switch(request.getParameter(Constantes.TYPE)){</span>
+            case &quot;Paciente&quot;: 
+<span class="nc bnc" id="L68" title="All 5 branches missed.">                switch(request.getParameter(Constantes.ARG)){</span>
+                    case Constantes.VISUALIZAR:
+                        
+                        List&lt;Cliente&gt; pacientes;
+<span class="nc" id="L72">                        pacientes = clienteDAO.getPacientes();</span>
+                        
+<span class="nc bnc" id="L74" title="All 2 branches missed.">                        if(pacientes.size() &gt; 0){</span>
+                        
+<span class="nc" id="L76">                            List&lt;Plano&gt; planosPacientes = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                            for(int i=0;i&lt;pacientes.size();i++){</span>
+<span class="nc" id="L79">                                planosPacientes.add(planoDAO.getPlano(pacientes.get(i).getIdtipoplano()));</span>
+                            }
+
+<span class="nc" id="L82">                            session.setAttribute(&quot;pacientes&quot;, pacientes);</span>
+<span class="nc" id="L83">                            session.setAttribute(&quot;planos_pacientes&quot;, planosPacientes);</span>
+<span class="nc" id="L84">                            RequestDispatcher cadpac = request.getRequestDispatcher(&quot;./view/RelacaoPacientes.jsp&quot;);</span>
+<span class="nc" id="L85">                            cadpac.forward(request, response);</span>
+<span class="nc" id="L86">                        }else{</span>
+<span class="nc" id="L87">                            RequestDispatcher sempac = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Vazio&amp;type=Paciente&quot;);</span>
+<span class="nc" id="L88">                            sempac.forward(request, response);</span>
+                        }
+<span class="nc" id="L90">                    break;</span>
+                    
+                    case &quot;Excluir&quot;:
+                        List&lt;List&lt;Integer&gt;&gt; compiladoIds;
+                        
+<span class="nc" id="L95">                        compiladoIds = clienteDAO.getIdDeletePaciente(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+                        
+<span class="nc bnc" id="L97" title="All 2 branches missed.">                        for(int i=0;i&lt;compiladoIds.get(0).size();i++){</span>
+<span class="nc" id="L98">                            exameDAO.deleteExame(compiladoIds.get(0).get(i));</span>
+                        }
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                        for(int i=0;i&lt;compiladoIds.get(1).size();i++){</span>
+<span class="nc" id="L101">                            consultaDAO.deleteConsulta(compiladoIds.get(1).get(i));</span>
+                        }
+                        
+<span class="nc" id="L104">                        clienteDAO.deletePaciente(Integer.parseInt(request.getParameter(&quot;id&quot;)));</span>
+                        
+<span class="nc" id="L106">                        RequestDispatcher delAdm = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Excluido&amp;type=Paciente&quot;);</span>
+<span class="nc" id="L107">                        delAdm.forward(request, response);</span>
+<span class="nc" id="L108">                    break;</span>
+
+
+                    
+                    case Constantes.EDITAR:
+                        Cliente paciente;
+                        Plano plano;
+                        List&lt;Plano&gt; planosDisponiveis;
+                        
+<span class="nc" id="L117">                        paciente = clienteDAO.getPaciente(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+<span class="nc" id="L118">                        plano = planoDAO.getPlano(paciente.getIdtipoplano());</span>
+<span class="nc" id="L119">                        planosDisponiveis = planoDAO.getPlanos();</span>
+                        
+<span class="nc" id="L121">                        session.setAttribute(Constantes.PACIENTE,paciente);</span>
+<span class="nc" id="L122">                        session.setAttribute(Constantes.PLANO,plano);</span>
+<span class="nc" id="L123">                        session.setAttribute(Constantes.PLANOS, planosDisponiveis);</span>
+                        
+<span class="nc" id="L125">                        RequestDispatcher edtPac = request.getRequestDispatcher(&quot;/view/EditarPacienteAdm.jsp&quot;);</span>
+<span class="nc" id="L126">                        edtPac.forward(request, response);</span>
+<span class="nc" id="L127">                    break;</span>
+
+                    case Constantes.CADASTRAR:
+                        List&lt;Plano&gt; planos;
+<span class="nc" id="L131">                        planos = planoDAO.getPlanos();</span>
+                        
+<span class="nc" id="L133">                        session.setAttribute(Constantes.PACIENTE,null);</span>
+<span class="nc" id="L134">                        session.setAttribute(Constantes.PLANO,null);</span>
+<span class="nc" id="L135">                        session.setAttribute(Constantes.PLANOS, planos);</span>
+                        
+<span class="nc bnc" id="L137" title="All 2 branches missed.">                        if(planos.size() &gt; 0){</span>
+<span class="nc" id="L138">                            RequestDispatcher cad = request.getRequestDispatcher(&quot;/view/CadastrarPaciente.jsp&quot;);</span>
+<span class="nc" id="L139">                            cad.forward(request, response);</span>
+<span class="nc" id="L140">                        }else{</span>
+<span class="nc" id="L141">                            RequestDispatcher cad = request.getRequestDispatcher(&quot;/view/ConfirmacaoAdm.jsp?arg=SemRequisito&amp;type=Paciente&quot;);</span>
+<span class="nc" id="L142">                            cad.forward(request, response);</span>
+                        }
+                    break;
+                }
+<span class="nc" id="L146">            break;</span>
+                
+            case &quot;Medico&quot;:
+                Medico medico;
+<span class="nc bnc" id="L150" title="All 6 branches missed.">                switch(request.getParameter(&quot;arg&quot;)){</span>
+                    case Constantes.VISUALIZAR:
+                        List&lt;Medico&gt; medicos;
+
+<span class="nc" id="L154">                        medicos = medicoDAO.getMedicos();</span>
+                        
+<span class="nc bnc" id="L156" title="All 2 branches missed.">                        if(medicos.size() &gt; 0){</span>
+                        
+<span class="nc" id="L158">                            List&lt;Especialidade&gt; especialidadesMedicos = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L160" title="All 2 branches missed.">                            for(int i=0;i&lt;medicos.size();i++){</span>
+<span class="nc" id="L161">                                especialidadesMedicos.add(especialidadeDAO.getEspecialidade(medicos.get(i).getIdespecialidade()));</span>
+                            }
+
+<span class="nc" id="L164">                            session.setAttribute(&quot;medicos&quot;,medicos);</span>
+<span class="nc" id="L165">                            session.setAttribute(&quot;especialidades_medicos&quot;,especialidadesMedicos);</span>
+<span class="nc" id="L166">                            RequestDispatcher cadmed = request.getRequestDispatcher(&quot;./view/RelacaoMedicos.jsp&quot;);</span>
+<span class="nc" id="L167">                            cadmed.forward(request, response);</span>
+<span class="nc" id="L168">                        }else{</span>
+<span class="nc" id="L169">                            RequestDispatcher semmed = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Vazio&amp;type=Medico&quot;);</span>
+<span class="nc" id="L170">                            semmed.forward(request, response);</span>
+                        }
+<span class="nc" id="L172">                    break;</span>
+                
+                    case Constantes.EXCLUIR:
+                        List&lt;List&lt;Integer&gt;&gt; compiladoIds;
+                        
+<span class="nc" id="L177">                        compiladoIds = medicoDAO.getIdDeleteMedico(Integer.parseInt(request.getParameter(&quot;id&quot;)));</span>
+                        
+<span class="nc bnc" id="L179" title="All 2 branches missed.">                        for(int i=0;i&lt;compiladoIds.get(0).size();i++){</span>
+<span class="nc" id="L180">                            exameDAO.deleteExame(compiladoIds.get(0).get(i));</span>
+                        }
+<span class="nc bnc" id="L182" title="All 2 branches missed.">                        for(int i=0;i&lt;compiladoIds.get(1).size();i++){</span>
+<span class="nc" id="L183">                            consultaDAO.deleteConsulta(compiladoIds.get(1).get(i));</span>
+                        }
+                        
+<span class="nc" id="L186">                        medicoDAO.deleteMedico(Integer.parseInt(request.getParameter(&quot;id&quot;)));</span>
+                        
+<span class="nc" id="L188">                        RequestDispatcher delAdm = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Excluido&amp;type=Medico&quot;);</span>
+<span class="nc" id="L189">                        delAdm.forward(request, response);</span>
+<span class="nc" id="L190">                    break;</span>
+
+
+                
+                    case Constantes.EDITAR:
+                        
+                        Especialidade especialidade;
+                        List&lt;Especialidade&gt; especsDisponiveis;
+                        
+<span class="nc" id="L199">                        medico = medicoDAO.getMedico(Integer.parseInt(request.getParameter(&quot;id&quot;)));</span>
+<span class="nc" id="L200">                        especialidade = especialidadeDAO.getEspecialidade(medico.getIdespecialidade());</span>
+<span class="nc" id="L201">                        especsDisponiveis = especialidadeDAO.getEspecialidades();</span>
+                        
+<span class="nc" id="L203">                        session.setAttribute(Constantes.MEDICO,medico);</span>
+<span class="nc" id="L204">                        session.setAttribute(Constantes.ESPECIALIDADE,especialidade);</span>
+<span class="nc" id="L205">                        session.setAttribute(Constantes.ESPECIALIDADE, especsDisponiveis);</span>
+                        
+<span class="nc" id="L207">                        RequestDispatcher edtMed = request.getRequestDispatcher(&quot;/view/EditarMedicoAdm.jsp&quot;);</span>
+<span class="nc" id="L208">                        edtMed.forward(request, response);</span>
+<span class="nc" id="L209">                    break;</span>
+
+                    case Constantes.CADASTRAR:
+                        List&lt;Especialidade&gt; especs;
+
+<span class="nc" id="L214">                        especs = especialidadeDAO.getEspecialidades();</span>
+                        
+<span class="nc bnc" id="L216" title="All 2 branches missed.">                        if(!especs.isEmpty()){</span>
+                            
+<span class="nc" id="L218">                            session.setAttribute(&quot;especialidades&quot;, especs);</span>
+<span class="nc" id="L219">                            RequestDispatcher cadMed = request.getRequestDispatcher(&quot;/view/CadastrarMedico.jsp&quot;);</span>
+<span class="nc" id="L220">                            cadMed.forward(request, response);</span>
+<span class="nc" id="L221">                        }else{</span>
+<span class="nc" id="L222">                            RequestDispatcher cad = request.getRequestDispatcher(&quot;/view/ConfirmacaoAdm.jsp?arg=SemRequisito&amp;type=Medico&quot;);</span>
+<span class="nc" id="L223">                            cad.forward(request, response);</span>
+                        }
+<span class="nc" id="L225">                    break;</span>
+                    
+                    case Constantes.VERCONSULTAS:
+                        
+                        List&lt;Consulta&gt; listaConsultas;                
+<span class="nc" id="L230">                        listaConsultas = medicoDAO.getConsultas(Integer.parseInt(request.getParameter(&quot;id&quot;)));</span>
+                    
+<span class="nc bnc" id="L232" title="All 2 branches missed.">                        if(listaConsultas.size() &gt; 0){</span>
+                            
+<span class="nc" id="L234">                            List&lt;List&lt;String&gt;&gt;listaExamesCompilado = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L236" title="All 2 branches missed.">                            for(int i=0;i&lt;listaConsultas.size();i++){</span>
+
+<span class="nc" id="L238">                                List&lt;String&gt;listaExames = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L239">                                listaExames = exameDAO.getExamesDaConsulta(listaConsultas.get(i).getId(),listaExames);</span>
+
+<span class="nc bnc" id="L241" title="All 2 branches missed.">                                if(listaExames.isEmpty()){</span>
+<span class="nc" id="L242">                                    listaExamesCompilado.add(null);</span>
+                                }
+                                else{
+<span class="nc" id="L245">                                    listaExamesCompilado.add(listaExames);</span>
+                                }
+                            }
+
+<span class="nc" id="L249">                            List&lt;String&gt; nomePacientes = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L251" title="All 2 branches missed.">                            for(int i=0;i&lt;listaConsultas.size();i++){</span>
+
+<span class="nc" id="L253">                                String nomePaciente = clienteDAO.getNomePaciente(listaConsultas.get(i).getIdpaciente());</span>
+<span class="nc" id="L254">                                nomePacientes.add(nomePaciente);</span>
+                            }
+                            
+<span class="nc" id="L257">                            medico = medicoDAO.getMedico(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+<span class="nc" id="L258">                            String nomeMedico = medico.getNome();</span>
+                            
+<span class="nc" id="L260">                            session.setAttribute(&quot;lista_nomes&quot;, nomePacientes);</span>
+<span class="nc" id="L261">                            session.setAttribute(&quot;lista_exames&quot;, listaExamesCompilado);</span>
+<span class="nc" id="L262">                            session.setAttribute(&quot;lista_consultas&quot;, listaConsultas);</span>
+<span class="nc" id="L263">                            session.setAttribute(&quot;nome_medico&quot;, nomeMedico);</span>
+<span class="nc" id="L264">                            RequestDispatcher admCons = request.getRequestDispatcher(&quot;./view/RelacaoConsultas.jsp&quot;);</span>
+<span class="nc" id="L265">                            admCons.forward(request, response);</span>
+<span class="nc" id="L266">                        }</span>
+                        else{
+<span class="nc" id="L268">                            RequestDispatcher clt = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=SemConsulta&quot;);</span>
+<span class="nc" id="L269">                            clt.forward(request, response);</span>
+                        }
+                    break;
+
+                }
+<span class="nc" id="L274">            break;</span>
+                
+            case Constantes.ADMINISTRADOR:
+<span class="nc bnc" id="L277" title="All 5 branches missed.">                switch(request.getParameter(Constantes.ARG)){</span>
+                    
+                    case Constantes.VISUALIZAR:     
+                        List&lt;Administrador&gt; adms;
+
+<span class="nc" id="L282">                        adms = administradorDAO.getAdministradores();</span>
+                        
+<span class="nc" id="L284">                        session.setAttribute(&quot;adms&quot;,adms);</span>
+<span class="nc" id="L285">                        session.setAttribute(&quot;administrador_sessao&quot;,administradorSessao);</span>
+<span class="nc" id="L286">                        RequestDispatcher viAdm = request.getRequestDispatcher(&quot;./view/RelacaoAdministradores.jsp&quot;);</span>
+<span class="nc" id="L287">                        viAdm.forward(request, response);</span>
+<span class="nc" id="L288">                    break;</span>
+
+                    
+                    case Constantes.EXCLUIR:
+<span class="nc" id="L292">                        administradorDAO.deleteAdministrador(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+<span class="nc" id="L293">                        RequestDispatcher delAdm = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Excluido&amp;type=Administrador&quot;);</span>
+<span class="nc" id="L294">                        delAdm.forward(request, response);</span>
+<span class="nc" id="L295">                    break;</span>
+
+                
+                    case Constantes.EDITAR: 
+                        Administrador administrador;
+                        
+<span class="nc" id="L301">                        administrador = administradorDAO.getAdministrador(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+                        
+<span class="nc" id="L303">                        session.setAttribute(&quot;administrador&quot;,administrador);</span>
+<span class="nc" id="L304">                        RequestDispatcher edtAdm = request.getRequestDispatcher(&quot;/view/EditarAdministradorAdm.jsp&quot;);</span>
+<span class="nc" id="L305">                        edtAdm.forward(request, response);</span>
+<span class="nc" id="L306">                    break;</span>
+
+                    
+                    case Constantes.CADASTRAR:
+<span class="nc" id="L310">                        session.setAttribute(&quot;administrador&quot;,null);</span>
+<span class="nc" id="L311">                        RequestDispatcher crAdm = request.getRequestDispatcher(&quot;/view/CadastrarAdministrador.jsp&quot;);</span>
+<span class="nc" id="L312">                        crAdm.forward(request, response);</span>
+                    break;
+
+
+                }  
+<span class="nc" id="L317">            break;</span>
+            
+            case Constantes.PLANO2:
+<span class="nc bnc" id="L320" title="All 5 branches missed.">                switch(request.getParameter(Constantes.ARG)){</span>
+                    case Constantes.VISUALIZAR:
+                        
+                        List&lt;Plano&gt; planos;
+
+<span class="nc" id="L325">                        planos = planoDAO.getPlanos();</span>
+
+<span class="nc bnc" id="L327" title="All 2 branches missed.">                        if(planos.size() &gt; 0){</span>
+<span class="nc" id="L328">                            session.setAttribute(&quot;planos&quot;,planos);</span>
+<span class="nc" id="L329">                            RequestDispatcher cadpla = request.getRequestDispatcher(&quot;./view/RelacaoPlanos.jsp&quot;);</span>
+<span class="nc" id="L330">                            cadpla.forward(request, response);</span>
+<span class="nc" id="L331">                        }else{</span>
+<span class="nc" id="L332">                            RequestDispatcher sempla = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Vazio&amp;type=Plano&quot;);</span>
+<span class="nc" id="L333">                            sempla.forward(request, response);</span>
+                        }
+<span class="nc" id="L335">                    break;</span>
+                    
+                    case Constantes.EXCLUIR:
+                        
+                        List&lt;List&lt;Integer&gt;&gt; compiladoIds;
+                        
+<span class="nc" id="L341">                        compiladoIds = planoDAO.getIdDeletePlano(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+                        
+<span class="nc bnc" id="L343" title="All 2 branches missed.">                        for(int i=0;i&lt;compiladoIds.get(0).size();i++){</span>
+<span class="nc" id="L344">                            exameDAO.deleteExame(compiladoIds.get(0).get(i));</span>
+                        }
+<span class="nc bnc" id="L346" title="All 2 branches missed.">                        for(int i=0;i&lt;compiladoIds.get(1).size();i++){</span>
+<span class="nc" id="L347">                            consultaDAO.deleteConsulta(compiladoIds.get(1).get(i));</span>
+                        }
+<span class="nc bnc" id="L349" title="All 2 branches missed.">                        for(int i=0;i&lt;compiladoIds.get(2).size();i++){</span>
+<span class="nc" id="L350">                            clienteDAO.deletePaciente(compiladoIds.get(2).get(i));</span>
+                        }
+                        
+<span class="nc" id="L353">                        planoDAO.deletePlano(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+                        
+<span class="nc" id="L355">                        session.setAttribute(Constantes.IDENTIDADE, 2);</span>
+<span class="nc" id="L356">                        RequestDispatcher delAdm = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Excluido&amp;type=Plano&quot;);</span>
+<span class="nc" id="L357">                        delAdm.forward(request, response);</span>
+<span class="nc" id="L358">                    break;</span>
+
+
+
+
+                    case Constantes.EDITAR:
+                        Plano plano;
+                        
+<span class="nc" id="L366">                        plano = planoDAO.getPlano(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+<span class="nc" id="L367">                        session.setAttribute(&quot;plano&quot;,plano);</span>
+                        
+<span class="nc" id="L369">                        RequestDispatcher edtPln = request.getRequestDispatcher(&quot;/view/CadastrarPlano.jsp&quot;);</span>
+<span class="nc" id="L370">                        edtPln.forward(request, response);</span>
+<span class="nc" id="L371">                    break;</span>
+
+
+                    case Constantes.CADASTRAR:
+<span class="nc" id="L375">                        session.setAttribute(&quot;plano&quot;,null);</span>
+                        
+<span class="nc" id="L377">                        RequestDispatcher cadPlan = request.getRequestDispatcher(&quot;/view/CadastrarPlano.jsp&quot;);</span>
+<span class="nc" id="L378">                        cadPlan.forward(request, response);</span>
+                    break;
+
+                }  
+<span class="nc" id="L382">            break;</span>
+            
+            case Constantes.ESPECIALIDADE2:
+<span class="nc bnc" id="L385" title="All 5 branches missed.">                switch(request.getParameter(Constantes.ARG)){</span>
+                    case Constantes.VISUALIZAR:
+                        
+                        List&lt;Especialidade&gt; especs;
+
+<span class="nc" id="L390">                        especs = especialidadeDAO.getEspecialidades();</span>
+
+<span class="nc bnc" id="L392" title="All 2 branches missed.">                        if(especs.size() &gt; 0){</span>
+<span class="nc" id="L393">                            session.setAttribute(&quot;especs&quot;,especs);</span>
+<span class="nc" id="L394">                            RequestDispatcher cadesp = request.getRequestDispatcher(&quot;./view/RelacaoEspecialidades.jsp&quot;);</span>
+<span class="nc" id="L395">                            cadesp.forward(request, response);</span>
+<span class="nc" id="L396">                        }else{</span>
+<span class="nc" id="L397">                            RequestDispatcher semesp = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Vazio&amp;type=Especialidade&quot;);</span>
+<span class="nc" id="L398">                            semesp.forward(request, response);</span>
+                        }
+<span class="nc" id="L400">                    break;</span>
+                    
+                    case Constantes.EXCLUIR:
+                        List&lt;List&lt;Integer&gt;&gt; compiladoIds;
+                        
+<span class="nc" id="L405">                        compiladoIds = especialidadeDAO.getIdDeleteEspecialidade(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+                        
+<span class="nc bnc" id="L407" title="All 2 branches missed.">                        for(int i=0;i&lt;compiladoIds.get(0).size();i++){</span>
+<span class="nc" id="L408">                            exameDAO.deleteExame(compiladoIds.get(0).get(i));</span>
+                        }
+<span class="nc bnc" id="L410" title="All 2 branches missed.">                        for(int i=0;i&lt;compiladoIds.get(1).size();i++){</span>
+<span class="nc" id="L411">                            consultaDAO.deleteConsulta(compiladoIds.get(1).get(i));</span>
+                        }
+<span class="nc bnc" id="L413" title="All 2 branches missed.">                        for(int i=0;i&lt;compiladoIds.get(2).size();i++){</span>
+<span class="nc" id="L414">                            medicoDAO.deleteMedico(compiladoIds.get(2).get(i));</span>
+                        }
+                        
+<span class="nc" id="L417">                        especialidadeDAO.deleteEspecialidade(Integer.parseInt(request.getParameter(&quot;id&quot;)));</span>
+                        
+<span class="nc" id="L419">                        session.setAttribute(Constantes.IDENTIDADE, 2);</span>
+<span class="nc" id="L420">                        RequestDispatcher delAdm = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Excluido&amp;type=Especialidade&quot;);</span>
+<span class="nc" id="L421">                        delAdm.forward(request, response);   </span>
+<span class="nc" id="L422">                    break;</span>
+
+
+
+                    case Constantes.EDITAR:
+                        Especialidade especialidade;
+                        
+<span class="nc" id="L429">                        especialidade = especialidadeDAO.getEspecialidade(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+<span class="nc" id="L430">                        session.setAttribute(Constantes.ESPECIALIDADE,especialidade);</span>
+                        
+<span class="nc" id="L432">                        RequestDispatcher edtEsp = request.getRequestDispatcher(&quot;/view/CadastrarEspecialidade.jsp&quot;);</span>
+<span class="nc" id="L433">                        edtEsp.forward(request, response);</span>
+
+<span class="nc" id="L435">                    break;</span>
+
+
+                    case Constantes.CADASTRAR:
+<span class="nc" id="L439">                        session.setAttribute(&quot;especialidade&quot;,null);</span>
+                        
+<span class="nc" id="L441">                        RequestDispatcher cadEsp = request.getRequestDispatcher(&quot;/view/CadastrarEspecialidade.jsp&quot;);</span>
+<span class="nc" id="L442">                        cadEsp.forward(request, response);</span>
+                    break;
+
+                }
+<span class="nc" id="L446">            break;</span>
+        
+            case Constantes.EXAME:
+<span class="nc bnc" id="L449" title="All 5 branches missed.">                switch(request.getParameter(Constantes.ARG)){</span>
+                    case Constantes.VISUALIZAR:
+                        
+                        List&lt;Exame&gt; exames;
+
+<span class="nc" id="L454">                        exames = exameDAO.getExames();</span>
+
+<span class="nc bnc" id="L456" title="All 2 branches missed.">                        if(exames.size() &gt; 0){</span>
+<span class="nc" id="L457">                            session.setAttribute(&quot;exames&quot;,exames);</span>
+<span class="nc" id="L458">                            RequestDispatcher exms = request.getRequestDispatcher(&quot;./view/RelacaoExames.jsp&quot;);</span>
+<span class="nc" id="L459">                            exms.forward(request, response);</span>
+<span class="nc" id="L460">                        }else{</span>
+<span class="nc" id="L461">                            RequestDispatcher semexm = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Vazio&amp;type=Exame&quot;);</span>
+<span class="nc" id="L462">                            semexm.forward(request, response);</span>
+                        }
+<span class="nc" id="L464">                    break;</span>
+                    
+                    case Constantes.EXCLUIR:
+                        List&lt;Integer&gt; compiladoIds;
+                        
+<span class="nc" id="L469">                        compiladoIds = exameDAO.getIdDeleteExame(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+                        
+<span class="nc bnc" id="L471" title="All 2 branches missed.">                        for(int i=0;i&lt;compiladoIds.size();i++){</span>
+<span class="nc" id="L472">                            exameDAO.deleteExame(compiladoIds.get(i));</span>
+                        }
+                        
+<span class="nc" id="L475">                        exameDAO.deleteTipoExame(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+                        
+<span class="nc" id="L477">                        session.setAttribute(Constantes.IDENTIDADE, 2);</span>
+<span class="nc" id="L478">                        RequestDispatcher delAdm = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Excluido&amp;type=Exame&quot;);</span>
+<span class="nc" id="L479">                        delAdm.forward(request, response);   </span>
+<span class="nc" id="L480">                    break;</span>
+
+
+                    
+                    case Constantes.EDITAR:
+                        Exame exame;
+                        
+<span class="nc" id="L487">                        exame = exameDAO.getExame(Integer.parseInt(request.getParameter(Constantes.ID)));</span>
+<span class="nc" id="L488">                        session.setAttribute(&quot;exame&quot;,exame);</span>
+                        
+<span class="nc" id="L490">                        RequestDispatcher edtExm = request.getRequestDispatcher(&quot;/view/CadastrarExame.jsp&quot;);</span>
+<span class="nc" id="L491">                        edtExm.forward(request, response);</span>
+
+<span class="nc" id="L493">                    break;</span>
+
+
+                    case Constantes.CADASTRAR:
+<span class="nc" id="L497">                        session.setAttribute(&quot;exame&quot;,null);</span>
+                        
+<span class="nc" id="L499">                        RequestDispatcher cadExm = request.getRequestDispatcher(&quot;/view/CadastrarExame.jsp&quot;);</span>
+<span class="nc" id="L500">                        cadExm.forward(request, response);</span>
+                    break;
+
+                }
+<span class="nc" id="L504">            break;</span>
+            
+            case Constantes.DASHBOARD:
+            
+<span class="nc" id="L508">                session.setAttribute(&quot;adm&quot;, administradorSessao);</span>
+<span class="nc" id="L509">                RequestDispatcher admin = request.getRequestDispatcher(&quot;./view/AreaAdministrador.jsp&quot;);</span>
+<span class="nc" id="L510">                admin.forward(request, response);    </span>
+            break;
+        }
+<span class="nc" id="L513">    }</span>
+    
+    /**
+     * Processa as requisições POST para o servlet.
+     * Realiza ações com base nos parâmetros recebidos para cadastrar ou editar informações de pacientes, médicos,
+     * administradores, planos, especialidades e exames.
+     * 
+     * @param request O objeto HttpServletRequest que contém a requisição do cliente.
+     * @param response O objeto HttpServletResponse que será enviado como resposta.
+     * @throws ServletException Se ocorrer um erro durante o processamento da servlet.
+     * @throws IOException Se ocorrer um erro de I/O durante o processamento da servlet.
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+<span class="nc" id="L529">        HttpSession session = request.getSession();</span>
+<span class="nc bnc" id="L530" title="All 7 branches missed.">        switch(request.getParameter(&quot;type&quot;)){</span>
+            
+            case Constantes.PACIENTE2:
+<span class="nc" id="L533">                ConexaoBancoDeDados conexao = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L534">                ClienteDAO novoCltDAO = new ClienteDAO();</span>
+<span class="nc" id="L535">                novoCltDAO.createConnection();</span>
+<span class="nc" id="L536">                Cliente paciente = new Cliente();</span>
+                
+<span class="nc" id="L538">                paciente.setNome(request.getParameter(Constantes.NOME));</span>
+<span class="nc" id="L539">                paciente.setCpf(request.getParameter(Constantes.CPF));</span>
+<span class="nc" id="L540">                paciente.setSenha(request.getParameter(Constantes.SENHA));</span>
+<span class="nc" id="L541">                paciente.setIdtipoplano(Integer.parseInt(request.getParameter(Constantes.PLANO)));</span>
+<span class="nc" id="L542">                paciente.setAutorizado(request.getParameter(Constantes.AUTORIZADO).charAt(0));</span>
+                
+<span class="nc bnc" id="L544" title="All 2 branches missed.">                if(request.getParameter(Constantes.ACTION).equals(Constantes.CADASTRAR)){</span>
+<span class="nc" id="L545">                        novoCltDAO.createPaciente(paciente);</span>
+                        
+<span class="nc" id="L547">                        RequestDispatcher cadPac = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Cadastrado&amp;type=Paciente&quot;);</span>
+<span class="nc" id="L548">                        cadPac.forward(request, response);</span>
+<span class="nc" id="L549">                }</span>
+<span class="nc bnc" id="L550" title="All 2 branches missed.">                else if(request.getParameter(Constantes.ACTION).equals(Constantes.EDITAR)){  </span>
+<span class="nc" id="L551">                        novoCltDAO.updatePaciente(Integer.parseInt(request.getParameter(Constantes.ID)),paciente);</span>
+                        
+<span class="nc" id="L553">                        RequestDispatcher cltEdit = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Editar&amp;type=Paciente&quot;);</span>
+<span class="nc" id="L554">                        cltEdit.forward(request, response);</span>
+<span class="nc" id="L555">                }  </span>
+            break;
+
+            
+            case Constantes.MEDICO2:
+<span class="nc" id="L560">                MedicoDAO novoMedDAO = new MedicoDAO();</span>
+<span class="nc" id="L561">                Medico medico = new Medico();</span>
+                
+<span class="nc" id="L563">                medico.setNome(request.getParameter(Constantes.NOME));</span>
+<span class="nc" id="L564">                medico.setCrm(Integer.parseInt(request.getParameter(Constantes.CRM)));</span>
+<span class="nc" id="L565">                medico.setEstadocrm(request.getParameter(Constantes.ESTADOCRM));</span>
+<span class="nc" id="L566">                medico.setCpf(request.getParameter(Constantes.CPF));</span>
+<span class="nc" id="L567">                medico.setSenha(request.getParameter(Constantes.SENHA));</span>
+<span class="nc" id="L568">                medico.setIdespecialidade(Integer.parseInt(request.getParameter(Constantes.ESPECIALIDADE)));</span>
+<span class="nc" id="L569">                medico.setAutorizado(request.getParameter(Constantes.AUTORIZADO).charAt(0));</span>
+                
+<span class="nc bnc" id="L571" title="All 2 branches missed.">                if(request.getParameter(Constantes.ACTION).equals(Constantes.CADASTRAR)){</span>
+<span class="nc" id="L572">                        novoMedDAO.createMedico(medico);</span>
+                        
+<span class="nc" id="L574">                        session.setAttribute(Constantes.IDENTIDADE, 2);</span>
+<span class="nc" id="L575">                        RequestDispatcher med = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Cadastrado&amp;type=Medico&quot;);</span>
+<span class="nc" id="L576">                        med.forward(request, response);</span>
+<span class="nc" id="L577">                }</span>
+<span class="nc bnc" id="L578" title="All 2 branches missed.">                else if(request.getParameter(Constantes.ACTION).equals(Constantes.EDITAR)){</span>
+<span class="nc" id="L579">                        novoMedDAO.updateMedico(Integer.parseInt(request.getParameter(Constantes.ID)),medico);</span>
+                        
+<span class="nc" id="L581">                        RequestDispatcher medEdit = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Editar&amp;type=Medico&quot;);</span>
+<span class="nc" id="L582">                        medEdit.forward(request, response);</span>
+<span class="nc" id="L583">                }</span>
+            break;
+
+                
+            case Constantes.ADMINISTRADOR:
+<span class="nc" id="L588">                AdministradorDAO novoAdmDAO = new AdministradorDAO();</span>
+<span class="nc" id="L589">                Administrador novoAdm = new Administrador();</span>
+                
+<span class="nc bnc" id="L591" title="All 2 branches missed.">                if(request.getParameter(Constantes.ACTION).equals(Constantes.CADASTRAR)){</span>
+<span class="nc" id="L592">                        novoAdm.setNome(request.getParameter(Constantes.NOME));</span>
+<span class="nc" id="L593">                        novoAdm.setCpf(request.getParameter(Constantes.CPF));</span>
+<span class="nc" id="L594">                        novoAdm.setSenha(request.getParameter(Constantes.SENHA));</span>
+
+<span class="nc" id="L596">                        novoAdmDAO.createAdministrador(novoAdm);</span>
+                        
+<span class="nc" id="L598">                        session.setAttribute(Constantes.IDENTIDADE, 2);</span>
+<span class="nc" id="L599">                        RequestDispatcher adm = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Cadastrado&amp;type=Administrador&quot;);</span>
+<span class="nc" id="L600">                        adm.forward(request, response);           </span>
+<span class="nc" id="L601">                }</span>
+<span class="nc bnc" id="L602" title="All 2 branches missed.">                else if(request.getParameter(Constantes.ACTION).equals(Constantes.EDITAR)){</span>
+<span class="nc" id="L603">                        novoAdm.setNome(request.getParameter(Constantes.NOME));</span>
+<span class="nc" id="L604">                        novoAdm.setCpf(request.getParameter(Constantes.CPF));</span>
+<span class="nc" id="L605">                        novoAdm.setSenha(request.getParameter(Constantes.SENHA)); </span>
+                        
+<span class="nc" id="L607">                        novoAdmDAO.updateAdministrador(Integer.parseInt(request.getParameter(Constantes.ID)),novoAdm);</span>
+                        
+<span class="nc" id="L609">                        RequestDispatcher edtAdm = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Editar&amp;type=Administrador&quot;);</span>
+<span class="nc" id="L610">                        edtAdm.forward(request, response);</span>
+<span class="nc" id="L611">                }</span>
+            break;
+
+
+
+            
+            case Constantes.PLANO2:
+<span class="nc" id="L618">                ConexaoBancoDeDados conexao2 = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L619">                Plano novoPlano = new Plano();</span>
+<span class="nc" id="L620">                PlanoDAO novoPlanoDAO = new PlanoDAO();</span>
+<span class="nc" id="L621">                novoPlanoDAO.createConnection();</span>
+                
+<span class="nc bnc" id="L623" title="All 2 branches missed.">                if(request.getParameter(Constantes.ACTION).equals(Constantes.CADASTRAR)){</span>
+<span class="nc" id="L624">                        novoPlano.setDescricao(request.getParameter(Constantes.NOMEPLANO));</span>
+                        
+<span class="nc" id="L626">                        novoPlanoDAO.createPlano(novoPlano);</span>
+                        
+<span class="nc" id="L628">                        session.setAttribute(Constantes.IDENTIDADE, 2);</span>
+<span class="nc" id="L629">                        RequestDispatcher pln = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Cadastrado&amp;type=Plano&quot;);</span>
+<span class="nc" id="L630">                        pln.forward(request, response);           </span>
+<span class="nc" id="L631">                }</span>
+<span class="nc bnc" id="L632" title="All 2 branches missed.">                else if(request.getParameter(Constantes.ACTION).equals(Constantes.EDITAR)){</span>
+<span class="nc" id="L633">                        novoPlano.setDescricao(request.getParameter(Constantes.NOMEPLANO));</span>
+<span class="nc" id="L634">                        novoPlanoDAO.updatePlano(Integer.parseInt(request.getParameter(Constantes.ID)),novoPlano);</span>
+                        
+<span class="nc" id="L636">                        RequestDispatcher novopln = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Editar&amp;type=Plano&quot;);</span>
+<span class="nc" id="L637">                        novopln.forward(request, response);</span>
+<span class="nc" id="L638">                }</span>
+            break;
+
+
+            
+            case Constantes.ESPECIALIDADE:
+<span class="nc" id="L644">                ConexaoBancoDeDados conexao3 = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L645">                EspecialidadeDAO novaEspDAO = new EspecialidadeDAO();</span>
+<span class="nc" id="L646">                novaEspDAO.createConnection(conexao3);</span>
+<span class="nc" id="L647">                Especialidade novaEspecialidade = new Especialidade();</span>
+                
+<span class="nc bnc" id="L649" title="All 2 branches missed.">                if(request.getParameter(Constantes.ACTION).equals(Constantes.CADASTRAR)){</span>
+<span class="nc" id="L650">                        novaEspecialidade.setDescricao(request.getParameter(&quot;nomeEspecialidade&quot;));</span>
+<span class="nc" id="L651">                        novaEspDAO.createEspecialidade(novaEspecialidade);</span>
+                        
+<span class="nc" id="L653">                        session.setAttribute(&quot;identidade&quot;, 2);</span>
+<span class="nc" id="L654">                        RequestDispatcher esp = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Cadastrado&amp;type=Especialidade&quot;);</span>
+<span class="nc" id="L655">                        esp.forward(request, response);           </span>
+<span class="nc" id="L656">                }</span>
+<span class="nc bnc" id="L657" title="All 2 branches missed.">                else if(request.getParameter(Constantes.ACTION).equals(&quot;Editar&quot;)){</span>
+<span class="nc" id="L658">                        novaEspecialidade.setDescricao(request.getParameter(&quot;nomeEspecialidade&quot;));</span>
+<span class="nc" id="L659">                        novaEspDAO.updateEspecialidade(Integer.parseInt(request.getParameter(&quot;id&quot;)),novaEspecialidade);</span>
+                        
+<span class="nc" id="L661">                        RequestDispatcher novaesp = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Editar&amp;type=Especialidade&quot;);</span>
+<span class="nc" id="L662">                        novaesp.forward(request, response);</span>
+<span class="nc" id="L663">                }</span>
+            break;
+
+
+            
+            case Constantes.EXAME:
+<span class="nc" id="L669">                ConexaoBancoDeDados conexao4 = new ConexaoBancoDeDados();</span>
+<span class="nc" id="L670">                ExameDAO novoExmDAO = new ExameDAO();</span>
+<span class="nc" id="L671">                novoExmDAO.createConnection();</span>
+<span class="nc" id="L672">                Exame novoExame = new Exame();</span>
+                
+<span class="nc bnc" id="L674" title="All 2 branches missed.">                if(request.getParameter(Constantes.ACTION).equals(Constantes.CADASTRAR)){</span>
+<span class="nc" id="L675">                        novoExame.setDescricao(request.getParameter(&quot;nomeExame&quot;));</span>
+<span class="nc" id="L676">                        novoExmDAO.createExame(novoExame);</span>
+                        
+<span class="nc" id="L678">                        session.setAttribute(&quot;identidade&quot;, 2);</span>
+<span class="nc" id="L679">                        RequestDispatcher exm = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Cadastrado&amp;type=Exame&quot;);</span>
+<span class="nc" id="L680">                        exm.forward(request, response);           </span>
+<span class="nc" id="L681">                }</span>
+<span class="nc bnc" id="L682" title="All 2 branches missed.">                else if (request.getParameter(&quot;action&quot;).equals(&quot;Editar&quot;)){   </span>
+<span class="nc" id="L683">                        novoExame.setDescricao(request.getParameter(&quot;nomeExame&quot;));</span>
+<span class="nc" id="L684">                        novoExmDAO.updateExame(Integer.parseInt(request.getParameter(&quot;id&quot;)),novoExame);</span>
+                        
+<span class="nc" id="L686">                        RequestDispatcher novoexm = request.getRequestDispatcher(&quot;./view/ConfirmacaoAdm.jsp?arg=Editar&amp;type=Exame&quot;);</span>
+<span class="nc" id="L687">                        novoexm.forward(request, response);</span>
+                }
+            break;
+
+
+        }
+<span class="nc" id="L693">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

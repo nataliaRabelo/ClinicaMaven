@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cliente.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ClinicaMaven</a> &gt; <a href="index.source.html" class="el_package">aplicacao</a> &gt; <span class="el_source">Cliente.java</span></div><h1>Cliente.java</h1><pre class="source lang-java linenums">package aplicacao;
+
+/**
+A classe Cliente representa um cliente do sistema.
+Um cliente possui um identificador, nome, CPF, senha, autorização e identificador de tipo de plano.
+*/
+<span class="fc" id="L7">public class Cliente {</span>
+    
+    private Integer id;
+    private String nome;
+    private String cpf;
+    private String senha;
+    private char autorizado;
+    private Integer idtipoplano;
+    
+ /**
+Obtém o identificador do cliente.
+@return O identificador do cliente.
+*/  
+    public Integer getId() {
+<span class="nc" id="L21">        return id;</span>
+    }
+
+/**
+
+Define o identificador do cliente.
+@param id O identificador a ser definido.
+*/
+    public void setId(Integer id) {
+<span class="fc" id="L30">        this.id = id;</span>
+<span class="fc" id="L31">    }</span>
+
+/**
+Obtém o nome do cliente.
+@return O nome do cliente.
+*/
+    public String getNome() {
+<span class="fc" id="L38">        return nome;</span>
+    }
+    
+/**
+Define o nome do cliente.
+@param nome O nome a ser definido.
+*/
+    public void setNome(String nome) {
+<span class="fc" id="L46">        this.nome = nome;</span>
+<span class="fc" id="L47">    }</span>
+    
+/**
+Obtém o CPF do cliente.
+@return O CPF do cliente.
+*/
+    public String getCpf() {
+<span class="fc" id="L54">        return cpf;</span>
+    }
+    
+/**
+Define o CPF do cliente.
+@param cpf O CPF a ser definido.
+*/
+    public void setCpf(String cpf) {
+<span class="fc" id="L62">        this.cpf = cpf;</span>
+<span class="fc" id="L63">    }</span>
+    
+/**
+Obtém a senha do cliente.
+@return A senha do cliente.
+*/
+    public String getSenha() {
+<span class="fc" id="L70">        return senha;</span>
+    }
+    
+/**
+Define a senha do cliente.
+@param senha A senha a ser definida.
+*/
+    public void setSenha(String senha) {
+<span class="fc" id="L78">        this.senha = senha;</span>
+<span class="fc" id="L79">    }</span>
+    
+/**
+Obtém a autorização do cliente.
+@return A autorização do cliente.
+*/
+    public char getAutorizado() {
+<span class="fc" id="L86">        return autorizado;</span>
+    }
+    
+/**
+Define a autorização do cliente.
+@param autorizado A autorização a ser definida.
+*/
+    public void setAutorizado(char autorizado) {
+<span class="fc" id="L94">        this.autorizado = autorizado;</span>
+<span class="fc" id="L95">    }</span>
+    
+/**
+Obtém o identificador do tipo de plano do cliente.
+@return O identificador do tipo de plano do cliente.
+*/
+    public Integer getIdtipoplano() {
+<span class="fc" id="L102">        return idtipoplano;</span>
+    }
+    
+/**
+Define o identificador do tipo de plano do cliente.
+@param idtipoplano O identificador do tipo de plano a ser definido.
+*/
+    public void setIdtipoplano(Integer idtipoplano) {
+<span class="fc" id="L110">        this.idtipoplano = idtipoplano;</span>
+<span class="fc" id="L111">    } </span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
