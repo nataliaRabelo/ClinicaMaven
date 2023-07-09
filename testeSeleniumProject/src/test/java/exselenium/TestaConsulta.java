@@ -140,10 +140,10 @@ public class TestaConsulta {
         select.selectByIndex(0); 
 
         WebElement cpfInput = driver.findElement(By.name("CPF"));
-        cpfInput.sendKeys("937.397.160-379999999999999999999999999999999999999999999999999");
+        cpfInput.sendKeys("937.397.160-379");
         
         WebElement senhaInput = driver.findElement(By.name("senha"));
-        senhaInput.sendKeys("111");
+        senhaInput.sendKeys("11109");
         
         WebElement enviarButton = driver.findElement(By.xpath("/html/body/div/form/input[3]"));
         enviarButton.click();
