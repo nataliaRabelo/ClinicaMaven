@@ -35,7 +35,7 @@ public class TestaConsulta {
 
     /**
      * Teste para verificar o fluxo de consulta onde o paciente solicita a consulta
-     * e o médico registra que a consulta foi realizada e solicita um exame.
+     * e o médico registra que a consulta foi realizada.
     */
      @Test
     public void testFluxo() {
@@ -79,7 +79,7 @@ public class TestaConsulta {
 
         WebElement tipoDeAcessoMedicoButton = driver.findElement(By.cssSelector("#papel"));
         Select select2 = new Select(tipoDeAcessoMedicoButton);
-        select2.selectByVisibleText("M�dico");
+        select2.selectByVisibleText("M�dico");
 
         WebElement cpfMedicoInput = driver.findElement(By.name("CPF"));
         cpfMedicoInput.sendKeys("693.339.230-98");
